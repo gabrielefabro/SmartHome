@@ -1,0 +1,73 @@
+Scenari
+1.  Fuori Casa
+Descrizione:
+    l'utente è fuori casa per impegni di al massimo una giornata come lavoro, commissioni o uscite con amici.
+Impostazioni:
+    Check sicurezza
+    Porta chiusa
+    Gestione illuminazione
+    Gestione temperatura
+
+2. Rientro a Casa
+Descrizione:
+    l'utente rientra a casa dopo un lasso di tempo indeterminato
+Impostazioni:
+    Gestione cancello
+    Apertura porta 
+    Gestione temperatura
+    Recap sicurezza
+    Gestione illuminazione
+    Messaggio di benvenuto
+
+3. Vacanza
+Descrzione:
+    l'utente lascia la cosa per un periodo di tempo maggiore rispetto all uscita descritta nello scenario "Fuori Casa"
+Impostazioni:
+    Telecamere e sistema di sorveglianza attivo
+    Porta chiusa
+    Gestione illuminazione
+    Programmazione irrigazione
+    Feedback sicurezza remoto
+
+4. Notte
+Descrzione:
+    l'utente è a casa durante la notte 
+Impostazioni:
+    Porta chiusa
+    Gestione illuminazione
+    Gestione elettrodomestici
+    Recap attività
+
+5. Buongiorno
+Descrizione:
+    Gestione illuminazione
+    Gestione elettrodomestici
+    Check sicurezza
+     
+6. Cinema
+Descrizione:
+    l'utente organizza una serata cinema in compagnia o da solo
+Impostazioni:
+    Gestione illuminazione
+    Gestione elettrodomestici
+
+7. Festa
+Descrizione:
+    l'utente organizza una piccola festa a casa
+Impostazioni:
+    Gestione illuminazione
+    Gestione elettrodomestici
+    Gestione sicurezza
+
+8. Emergenza
+Descrizione: 
+    Situazione di emergenza come incendio, allarme antifurto o soccorso medico.
+Impostazioni: 
+    Gestione sicurezza
+    Notifica automatica agli enti competenti
+
+9. Giardinaggio
+Descrizione: 
+    l'utente di prende cura giardino
+Impostazioni:
+    Gestione giardino
