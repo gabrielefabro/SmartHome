@@ -1,0 +1,2 @@
+1. Controllo temperatura
+2. Gestione temperatura

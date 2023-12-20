@@ -1,0 +1,7 @@
+1. Accensione luci
+2. Spegnimento luci
+3. Regolazione luci
+4. Programmazione luci esterne
+5. Apertura tapparelle
+6. Chiusura tapparelle
+7. Luci da festa

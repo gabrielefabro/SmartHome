@@ -1,0 +1,9 @@
+1. Televisione
+2. Lavastoviglie
+3. Lavatrice
+4. Macchina del caffè
+5. Microonde
+6. Caldo Sonno
+7. Casse
+8. Sveglia
+9. Cancello
