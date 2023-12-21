@@ -1,7 +1,3 @@
-1. Accensione luci
-2. Spegnimento luci
-3. Regolazione luci
-4. Programmazione luci esterne
-5. Apertura tapparelle
-6. Chiusura tapparelle
-7. Luci da festa
+1. Gestione Luci
+2. Gestione Tapparelle
+3. Gestione Luci da festa
