@@ -61,7 +61,7 @@ Impostazioni:
 
 8. Emergenza
 Descrizione: 
-    Situazione di emergenza come incendio, allarme antifurto o soccorso medico.
+    Situazione di emergenza come incendio, allarme antifurto o soccorso medico
 Impostazioni: 
     Gestione sicurezza
     Notifica automatica agli enti competenti

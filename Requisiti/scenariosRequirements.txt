@@ -1,0 +1,11 @@
+1. Creation of Custom Scenarios:
+    Creation of scenarios such as "Arrival Home," "Movie Night," or "Night Mode"
+    Specifying sequences of actions and associated conditions
+
+2. Scheduled Activation:
+    Scheduling automatic activation of scenarios on specific days or times
+    Ability to activate scenarios manually through the user interface
+
+3. Integration with Smart Devices:
+    Coordination of actions with other smart devices in the home
+    Example: activation of "Cinema" mode involves closing curtains and adjusting lights

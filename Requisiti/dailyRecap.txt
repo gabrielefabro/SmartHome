@@ -1,0 +1,5 @@
+1. Recap:
+    Provides daily activities done
+
+2. Analysis:
+    Analysis of the most frequently used activities with percentages of use

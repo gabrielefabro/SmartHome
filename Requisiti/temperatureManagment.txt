@@ -1,0 +1,14 @@
+1. Temperature Control:
+    Room temperature regulation through smart thermostats or climate control systems
+
+2. Remote Control:
+    Ability to adjust temperature remotely via a centralized interface such as a mobile app or control device
+
+3.Time Schedule:
+    Schedule programming for automatic temperature adjustment during different times of the day or year
+
+4. Temperature Tracking:
+    Provision of real-time monitoring of home room temperatures
+
+5. Appliance Usage:
+    Ability to set the activation of air conditioners or radiators based on personal preferences or according to preset requirements

@@ -1,4 +1,0 @@
-1. Gestione Telecamere 
-2. Gestione Sensori
-3. Feedback Sicurezza
-4. Gestione Emergenze 
