@@ -1,0 +1,2 @@
+1. Authentication:
+    Access to the system should require simple authentication by user name and password.
