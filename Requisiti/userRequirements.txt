@@ -29,6 +29,8 @@ Specification:
     1. Video Surveillance and Motion Sensor
     2. Alarm Notifications
     3. Emergency Management
+    4. Security Check
+    5. Security Recap
 
 
 Requirement 4: Temperature Management
@@ -56,7 +58,7 @@ Specification:
 Requirement 6: Devices Management
 
 Description:
-    Customizable and modifiable management of appliances and lights, including turning on, turning off, and 
+    Customizable and modifiable Management of appliances and lights, including turning on, turning off, and 
     adjusting intensities and usage customizations
 
 Specification:
