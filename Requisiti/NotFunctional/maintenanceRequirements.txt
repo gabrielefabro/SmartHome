@@ -1,0 +1,4 @@
+1. Software Updates:
+    Software updates should be released periodically, with clear notifications to users in case of maintenance.
+2. Preventive Maintenance:
+    The system should undergo preventive maintenance every month to ensure its stability.
