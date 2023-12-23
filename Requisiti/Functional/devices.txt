@@ -11,3 +11,4 @@ The list of smart devices that the home provides for the user:
 9. Sprinkler
 10. Lawn mower
 11. Shutter
+12. Gate

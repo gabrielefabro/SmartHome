@@ -1,0 +1,10 @@
+Class Camera:
+    attributes:
+        recording (true if the camera is recording)       
+    functions:
+        Recorder:
+        registra da quando la funzione viene chiamata e ritorna il video in formato mp4 e setta recordi a true
+
+        stopRecording:
+        interrompe la registrazione e setta recor a false
+        

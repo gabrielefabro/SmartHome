@@ -1,0 +1,20 @@
+Class Light:
+    attributes:
+        state (true or false if the light is turned on or turned off)
+        color (a string that rapresents the light's color)
+        intensity (integer between 1 and 100  that rapresents the intensity of the light)
+
+    functions:
+        turnOn:
+            the function turn on the light setting state true
+        
+        turnOff:
+            the function turn off the light setting state false
+
+        changeColor:
+            the function takes a color from the input and change the color of the light
+
+        changeIntensity:
+            the function takes a value from the input and change the intensity of the light
+
+        

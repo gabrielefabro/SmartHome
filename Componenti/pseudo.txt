@@ -1,6 +1,0 @@
-Cancello
-Elettrodomestici
-Luci
-Temperatura
-Camera
-Sensore

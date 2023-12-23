@@ -1,0 +1,12 @@
+Class Sensor:
+    attributes:
+        humidity (rapresents the humidity of the ground)
+        temperature (garden's temperature)
+    funcitons:
+        checkHumidity:
+            return the level of the humidity and set the variable
+
+        checkTemperature:
+            return the level of the temperature and set the variable
+        
+        

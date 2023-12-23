@@ -7,7 +7,6 @@
     Support scheduled turning on/off of lights to improve safety
 
 3. Environmental Sensor Monitoring:
-    Integration of soil moisture and brightness sensors
     Automatic adjustment of watering and lighting in response to environmental conditions
 
 4. Gate Management:
