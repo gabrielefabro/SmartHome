@@ -8,6 +8,6 @@ The list of smart devices that the home provides for the user:
 6. Heated Blankets
 7. Speakers
 8. Alarm clock
-9. Gate
-10. Sprinkler
-11. Lawn mower
+9. Sprinkler
+10. Lawn mower
+11. Shutter
