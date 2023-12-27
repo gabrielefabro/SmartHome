@@ -1,13 +1,7 @@
-Class stove:
+Class stove extends Device:
     attributes:
         state (true or false if the device is turned on or turned off)
         level (level intesity)
     functions:
-        turnOn:
-            the function turn on the device setting state true
-        
-        turnOff:
-            the function turn off the device setting state false
-
         modifyTheLevel:
             the function takes as input an integer that rapresent the level of the power of the stove
