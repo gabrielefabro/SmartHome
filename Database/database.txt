@@ -1,0 +1,46 @@
+Tabella Utente
+    Campi: 
+        username (il nome dell'account)(key)
+        password (la password dell'account)
+
+Tabella Device 
+    Campi:
+        id (id identificativo)(key)
+        nome (il nome del device)
+
+Tabella Telecamera
+    Campi:
+        id (id identificativo)(key)
+        posizione (posizione in casa)
+
+Tabella Posizione_Device
+    Campi:
+        id_Device (id di un device)(key)
+        latitudine (latitudine di posizione)(key)
+        longitudine (longitudine di posizione)(key)
+
+Tabella Posizione
+    Campi:
+        latitudine (posizione x)(key)
+        longitudine (posizione y)(key)
+        stanza(nome stanza)
+
+Tabella Scenario
+    Campi
+        id (id identificativo)(key)
+        nome (il nome dello scenario)
+
+Tabella Scenario_Dispositivo
+    Campi:
+        id (id identificativo)(key)
+        id_Device (id di un device)
+        id_Scenario (id di uno scenario)
+
+Tabella Stanza
+    Campi:
+        nome (nome della Stanza)(key)
+
+Tabella Attività
+    Campi:
+        nome (nome Attività)(key)
+        orario (orario di inizio)
