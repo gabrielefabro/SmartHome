@@ -1,4 +1,4 @@
-Class Sensor:
+Class SensorGarden:
     attributes:
         humidity (rapresents the humidity of the ground)
         temperature (garden's temperature)
