@@ -1,17 +1,19 @@
 #include <iostream>
 
-class SensorGarden {
+class SensorGarden
+{
 private:
-    double humidity;     // Humidity of the ground
-    double temperature;  // Garden's temperature
+    double humidity;    // Humidity of the ground
+    double temperature; // Garden's temperature
     int id;
 
 public:
     // Constructor
-    Sensor(int sensorGardenId) : humidity(0.0), temperature(0.0),id(sensorGardenId) {}
+    SensorGarden(int sensorGardenId) : humidity(0.0), temperature(0.0), id(sensorGardenId) {}
 
     // Function to check and calculate humidity based on input
-    void checkHumidity(double temperature, double moisture) {
+    void checkHumidity(double temperature, double moisture)
+    {
         // Simulate a basic humidity calculation (replace this with actual implementation)
         humidity = moisture - (0.1 * temperature);
 
@@ -19,17 +21,20 @@ public:
     }
 
     // Function to check temperature
-    double checkTemperature(double newTemperature) {
+    double checkTemperature(double newTemperature)
+    {
         temperature = newTemperature;
         return temperature;
     }
 
     // Getter functions for humidity and temperature
-    double getHumidity() const {
+    double getHumidity() const
+    {
         return humidity;
     }
 
-    double getTemperature() const {
+    double getTemperature() const
+    {
         return temperature;
     }
 };

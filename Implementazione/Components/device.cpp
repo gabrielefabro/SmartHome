@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
 
-class Device {
+class Device
+{
 private:
     std::string nome;
     bool state;
@@ -9,25 +10,29 @@ private:
 
 public:
     // Constructor
-    Device(std::string deviceName,int deviceId) : nome(deviceName), state(false),id(deviceId) {}
+    Device(std::string deviceName, int deviceId) : nome(deviceName), state(false), id(deviceId) {}
 
     // Functions
-    void turnOn() {
+    void turnOn()
+    {
         state = true;
         std::cout << nome << " is turned on." << std::endl;
     }
 
-    void turnOff() {
+    void turnOff()
+    {
         state = false;
         std::cout << nome << " is turned off." << std::endl;
     }
 
     // Getter functions
-    bool getState() const {
+    bool getState() const
+    {
         return state;
     }
 
-    std::string getNome() const {
+    std::string getNome() const
+    {
         return nome;
     }
 };
