@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "../Components/device.cpp"
 #include "../Components/camera.cpp"
 #include "../Components/light.cpp"
 #include "../Components/stove.cpp"
@@ -18,7 +19,7 @@ private:
     std::vector<Device> shutters;
 
 public:
-     OutOfHome(const std::vector<Light> &lightsList, const std::vector<Camera> &camerasList, const std::vector<Sensor> &sensorsList,const std::vector<Stove> &stovesList, const std::vector<Conditioner> &conditionersList, const std::vector<Device> &shuttersList):lights(lightsList), cameras(camerasList), sensors(sensorsList), stoves(stovesList), conditioners(conditionersList), shutters(shuttersList) {}
+    OutOfHome(const std::vector<Light> &lightsList, const std::vector<Camera> &camerasList, const std::vector<Sensor> &sensorsList,const std::vector<Stove> &stovesList, const std::vector<Conditioner> &conditionersList, const std::vector<Device> &shuttersList):lights(lightsList), cameras(camerasList), sensors(sensorsList), stoves(stovesList), conditioners(conditionersList), shutters(shuttersList) {}
     
     // Metodi per controllare i dispositivi
     void turnOffLights() {
@@ -31,14 +32,14 @@ public:
     void turnOnCameras() {
         for (Camera &camera : cameras) {
             // Accendi ogni telecamera
-            camera.turnOn();
+            camera.startRecording();
         }
     }
 
     void activateSensors() {
         for (Sensor &sensor : sensors) {
             // Attiva ogni sensore
-            sensor.activate();
+            sensor.startChecking();
         }
     }
 

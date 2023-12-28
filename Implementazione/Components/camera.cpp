@@ -12,7 +12,7 @@ public:
     Camera(int cameraId) : recording(false), id(cameraId) {}
 
     // Funzione per iniziare la registrazione
-    std::string startRecording()
+    void startRecording()
     {
         if (!recording)
         {
@@ -22,7 +22,6 @@ public:
         else
         {
             std::cout << "Error: Already recording." << std::endl;
-            return "";
         }
     }
 
@@ -33,10 +32,6 @@ public:
         {
             recording = false;
             std::cout << "Recording stopped." << std::endl;
-        }
-        else
-        {
-            std::cout << "Error: Not currently recording." << std::endl;
         }
     }
 

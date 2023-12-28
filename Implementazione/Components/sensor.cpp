@@ -7,6 +7,7 @@ class Sensor
 private:
     bool movement;
     int id;
+    bool checking;
 
 public:
     // Constructor
@@ -37,8 +38,33 @@ public:
     }
 
     // Getter function for movement
-    bool hasMovement() const
+    bool hasChecking() const
     {
-        return movement;
+        return checking;
+    }
+
+    void startChecking()
+    {
+        if (!checking)
+        {
+            checking = true;
+            std::cout << "Checking started." << std::endl;
+        }
+    }
+
+    // Funzione per fermare la registrazione
+    void stopChecking()
+    {
+        if (checking)
+        {
+            checking = false;
+            std::cout << "Checking stopped." << std::endl;
+        }
+    }
+
+    // Funzione per controllare lo stato di registrazione
+    bool isChecking() const
+    {
+        return checking;
     }
 };

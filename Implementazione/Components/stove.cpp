@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "device.cpp"
+
 
 class Stove : public Device
 {
