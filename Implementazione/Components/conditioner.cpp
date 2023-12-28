@@ -4,10 +4,11 @@
 class Conditioner : public Device {
 private:
     int level;
+    int id;
 
 public:
     // Constructor
-    Conditioner(std::string deviceName) : Device(deviceName), level(0) {}
+    Conditioner(std::string deviceName,int conditionerId) : Device(deviceName), level(0), id(conditionerId) {}
 
     // Function to modify the power level of the conditioner
     void modifyTheLevel(int newLevel) {

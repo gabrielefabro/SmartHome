@@ -4,10 +4,11 @@
 class Camera {
 private:
     bool recording;
+    int id;
 
 public:
     // Costruttore
-    Camera() : recording(false) {}
+    Camera(int cameraId) : recording(false), id(cameraId) {}
 
     // Funzione per iniziare la registrazione
     std::string startRecording() {

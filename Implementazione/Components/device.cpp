@@ -5,10 +5,11 @@ class Device {
 private:
     std::string nome;
     bool state;
+    int id;
 
 public:
     // Constructor
-    Device(std::string deviceName) : nome(deviceName), state(false) {}
+    Device(std::string deviceName,int deviceId) : nome(deviceName), state(false),id(deviceId) {}
 
     // Functions
     void turnOn() {

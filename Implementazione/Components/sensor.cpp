@@ -3,10 +3,11 @@
 class Sensor {
 private:
     bool movement;
+    int id;
 
 public:
     // Constructor
-    Sensor() : movement(false) {}
+    Sensor(int sensorId) : movement(false),id(sensorId) {}
 
     // Function to check for movement
     void checkMovement() {

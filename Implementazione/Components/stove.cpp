@@ -4,10 +4,11 @@
 class Stove : public Device {
 private:
     int level;
+    int id;
 
 public:
     // Constructor
-    Stove(std::string deviceName) : Device(deviceName), level(0) {}
+    Stove(std::string deviceName,int stoveId) : Device(deviceName), level(0),id(stoveId) {}
 
     // Function to modify the power level of the stove
     void modifyTheLevel(int newLevel) {

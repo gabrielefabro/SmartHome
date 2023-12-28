@@ -5,10 +5,11 @@ class Light : public Device {
 private:
     std::string color;
     int intensity;
+    int id;
 
 public:
     // Constructor
-    Light(std::string deviceName) : Device(deviceName), color("White"), intensity(50) {}
+    Light(std::string deviceName,int lightId) : Device(deviceName), color("White"), intensity(50),id(lightId) {}
 
     // Function to change the color of the light
     void changeColor(std::string newColor) {

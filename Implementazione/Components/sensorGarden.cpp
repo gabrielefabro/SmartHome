@@ -4,10 +4,11 @@ class SensorGarden {
 private:
     double humidity;     // Humidity of the ground
     double temperature;  // Garden's temperature
+    int id;
 
 public:
     // Constructor
-    Sensor() : humidity(0.0), temperature(0.0) {}
+    Sensor(int sensorGardenId) : humidity(0.0), temperature(0.0),id(sensorGardenId) {}
 
     // Function to check and calculate humidity based on input
     void checkHumidity(double temperature, double moisture) {
