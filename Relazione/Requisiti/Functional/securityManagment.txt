@@ -11,6 +11,3 @@
 
 4. Security Check:
     Home live check
-
-5. Security Recap:
-    List of events that happened during the week

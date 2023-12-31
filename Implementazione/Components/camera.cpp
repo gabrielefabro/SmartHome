@@ -40,4 +40,8 @@ public:
     {
         return recording;
     }
+
+    int getId(){
+        return id;
+    }
 };

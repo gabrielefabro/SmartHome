@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <chrono>
 
 class Device
 {
@@ -35,28 +34,5 @@ public:
     std::string getNome() const
     {
         return nome;
-    }
-
-    void operateAtScheduledTimes(const std::chrono::system_clock::time_point &startTime, const std::chrono::duration<int> &duration)
-    {
-        auto endTime = startTime + duration;
-
-        while (true)
-        {
-            auto currentTime = std::chrono::system_clock::now();
-
-            if (currentTime > startTime && currentTime < endTime)
-            {
-                if (!state)
-                {
-                    turnOn();
-                }
-            }
-            else
-            {
-                turnOff();
-                break;
-            }
-        }
     }
 };
