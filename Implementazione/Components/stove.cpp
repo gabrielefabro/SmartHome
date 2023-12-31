@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 
-
 class Stove : public Device
 {
 private:

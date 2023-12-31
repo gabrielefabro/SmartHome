@@ -19,53 +19,73 @@ private:
     std::vector<Device> shutters;
 
 public:
-    OutOfHome(const std::vector<Light> &lightsList, const std::vector<Camera> &camerasList, const std::vector<Sensor> &sensorsList,const std::vector<Stove> &stovesList, const std::vector<Conditioner> &conditionersList, const std::vector<Device> &shuttersList):lights(lightsList), cameras(camerasList), sensors(sensorsList), stoves(stovesList), conditioners(conditionersList), shutters(shuttersList) {}
-    
+    OutOfHome(const std::vector<Light> &lightsList, const std::vector<Camera> &camerasList, const std::vector<Sensor> &sensorsList, const std::vector<Stove> &stovesList, const std::vector<Conditioner> &conditionersList, const std::vector<Device> &shuttersList) : lights(lightsList), cameras(camerasList), sensors(sensorsList), stoves(stovesList), conditioners(conditionersList), shutters(shuttersList) {}
+
     // Metodi per controllare i dispositivi
-    void turnOffLights() {
-        for (Light &light : lights) {
+    void turnOffLights()
+    {
+        for (Light &light : lights)
+        {
             // Spegni ogni luce
             light.turnOff();
         }
     }
 
-    void turnOnCameras() {
-        for (Camera &camera : cameras) {
+    void turnOnCameras()
+    {
+        for (Camera &camera : cameras)
+        {
             // Accendi ogni telecamera
             camera.startRecording();
         }
     }
 
-    void activateSensors() {
-        for (Sensor &sensor : sensors) {
+    void activateSensors()
+    {
+        for (Sensor &sensor : sensors)
+        {
             // Attiva ogni sensore
             sensor.startChecking();
         }
     }
 
-    void turnOffStoves() {
-        for (Stove &stove : stoves) {
+    void turnOffStoves()
+    {
+        for (Stove &stove : stoves)
+        {
             // Spegni ogni stufa
             stove.turnOff();
         }
     }
 
-    void turnOffConditioners() {
-        for (Conditioner &conditioner : conditioners) {
+    void turnOffConditioners()
+    {
+        for (Conditioner &conditioner : conditioners)
+        {
             // Spegni ogni condizionatore
             conditioner.turnOff();
         }
     }
 
-    void turnOffShutters() {
-        for (Device &shutter : shutters) {
+    void turnOffShutters()
+    {
+        for (Device &shutter : shutters)
+        {
             // Spegni ogni persiana
-            shutter.turnOff();
+            if (shutter.getNome() == "Shutter")
+            {
+                shutter.turnOff();
+            }
+            else
+            {
+                std::cout << "This object isn't a shutter!" << std::endl;
+            }
         }
     }
 };
 
-int main() {
+int main()
+{
     // Creazione di alcune istanze di luci, telecamere, sensori, stufe, condizionatori, persiane
     std::vector<Light> lights{
         Light("LivingRoomLight", 2),
@@ -116,4 +136,3 @@ int main() {
 
     return 0;
 }
-

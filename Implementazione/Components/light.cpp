@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 
-
 class Light : public Device
 {
 private:
@@ -45,4 +44,3 @@ public:
         return intensity;
     }
 };
-

@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 
-
 class Conditioner : public Device
 {
 private:

@@ -13,9 +13,9 @@ public:
     // Constructor
     Sensor(int sensorId) : movement(false), id(sensorId) {}
 
-
     // Simula il rilevamento del movimento
-    bool simulateMotionDetection() {
+    bool simulateMotionDetection()
+    {
         // Genera un numero casuale per simulare il rilevamento del movimento
         std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
@@ -28,10 +28,13 @@ public:
         movement = (randomValue < 30);
 
         // Stampa un messaggio di debug
-        if (movement) {
+        if (movement)
+        {
             std::cout << "Movement detected!" << std::endl;
             return true;
-        } else {
+        }
+        else
+        {
             std::cout << "No movement detected." << std::endl;
             return false;
         }
