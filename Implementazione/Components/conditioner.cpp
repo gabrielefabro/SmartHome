@@ -26,6 +26,11 @@ public:
         std::cout << nome << " is turned off." << std::endl;
     }
 
+    int getId()
+    {
+        return id;
+    }
+
     // Getter functions
     bool getState() const
     {
@@ -90,4 +95,19 @@ public:
     {
         return level;
     }
+
+    // Simula il rilevamento della temperatura
+    int simulateTempearature()
+    {
+        // Genera un numero casuale per simulare il rilevamento del movimento
+        std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
+        // Genera un numero casuale compreso tra 0 e RAND_MAX 
+        int randomValue = std::rand() % 40;
+
+        std::cout << randomValue << std::endl;
+
+        return randomValue;
+    }
+
 };

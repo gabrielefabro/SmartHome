@@ -11,4 +11,4 @@
     Provision of real-time monitoring of home room temperatures
 
 5. Appliance Usage:
-    Ability to set the activation of air conditioners or radiators based on personal preferences or according to preset requirements
+    Ability to set the activation of air conditioners based on personal preferences or according to preset requirements

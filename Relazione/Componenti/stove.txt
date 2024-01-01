@@ -1,7 +1,0 @@
-Class stove extends Device:
-    attributes:
-        state (true or false if the device is turned on or turned off)
-        level (level intesity)
-    functions:
-        modifyTheLevel:
-            the function takes as input an integer that rapresent the level of the power of the stove

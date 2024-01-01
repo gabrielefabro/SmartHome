@@ -11,7 +11,7 @@ void turnOffSprinklers(std::vector<Device> sprinklers)
 {
     for (Device &sprinkler : sprinklers)
     {
-        // Spegni ogni luce
+        // Spegni ogni irrigatore
         sprinkler.turnOff();
     }
 }
@@ -20,7 +20,7 @@ void turnOnSprinklers(std::vector<Device> sprinklers)
 {
     for (Device &sprinkler : sprinklers)
     {
-        // Spegni ogni luce
+        // Spegni ogni irrigatore
         sprinkler.turnOn();
     }
 }
@@ -40,15 +40,15 @@ void irrigationManagment(std::vector<Device> sprinklers, int hours)
     }
 }
 
-void openGate(Device gate)
+void openGate(Device gate, bool key)
 {
-    if (gate.getNome() == "Gate")
+    if (key == true)
     {
         gate.turnOn();
     }
 }
 
-void controlLights(SensorGarden sensor)
+void controlLights(std::vector<Light> lights, SensorGarden sensor)
     {
         double humidity = sensor.getHumidity();
         double temperature = sensor.getTemperature();
@@ -56,30 +56,30 @@ void controlLights(SensorGarden sensor)
         // Adjust the lights based on humidity and temperature conditions
         if (humidity > 50 && temperature > 25)
         {
-            turnOnLights();
+            turnOnLights(lights);
             std::cout << "Turning on lights." << std::endl;
         }
         else
         {
-            turnOffLights();
+            turnOffLights(lights);
             std::cout << "Turning off lights." << std::endl;
         }
     }
 
 // Function to control irrigation based on humidity
-void controlIrrigation(SensorGarden sensor)
+void controlIrrigation(std::vector<Device> sprinklers, SensorGarden sensor)
 {
     double humidity = sensor.getHumidity();
 
     // Adjust irrigation based on humidity conditions
     if (humidity < 30)
     {
-        turnOnSprinklers();
+        turnOnSprinklers(sprinklers);
         std::cout << "Turning on irrigation." << std::endl;
     }
     else
     {
-        turnOffSprinklers();
+        turnOffSprinklers(sprinklers);
         std::cout << "Turning off irrigation." << std::endl;
     }
 }

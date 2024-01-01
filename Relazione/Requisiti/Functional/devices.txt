@@ -13,3 +13,4 @@ The list of smart devices that the home provides for the user:
 11. Shutter
 12. Gate
 13. Light
+14. Conditioner
