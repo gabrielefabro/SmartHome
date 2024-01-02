@@ -3,7 +3,6 @@
 #include "../Components/device.cpp"
 #include "../Components/camera.cpp"
 #include "../Components/light.cpp"
-#include "../Components/stove.cpp"
 #include "../Components/conditioner.cpp"
 #include "../Components/sensor.cpp"
 #include <vector>
@@ -14,12 +13,11 @@ private:
     std::vector<Light> lights;
     std::vector<Camera> cameras;
     std::vector<Sensor> sensors;
-    std::vector<Stove> stoves;
     std::vector<Conditioner> conditioners;
     std::vector<Device> shutters;
 
 public:
-    OutOfHome(const std::vector<Light> &lightsList, const std::vector<Camera> &camerasList, const std::vector<Sensor> &sensorsList, const std::vector<Stove> &stovesList, const std::vector<Conditioner> &conditionersList, const std::vector<Device> &shuttersList) : lights(lightsList), cameras(camerasList), sensors(sensorsList), stoves(stovesList), conditioners(conditionersList), shutters(shuttersList) {}
+    OutOfHome(const std::vector<Light> &lightsList, const std::vector<Camera> &camerasList, const std::vector<Sensor> &sensorsList, const std::vector<Conditioner> &conditionersList, const std::vector<Device> &shuttersList) : lights(lightsList), cameras(camerasList), sensors(sensorsList), conditioners(conditionersList), shutters(shuttersList) {}
 
     // Metodi per controllare i dispositivi
     void turnOffLights()
@@ -46,15 +44,6 @@ public:
         {
             // Attiva ogni sensore
             sensor.startChecking();
-        }
-    }
-
-    void turnOffStoves()
-    {
-        for (Stove &stove : stoves)
-        {
-            // Spegni ogni stufa
-            stove.turnOff();
         }
     }
 
@@ -105,12 +94,6 @@ int main()
         // ... aggiungi altri sensori se necessario
     };
 
-    std::vector<Stove> stoves{
-        Stove("stove", 86),
-        Stove("stove", 65),
-        // ... aggiungi altre stufe se necessario
-    };
-
     std::vector<Conditioner> conditioners{
         Conditioner("conditioner", 11),
         Conditioner("conditioner", 63),
@@ -124,13 +107,12 @@ int main()
     };
 
     // Creazione dell'istanza di OutOfHome con le liste di dispositivi
-    OutOfHome myHome(lights, cameras, sensors, stoves, conditioners, shutters);
+    OutOfHome myHome(lights, cameras, sensors, conditioners, shutters);
 
     // Test delle funzioni di controllo dei dispositivi
     myHome.turnOffLights();
     myHome.turnOnCameras();
     myHome.activateSensors();
-    myHome.turnOffStoves();
     myHome.turnOffConditioners();
     myHome.turnOffShutters();
 
