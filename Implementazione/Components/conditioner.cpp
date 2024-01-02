@@ -8,22 +8,27 @@ private:
     std::string nome;
     bool state;
     int id;
+    RedisManager &redisManager;
 
 public:
     // Constructor
-    Device(std::string deviceName, int deviceId) : nome(deviceName), state(false), id(deviceId) {}
+    Device::Device(std::string deviceName, int deviceId, RedisManager &redisManager) : nome(deviceName), state(false), id(deviceId), redisManager(redisManager) {}
 
     // Functions
     void turnOn()
     {
         state = true;
         std::cout << nome << " is turned on." << std::endl;
+        redisManager.sendCommand("LPUSH device_events:turning_on " + std::to_string(getId()) + " " + getCurrentTimestamp());
+        redisManager.sendCommand("SET device_state:" + std::to_string(getId()) + " on");
     }
 
     void turnOff()
     {
         state = false;
         std::cout << nome << " is turned off." << std::endl;
+        redisManager.sendCommand("LPUSH device_events:turning_off " + std::to_string(getId()) + " " + getCurrentTimestamp());
+        redisManager.sendCommand("SET device_state:" + std::to_string(getId()) + " off");
     }
 
     int getId()
@@ -74,7 +79,7 @@ private:
 
 public:
     // Constructor
-    Conditioner(std::string deviceName, int conditionerId) : Device(deviceName, conditionerId), level(0), id(conditionerId) {}
+    Conditioner::Conditioner(std::string deviceName, int conditionerId, RedisManager &redisManager) : Device(deviceName, conditionerId, redisManager), level(0) {}
 
     // Function to modify the power level of the conditioner
     void modifyTheLevel(int newLevel)
@@ -83,6 +88,9 @@ public:
         {
             level = newLevel;
             std::cout << getNome() << " power level modified to " << level << std::endl;
+            redisManager.sendCommand("SET conditioner_level:" + std::to_string(getId()) + std::to_string(newLevel));
+            redisManager.sendCommand("LPUSH conditioner_events:modify_level " + std::to_string(getId()) + " " + getCurrentTimestamp());
+            
         }
         else
         {
@@ -106,7 +114,7 @@ public:
         int randomValue = std::rand() % 40;
 
         std::cout << randomValue << std::endl;
-
+        redisManager.sendCommand("LPUSH conditioner_events:simulate_temperature " + std::to_string(getId()) + " " + getCurrentTimestamp());
         return randomValue;
     }
 

@@ -8,11 +8,11 @@ private:
     bool movement;
     int id;
     bool checking;
+    RedisManager &redisManager;
 
 public:
     // Constructor
-    Sensor(int sensorId) : movement(false), id(sensorId) {}
-
+    Sensor::Sensor(int sensorId, RedisManager &redisManager) : movement(false), id(sensorId), checking(false), redisManager(redisManager) {}
     // Simula il rilevamento del movimento
     bool simulateMotionDetection()
     {
@@ -31,6 +31,7 @@ public:
         if (movement)
         {
             std::cout << "Movement detected!" << std::endl;
+            redisManager.sendCommand("LPUSH sensor_events:motion_detection " + std::to_string(getId()) + " " + getCurrentTimestamp());
             return true;
         }
         else
@@ -52,6 +53,8 @@ public:
         {
             checking = true;
             std::cout << "Checking started." << std::endl;
+            redisManager.sendCommand("LPUSH sensor_events:start_checking " + std::to_string(getId()) + " " + getCurrentTimestamp());
+            redisManager.sendCommand("SET sensor_checking:" + std::to_string(getId()) + " " + std::to_string(isChecking()));
         }
     }
 
@@ -62,6 +65,8 @@ public:
         {
             checking = false;
             std::cout << "Checking stopped." << std::endl;
+            redisManager.sendCommand("LPUSH sensor_events:stop_checking " + std::to_string(getId()) + " " + getCurrentTimestamp());
+            redisManager.sendCommand("SET sensor_checking:" + std::to_string(getId()) + " " + std::to_string(isChecking()));
         }
     }
 
