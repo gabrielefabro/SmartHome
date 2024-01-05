@@ -1,4 +1,5 @@
 #include "main.h"
+#include "camera.h"
 
 #define READ_STREAM "stream1"
 #define WRITE_STREAM "stream2"
@@ -12,14 +13,20 @@ int main()
   char buf[200];
   redisReply *reply;
   int pid;
+  char id[20];
+  char state[20];
+  char id2send[20];
+  char state2send[25];
+  int block = 1000000000;
+  char username[100];
 
 #if (DEBUG > 0)
   setvbuf(stdout, (char *)NULL, _IONBF, 0);
   setvbuf(stderr, (char *)NULL, _IONBF, 0);
 #endif
 
-  camera_type x, y;
   int t = 0;
+  sprintf(username, "%u", rand());
 
   /* init random number generator  */
   srand((unsigned)time(NULL));
@@ -38,10 +45,7 @@ int main()
   /* init time */
   init_time();
 
-  /* init camera state */
-  int value = rand();
-  x = init();
-  nanos = get_nanos();
+  Camera camera = initCamera();
 
   c2r = redisConnect("localhost", 6379);
 
@@ -57,27 +61,31 @@ int main()
   initStreams(c2r, READ_STREAM);
   initStreams(c2r, WRITE_STREAM);
 
-  sprintf(key, "mykey:%d", send_counter);
-  sprintf(value, "myvalue:%d", send_counter);
-
   while (t <= HORIZON)
   {
     /* output */
+    int2state(state, camera.getState());
 
-    //   nanos_day = get_day_nanos(buf);
+    sprintf(id2send, "my ID: %d", camera.getId());
+    sprintf(state2send, "my state: %d", state);
+    // sender
+    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, id2send, state2send);
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+    printf("main(): pid =%d: stream %s: camera %s, changed state to %s (id: %s)\n", pid, WRITE_STREAM, id2send, state2send, reply->str);
+    freeReplyObject(reply);
 
     nanos_day = nanos2day(buf, nanos);
 
-    printf("%d, %lf, %lf, %ld, %d, %s, %ld\n", t, global_time_sec, timeadvance, nanos, x, buf, nanos_day);
+    printf("%d, %lf, %lf, %ld, %d, %s, %ld\n", t, global_time_sec, timeadvance, nanos, state, buf, nanos_day);
 
-    log2db(db1, pid, nanos, x);
+    log2db(db1, pid, nanos, camera.getState());
+    reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT 1 NOACK STREAMS %s >", username, block, READ_STREAM);
 
+     assertReply(c2r, reply);
+     dumpReply(reply, 0);
+     freeReplyObject(reply);
     /* update state */
-    y = next(x);
-
-    assert((y == x) || (y == (x + 1) % 3));
-
-    x = y;
+    camera.next(camera);
 
     /* update time */
     t++;

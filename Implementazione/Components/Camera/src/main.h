@@ -14,19 +14,14 @@
 #include <cassert>
 #include <cerrno>
 #include "con2redis.h"
-
+#include "camera.h"
 #include "global.h"
+#include "initCamera.cpp"
 #include "../../../con2db/pgsql.h"
 
 #define DEBUG 1000
 
-#define HORIZON 10  // TICKS
-
-typedef enum {ON, RECORDING, OFF} camera_type;
-
-
-camera_type init();
-camera_type next(camera_type x);
+#define HORIZON 10 // TICKS
 
 int msleep(long msec);
 int micro_sleep(long usec);
@@ -34,13 +29,12 @@ int long get_nanos(void);
 void init_time();
 void update_time();
 
-long int get_day_nanos(char* buf);
+long int get_day_nanos(char *buf);
 void int2state(char *buf, camera_type x);
 void init_logdb(Con2DB db1, int pid);
 void log2db(Con2DB db1, int pid, long int nanos_day, camera_type x);
-long int nanos2day(char* buf, long int nanosec);
+long int nanos2day(char *buf, long int nanosec);
 void log2stdout(Con2DB db1, int pid);
-
 
 using namespace std;
 

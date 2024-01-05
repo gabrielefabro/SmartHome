@@ -12,7 +12,7 @@ void log2db(Con2DB db1, int pid, long int nanosec, camera_type x)
  long int dbnanosec, nsafters;
  char datebuf[1000];
    
- /*  init  */
+
  int2state(cstate, x);
 
  #if (DEBUG > 1000000)
@@ -74,8 +74,4 @@ void log2db(Con2DB db1, int pid, long int nanosec, camera_type x)
     fprintf(stderr, "log2db(): ns = %ld = TIME_UTC = %s + %ld ns\n", dbnanosec, datebuf, nsafters);
 #endif
 
-   
- 
-
-      
  }  /*   log2db()  */
