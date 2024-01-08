@@ -4,7 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/include/postgresql",
+                "/usr/include/postgresql/**",
                 "${workspaceFolder}/Implementazione/con2redis/src"
             ],
             "defines": [],

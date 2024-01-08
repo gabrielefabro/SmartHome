@@ -1,33 +1,19 @@
-#include <iostream>
-#include <string>
-#include <cstdlib>
-#include "main.h"
 #include "camera.h"
 
-class Camera
+Camera::Camera(int id, camera_type state) : id(id), state(state) {}
+
+camera_type Camera::next()
 {
-private:
-    camera_type state;
-    int id;
+    state = static_cast<camera_type>((state + rand() % 2) % 3);
+    return state;
+}
 
-public:
-    // Costruttore
-    Camera(int id, camera_type state) : state(state), id(id) {}
-    
-    camera_type next(Camera camera)
-    {
-        camera.state = static_cast<camera_type>((state + rand() % 2) % 3);
-        return state;
-    }
+camera_type Camera::getState() const
+{
+    return state;
+}
 
-    // Funzione per controllare lo stato di registrazione
-    camera_type getState() const
-    {
-        return state;
-    }
-
-    int getId() const
-    {
-        return id;
-    }
-};
+int Camera::getId() const
+{
+    return id;
+}

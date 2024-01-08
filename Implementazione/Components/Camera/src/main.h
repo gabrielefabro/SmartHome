@@ -13,7 +13,7 @@
 #include <sys/times.h>
 #include <cassert>
 #include <cerrno>
-#include "con2redis.h"
+#include "../../../con2redis/src/con2redis.h"
 #include "camera.h"
 #include "global.h"
 #include "initCamera.cpp"

@@ -21,7 +21,7 @@ public:
     Camera(int id, camera_type state);
 
     // Funzione per ottenere lo stato successivo
-    camera_type next(Camera camera);
+    camera_type next();
 
     // Funzione per controllare lo stato di registrazione
     camera_type getState() const;

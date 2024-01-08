@@ -16,7 +16,7 @@ int main()
   char id[20];
   char state[20];
   char id2send[20];
-  char state2send[25];
+  char state2send[30];
   int block = 1000000000;
   char username[100];
 
@@ -67,7 +67,8 @@ int main()
     int2state(state, camera.getState());
 
     sprintf(id2send, "my ID: %d", camera.getId());
-    sprintf(state2send, "my state: %d", state);
+    sprintf(state2send, "my state: %s", state);
+
     // sender
     reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, id2send, state2send);
     assertReplyType(c2r, reply, REDIS_REPLY_STRING);
@@ -76,7 +77,7 @@ int main()
 
     nanos_day = nanos2day(buf, nanos);
 
-    printf("%d, %lf, %lf, %ld, %d, %s, %ld\n", t, global_time_sec, timeadvance, nanos, state, buf, nanos_day);
+    printf("%d, %lf, %lf, %ld, %s, %s, %ld\n", t, global_time_sec, timeadvance, nanos, state, buf, nanos_day);
 
     log2db(db1, pid, nanos, camera.getState());
     reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT 1 NOACK STREAMS %s >", username, block, READ_STREAM);
@@ -85,7 +86,7 @@ int main()
     dumpReply(reply, 0);
     freeReplyObject(reply);
     /* update state */
-    camera.next(camera);
+    camera.next();
 
     /* update time */
     t++;
