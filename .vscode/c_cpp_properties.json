@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/include/postgresql/**",
-                "${workspaceFolder}/Implementazione/con2redis/src"
+                "/usr/include/hiredis/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

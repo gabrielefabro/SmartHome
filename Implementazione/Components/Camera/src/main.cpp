@@ -1,5 +1,6 @@
 #include "main.h"
 #include "camera.h"
+#include "hiredis/hiredis.h"
 
 #define READ_STREAM "stream1"
 #define WRITE_STREAM "stream2"
