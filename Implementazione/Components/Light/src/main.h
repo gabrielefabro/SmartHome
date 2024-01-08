@@ -30,6 +30,7 @@ void update_time();
 
 long int get_day_nanos(char *buf);
 void int2state(char *buf, light_type x);
+light_color stringToLightColor(const char* colorStr);
 void init_logdb(Con2DB db1, int pid);
 void log2db(Con2DB db1, int pid, long int nanos_day, light_type x);
 long int nanos2day(char *buf, long int nanosec);

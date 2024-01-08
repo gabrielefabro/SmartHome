@@ -5,9 +5,13 @@
 #include <cstdlib>
 #include <ctime>
 #include "randomColor.cpp"
+#include "randomIntensity.cpp"
+
 
 int main() {
+    
     char state[20];
+
     // Inizializza la connessione a Redis
     redisContext *context = redisConnect("127.0.0.1", 6379);
     if (context == nullptr || context->err) {
@@ -28,11 +32,20 @@ int main() {
 
     if(state == "change_color")
     {
-        // Invia il nuovo stato a Redis
+        // Invia il nuovo colore a Redis
         light_color newColor = getRandomColor();
         reply = (redisReply *)redisCommand(context, "SET new_color %s", newColor);
         freeReplyObject(reply);
     }
+    else if (state == "change_intensity")
+    {
+        // Invia la nuova intensita' a Redis
+        int newIntensity = changeIntensity();
+        reply = (redisReply *)redisCommand(context, "SET new_color %d", newIntensity);
+        freeReplyObject(reply);
+    }
+    
+
 
     // Chiudi la connessione a Redis
     redisFree(context);

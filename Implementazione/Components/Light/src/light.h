@@ -43,7 +43,7 @@ public:
     light_type getState() const;
 
     // Funzione per cambiare l'intesità delle luci
-    void changeIntensity(int newIntensity);
+    void setIntensity(int newIntensity);
 
     // Funzione per ottenere l'ID della fotocamera
     int getId() const;

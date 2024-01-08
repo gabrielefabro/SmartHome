@@ -21,22 +21,6 @@ public:
         return state;
     }
 
-    void changeIntensity(int newIntensity)
-    {
-        if(getState() == ON)
-        {
-            if (newIntensity >= 1 && newIntensity <= 10)
-            {
-                intensity = newIntensity;
-                std::cout << "light intensity changed to " << intensity << std::endl;
-            }
-            else
-            {
-                std::cout << "Error: Intensity value must be between 1 and 10." << std::endl;
-            }
-        }
-    }
-
     // Funzione per controllare lo stato delle luci
     light_type getState() const
     {
@@ -51,6 +35,11 @@ public:
     void setColor(light_color newColor)
     {
         color = newColor;
+    }
+
+    void setIntensity(int newIntensity)
+    {
+        intensity = newIntensity;
     }
 
 };
