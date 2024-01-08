@@ -34,10 +34,10 @@ public:
     Light(int id, light_type state, light_color color, int intensity);
 
     // Funzione per ottenere lo stato successivo
-    light_type next(Light light);
+    light_type next();
 
     // Funzione per cambiare colore delle luci
-    light_color changeColor(Light light);
+    void setColor(light_color newColor);
 
     // Funzione per controllare lo stato delle luci
     light_type getState() const;
