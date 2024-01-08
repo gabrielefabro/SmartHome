@@ -19,7 +19,7 @@ public:
     
     light_type next(Light light)
     {
-        light.state = static_cast<light_type>((state + rand() % 2) % 3);
+        light.state = static_cast<light_type>((state + rand() % 2) % 4);
         return state;
     }
 
@@ -28,7 +28,7 @@ public:
     {
         if (getState() == ON)
         {
-            light.color = static_cast<light_color>((color + rand() % 2) % 4);
+            light.color = static_cast<light_color>((color + rand() % 2) % 7);
         }
         return color;
     }

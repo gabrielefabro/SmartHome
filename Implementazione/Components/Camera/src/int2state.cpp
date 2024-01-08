@@ -6,11 +6,16 @@ void int2state(char *buf, camera_type x)
 {
 
   if (x == ON)
-    {sprintf(buf, "ON");}
+  {
+    sprintf(buf, "ON");
+  }
   else if (x == RECORDING)
-    {sprintf(buf, "Recording");}
+  {
+    sprintf(buf, "Recording");
+  }
   else
-    {sprintf(buf, "OFF");}
-  
+  {
+    sprintf(buf, "OFF");
+  }
 
-}  /*   int2color()  */
+} /*   int2color()  */

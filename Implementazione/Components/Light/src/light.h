@@ -6,6 +6,8 @@ typedef enum
 {
     ON,
     OFF,
+    change_intensity,
+    change_color,
 } light_type;
 
 typedef enum
@@ -13,10 +15,11 @@ typedef enum
     RED,
     BLUE,
     YELLOW,
-    PINK
+    PINK,
+    ORANGE,
+    WHITE,
+    PURPLE,
 } light_color;
-
-
 
 class Light
 {

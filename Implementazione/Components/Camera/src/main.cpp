@@ -81,9 +81,9 @@ int main()
     log2db(db1, pid, nanos, camera.getState());
     reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT 1 NOACK STREAMS %s >", username, block, READ_STREAM);
 
-     assertReply(c2r, reply);
-     dumpReply(reply, 0);
-     freeReplyObject(reply);
+    assertReply(c2r, reply);
+    dumpReply(reply, 0);
+    freeReplyObject(reply);
     /* update state */
     camera.next(camera);
 
