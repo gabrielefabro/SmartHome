@@ -11,7 +11,14 @@ typedef enum
 
 typedef enum
 {
-    //
+    TV,
+    DISHWASHER,
+    WASHING_MACHINE,
+    COFFEE_MAKER,
+    MICROWAVE,
+    HEATED_BLANKETS,
+    SPEAKERS,
+    LAWN_MOWER,
 } nome_type;
 
 class Device
@@ -26,10 +33,16 @@ public:
     Device(int id, device_type state, nome_type nome);
 
     // Funzione per ottenere lo stato successivo
-    device_type next(Device device);
+    device_type next();
+
+    // Funzione per programmare il device
+    void programmed_device(int intervalloPrimo, int intervalloSecondo);
 
     // Funzione per controllare lo stato delle luci
     device_type getState() const;
+
+    // Funzione per ottenere il nome del device
+    nome_type getNome() const;
 
     // Funzione per ottenere l'ID del device
     int getId() const;
@@ -37,4 +50,4 @@ public:
     void setState();
 };
 
-#endif // LIGHT_H
+#endif // DEVICE_H

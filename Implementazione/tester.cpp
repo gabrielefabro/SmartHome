@@ -1,4 +1,5 @@
 #include "light.h"
+#include "device.h"
 #include "main.h"
 #include <iostream>
 #include <hiredis/hiredis.h>
@@ -41,12 +42,10 @@ int main() {
     {
         // Invia la nuova intensita' a Redis
         int newIntensity = changeIntensity();
-        reply = (redisReply *)redisCommand(context, "SET new_color %d", newIntensity);
+        reply = (redisReply *)redisCommand(context, "SET new_intensity %d", newIntensity);
         freeReplyObject(reply);
     }
     
-
-
     // Chiudi la connessione a Redis
     redisFree(context);
 

@@ -1,0 +1,43 @@
+#include "device.h"
+#include "main.h"
+#include "randomInter.cpp"
+#include <iostream>
+#include <hiredis/hiredis.h>
+#include <cstdlib>
+#include <ctime>
+
+int main()
+{
+    char state[20];
+
+// Leggi ID e STATE e NOME da Redis
+    redisReply *reply = (redisReply *)redisCommand(context, "GET device_id");
+    int deviceId = atoi(reply->str);
+    freeReplyObject(reply);
+
+    reply = (redisReply *)redisCommand(context, "GET device_state");
+    device_type deviceState = static_cast<device_type>(atoi(reply->str));
+    freeReplyObject(reply);
+
+    reply = (redisReply *)redisCommand(context, "GET nome_device");
+    nome_type deviceState = static_cast<nome_type>(atoi(reply->str));
+    freeReplyObject(reply);
+
+    int2state(state,deviceState);
+
+    if(strcmp(state, "programmed"))
+    {
+        int intervalloPrimo = changeInt();
+        int intervalloSecondo = changeInt();
+        reply = (redisReply *)redisCommand(context, "SET new_int1 %d", intervalloPrimo);
+        reply = (redisReply *)redisCommand(context, "SET new_int2 %d", intervalloSecondo);
+        freeReplyObject(reply);
+
+    }
+
+    // Chiudi la connessione a Redis
+    redisFree(context);
+
+    return 0;
+
+}
