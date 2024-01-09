@@ -30,7 +30,10 @@ public:
             std::this_thread::sleep_for(std::chrono::milliseconds(intervalloPrimo));
             setState();
             std::this_thread::sleep_for(std::chrono::milliseconds(intervalloSecondo));
+<<<<<<< HEAD
             
+=======
+>>>>>>> 85ebde1cbc59337d003fcdd81476c30f9b79bb35
         }
     }
 

@@ -13,9 +13,9 @@
 #include <sys/times.h>
 #include <cassert>
 #include <cerrno>
-#include "light.h"
+#include "sensor.h"
 #include "global.h"
-#include "initLight.cpp"
+#include "initSensor.cpp"
 #include "../../../con2db/pgsql.h"
 
 #define DEBUG 1000
@@ -29,10 +29,9 @@ void init_time();
 void update_time();
 
 long int get_day_nanos(char *buf);
-void int2state(char *buf, light_type x);
-light_color stringToLightColor(const char *colorStr);
+void int2state(char *buf, sensor_type x);
 void init_logdb(Con2DB db1, int pid);
-void log2db(Con2DB db1, int pid, long int nanos_day, light_type x);
+void log2db(Con2DB db1, int pid, long int nanos_day, sensor_type x);
 long int nanos2day(char *buf, long int nanosec);
 void log2stdout(Con2DB db1, int pid);
 

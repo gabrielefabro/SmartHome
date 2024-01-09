@@ -7,23 +7,23 @@
 class SensorGarden
 {
 private:
-    sensor_Garden_type state;
+    sensorGarden_type state;
     int id;
     int humidity;  
     int temperature;
 
 public:
     // Costruttore
-    SensorGarden(int id, sensor_Garden_type state, int humidity, int temperature) : id(id), state(state), humidity(humidity), temperature(temperature) {}
+    SensorGarden(int id, sensorGarden_type state, int humidity, int temperature) : id(id), state(state), humidity(humidity), temperature(temperature) {}
 
-    sensor_Garden_type next(SensorGarden sensor)
+    sensorGarden_type next()
     {
-        sensor.state = static_cast<sensor_Garden_type>((state + rand() % 2) % 4);
+        state = static_cast<sensorGarden_type>((state + rand() % 2) % 4);
         return state;
     }
 
-    // Funzione per controllare lo stato di registrazione
-    sensor_Garden_type getState() const
+    // Funzione per controllare lo stato del sensoreGarden
+    sensorGarden_type getState() const
     {
         return state;
     }

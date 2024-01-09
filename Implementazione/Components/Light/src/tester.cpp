@@ -31,14 +31,14 @@ int main() {
 
     int2state(state,lightState);
 
-    if(strcmp(state, "change_color"))
+    if(strcmp(state, "change_color") == 0)
     {
         // Invia il nuovo colore a Redis
         light_color newColor = getRandomColor();
         reply = (redisReply *)redisCommand(context, "SET new_color %s", newColor);
         freeReplyObject(reply);
     }
-    else if (strcmp(state, "change_intensity"))
+    else if (strcmp(state, "change_intensity") == 0)
     {
         // Invia la nuova intensita' a Redis
         int newIntensity = changeIntensity();
