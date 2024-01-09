@@ -26,10 +26,10 @@ public:
     // Funzione per ottenere lo stato successivo
     sensorGarden_type next();
 
-    // Funzione per controllare lo stato di registrazione
+    // Funzione per controllare lo stato del sensorGarden
     sensorGarden_type getState() const;
 
-    // Funzione per ottenere l'ID della fotocamera
+    // Funzione per ottenere l'ID del sensorGarden
     int getId() const;
 };
 

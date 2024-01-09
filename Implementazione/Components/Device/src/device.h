@@ -38,7 +38,7 @@ public:
     // Funzione per programmare il device
     void programmed_device(int intervalloPrimo, int intervalloSecondo);
 
-    // Funzione per controllare lo stato delle luci
+    // Funzione per controllare lo stato del device
     device_type getState() const;
 
     // Funzione per ottenere il nome del device

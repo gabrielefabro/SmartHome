@@ -18,7 +18,9 @@ int main()
         return 1;
     }
 
-    // Inizializza un oggetto Sensor
+
+
+    // Inizializza un oggetto SensorGarden
     SensorGarden sensorGarden = initSensorGarden();
 
     while (t < HORIZON)
@@ -37,8 +39,8 @@ int main()
             freeReplyObject(reply);
         }
 
-        int humidity;
-        sscanf(reply->str, "%d", &humidity); // converte reply in int
+        int humidity = reply->integer;
+        
 
         char state[20];
         sensorGarden_type sensorState = static_cast<sensorGarden_type>(atoi(reply->str));
@@ -53,8 +55,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            int temperature;
-            sscanf(reply->str, "%d", &temperature); // converte reply in int
+            int temperature = reply->integer;
 
             // Adjust the lights based on humidity and temperature conditions
             if (humidity > 50 && temperature > 25)

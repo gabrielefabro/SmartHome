@@ -18,4 +18,4 @@ void int2state(char *buf, conditioner_type x)
     sprintf(buf, "change_temperature");
   }
 
-} /*   int2color()  */
+} /*   int2state()  */

@@ -17,7 +17,7 @@ int main()
         return 1;
     }
 
-    // Inizializza un oggetto Light
+    // Inizializza un oggetto Conditioner
     Conditioner conditioner = initConditioner();
 
     while (t < HORIZON)

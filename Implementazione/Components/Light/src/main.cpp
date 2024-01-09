@@ -48,8 +48,7 @@ int main()
         }
         else if (strcmp(state, "change_intensity") == 0)
         {
-            int newIntensity;
-            sscanf(reply->str, "%d", &newIntensity); // converte reply in int
+            int newIntensity = reply->integer;
             light.setIntensity(newIntensity);
         }
 

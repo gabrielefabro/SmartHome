@@ -10,7 +10,15 @@ int main()
 {
     char state[20];
 
-// Leggi ID e STATE e NOME da Redis
+    // Inizializza la connessione a Redis
+    redisContext *context = redisConnect("127.0.0.1", 6379);
+    if (context == nullptr || context->err)
+    {
+        std::cerr << "Errore nella connessione a Redis: " << context->errstr << std::endl;
+        return 1;
+    }
+
+    // Leggi ID e STATE e NOME da Redis
     redisReply *reply = (redisReply *)redisCommand(context, "GET device_id");
     int deviceId = atoi(reply->str);
     freeReplyObject(reply);
@@ -23,21 +31,19 @@ int main()
     nome_type deviceState = static_cast<nome_type>(atoi(reply->str));
     freeReplyObject(reply);
 
-    int2state(state,deviceState);
+    int2state(state, deviceState);
 
-    if(strcmp(state, "programmed"))
+    if (strcmp(state, "programmed"))
     {
         int intervalloPrimo = changeInt();
         int intervalloSecondo = changeInt();
         reply = (redisReply *)redisCommand(context, "SET new_int1 %d", intervalloPrimo);
         reply = (redisReply *)redisCommand(context, "SET new_int2 %d", intervalloSecondo);
         freeReplyObject(reply);
-
     }
 
     // Chiudi la connessione a Redis
     redisFree(context);
 
     return 0;
-
 }

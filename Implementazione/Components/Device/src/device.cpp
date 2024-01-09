@@ -23,17 +23,14 @@ public:
         return state;
     }
 
-    // Funzione per cambiare colore delle luci
+    // Funzione per programmare l'attivazione di un device in un intervallo di tempo
     void programmed_device(int intervalloPrimo, int intervalloSecondo)
     {
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(intervalloPrimo));
             setState();
             std::this_thread::sleep_for(std::chrono::milliseconds(intervalloSecondo));
-<<<<<<< HEAD
             
-=======
->>>>>>> 85ebde1cbc59337d003fcdd81476c30f9b79bb35
         }
     }
 

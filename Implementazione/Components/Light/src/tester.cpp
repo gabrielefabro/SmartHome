@@ -1,5 +1,4 @@
 #include "light.h"
-#include "device.h"
 #include "main.h"
 #include <iostream>
 #include <hiredis/hiredis.h>
