@@ -4,7 +4,6 @@
 #include "main.h"
 #include "conditioner.h"
 
-
 class Conditioner
 {
 private:
@@ -15,7 +14,7 @@ private:
 public:
     // Costruttore
     Conditioner(int id, int level, conditioner_type state) : id(id), level(level), state(state) {}
-    
+
     conditioner_type next(Conditioner conditioner)
     {
         conditioner.state = static_cast<conditioner_type>((state + rand() % 2) % 2);
@@ -42,7 +41,8 @@ public:
         }
     }
 
-     int getId() const
+    int getId() const
     {
         return id;
     }
+};

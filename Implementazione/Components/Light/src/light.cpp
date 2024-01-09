@@ -14,10 +14,10 @@ private:
 public:
     // Costruttore
     Light(int id, light_type state, light_color color, int intensity) : id(id), state(state), color(color), intensity(intensity) {}
-    
+
     light_type Light::next()
     {
-        state = static_cast<light_type>((state + rand() % 2) % 4);
+        state = static_cast<light_type>(rand() % 4);
         return state;
     }
 
@@ -41,5 +41,4 @@ public:
     {
         intensity = newIntensity;
     }
-
 };

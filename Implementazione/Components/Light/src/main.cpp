@@ -4,13 +4,15 @@
 #include <hiredis/hiredis.h>
 #include "main.h"
 
-int main() {
+int main()
+{
 
     int t = 0;
 
     // Inizializza la connessione a Redis
     redisContext *context = redisConnect("127.0.0.1", 6379);
-    if (context == nullptr || context->err) {
+    if (context == nullptr || context->err)
+    {
         std::cerr << "Errore nella connessione a Redis: " << context->errstr << std::endl;
         return 1;
     }
@@ -29,17 +31,16 @@ int main() {
 
         // Aspetta una risposta dal tester
         reply = (redisReply *)redisCommand(context, "GET tester_response");
-        if (reply != nullptr && reply->str != nullptr) {
+        if (reply != nullptr && reply->str != nullptr)
+        {
             freeReplyObject(reply);
         }
 
-
-//
         char state[20];
         light_type lightState = static_cast<light_type>(atoi(reply->str));
-        int2state(state,lightState);
+        int2state(state, lightState);
 
-        if(state == "change_color")
+        if (strcmp(state, "change_color"))
         {
             char colorStr[20];
             sscanf(reply->str, "%s", colorStr);
@@ -49,25 +50,20 @@ int main() {
         else if (strcmp(state, "change_intensity") == 0)
         {
             int newIntensity;
-            sscanf(reply->str, "%d", &newIntensity); //converte reply in int
+            sscanf(reply->str, "%d", &newIntensity); // converte reply in int
             light.setIntensity(newIntensity);
         }
-//
-        
 
         // Chiudi la connessione a Redis
         redisFree(context);
 
-
         light.next();
-        
+
         t++;
 
         /* sleep   */
         micro_sleep(500);
-        
     }
-    
+
     return 0;
-    
 }
