@@ -2,7 +2,7 @@
 #include "main.h"
 #include <iostream>
 #include <hiredis/hiredis.h>
-
+#include "initConditioner.cpp"
 
 int main()
 {
