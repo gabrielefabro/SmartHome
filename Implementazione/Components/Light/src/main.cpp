@@ -2,7 +2,6 @@
 #include "main.h"
 #include <iostream>
 #include <hiredis/hiredis.h>
-#include "main.h"
 
 int main()
 {

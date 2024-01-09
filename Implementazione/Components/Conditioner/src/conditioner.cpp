@@ -15,9 +15,9 @@ public:
     // Costruttore
     Conditioner(int id, int level, conditioner_type state) : id(id), level(level), state(state) {}
 
-    conditioner_type next(Conditioner conditioner)
+    conditioner_type next()
     {
-        conditioner.state = static_cast<conditioner_type>((state + rand() % 2) % 2);
+        state = static_cast<conditioner_type>((state + rand() % 2) % 2);
         return state;
     }
 
@@ -28,11 +28,11 @@ public:
     }
 
     // Modificare la temperatura
-    void modifyTheLevel(int newLevel)
+    void modifyTemperature(int newTemperature)
     {
         if (getState() == ON)
         {
-            level = newLevel;
+            level = newTemperature;
             std::cout << " power level modified to " << level << std::endl;
         }
         else
