@@ -1,13 +1,7 @@
 #ifndef CONDITIONER_H
 #define CONDITIONER_H
 #include <cstdlib>
-
-typedef enum
-{
-    ON,
-    OFF,
-} conditioner_type;
-
+#include "main.h"
 
 class Conditioner
 {
@@ -21,13 +15,13 @@ public:
     Conditioner(int id, int level, conditioner_type state);
 
     // Funzione per ottenere lo stato successivo
-    conditioner_type next(Conditioner conditioner);
+    conditioner_type next();
 
     // Funzione per controllare lo stato delle luci
     conditioner_type getState() const;
 
     // Funzione per cambiare l'intesità delle luci
-    void modifyTheLevel(int newLevel);
+    void modifyTemperature(int Temperature);
 
     // Funzione per ottenere l'ID della fotocamera
     int getId() const;

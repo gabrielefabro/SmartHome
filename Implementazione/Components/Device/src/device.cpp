@@ -31,8 +31,6 @@ public:
             std::this_thread::sleep_for(std::chrono::milliseconds(intervalloPrimo));
             device.setState();
             std::this_thread::sleep_for(std::chrono::milliseconds(intervalloSecondo));
-
-            
         }
     }
 
