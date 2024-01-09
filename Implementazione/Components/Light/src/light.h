@@ -45,7 +45,7 @@ public:
     // Funzione per cambiare l'intesità delle luci
     void setIntensity(int newIntensity);
 
-    // Funzione per ottenere l'ID della fotocamera
+    // Funzione per ottenere l'ID della luce
     int getId() const;
 };
 

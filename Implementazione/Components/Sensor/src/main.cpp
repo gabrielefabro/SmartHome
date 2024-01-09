@@ -1,8 +1,9 @@
-#include "light.h"
+#include "sensor.h"
 #include "main.h"
 #include <iostream>
 #include <hiredis/hiredis.h>
-
+#include <ctime>
+#include <cstdlib>
 
 int main()
 {
@@ -17,16 +18,16 @@ int main()
         return 1;
     }
 
-    // Inizializza un oggetto Light
-    Light light = initLight();
+    // Inizializza un oggetto Sensor
+    Sensor sensor = initSensor();
 
     while (t < HORIZON)
     {
         // Invia ID e STATE a Redis
-        redisReply *reply = (redisReply *)redisCommand(context, "SET light_id %d", light.getId());
+        redisReply *reply = (redisReply *)redisCommand(context, "SET sensor_id %d", sensor.getId());
         freeReplyObject(reply);
 
-        reply = (redisReply *)redisCommand(context, "SET light_state %d", light.getState());
+        reply = (redisReply *)redisCommand(context, "SET sensor_state %d", sensor.getState());
         freeReplyObject(reply);
 
         // Aspetta una risposta dal tester
@@ -37,27 +38,26 @@ int main()
         }
 
         char state[20];
-        light_type lightState = static_cast<light_type>(atoi(reply->str));
-        int2state(state, lightState);
-
-        if (strcmp(state, "change_color") == 0)
+        sensor_type sensorState = static_cast<sensor_type>(atoi(reply->str));
+        int2state(state, sensorState);
+        if (strcmp(state, "CHECKING") == 0)
         {
-            char colorStr[20];
-            sscanf(reply->str, "%s", colorStr);
-            light_color newColor = stringToLightColor(colorStr);
-            light.setColor(newColor);
-        }
-        else if (strcmp(state, "change_intensity") == 0)
-        {
-            int newIntensity;
-            sscanf(reply->str, "%d", &newIntensity); // converte reply in int
-            light.setIntensity(newIntensity);
+            int movement;
+            sscanf(reply->str, "%d", &movement); // converte reply in int
+            if (movement == 0)
+            {
+                sensor.setMovement(false);
+            }
+            else
+            {
+                sensor.setMovement(true);
+            }
         }
 
         // Chiudi la connessione a Redis
         redisFree(context);
 
-        light.next();
+        sensor.next();
 
         t++;
 
