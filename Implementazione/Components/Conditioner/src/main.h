@@ -15,7 +15,6 @@
 #include <cerrno>
 #include "conditioner.h"
 #include "global.h"
-#include "initConditioner.cpp"
 #include "../../../con2db/pgsql.h"
 
 #define DEBUG 1000
