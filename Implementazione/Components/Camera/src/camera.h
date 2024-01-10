@@ -6,7 +6,7 @@
 typedef enum
 {
     ON,
-    RECORDING,
+    WAITING,
     OFF
 } camera_type;
 
@@ -15,6 +15,7 @@ class Camera
 private:
     camera_type state;
     int id;
+    bool recording;
 
 public:
     // Costruttore
@@ -28,6 +29,8 @@ public:
 
     // Funzione per ottenere l'ID della fotocamera
     int getId() const;
+
+    void setRecording();
 };
 
 #endif // CAMERA_H

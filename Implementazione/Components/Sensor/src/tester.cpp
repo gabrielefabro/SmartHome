@@ -5,19 +5,20 @@
 #include <cstdlib>
 #include <ctime>
 
+int main()
+{
 
-int main() {
-    
     char state[20];
 
     // Inizializza la connessione a Redis
     redisContext *context = redisConnect("127.0.0.1", 6379);
-    if (context == nullptr || context->err) {
+    if (context == nullptr || context->err)
+    {
         std::cerr << "Errore nella connessione a Redis: " << context->errstr << std::endl;
         return 1;
     }
 
-     // Leggi ID e STATE da Redis
+    // Leggi ID e STATE da Redis
     redisReply *reply = (redisReply *)redisCommand(context, "GET sensor_id");
     int lightId = atoi(reply->str);
     freeReplyObject(reply);
@@ -26,9 +27,9 @@ int main() {
     sensor_type sensorState = static_cast<sensor_type>(atoi(reply->str));
     freeReplyObject(reply);
 
-    int2state(state,sensorState);
+    int2state(state, sensorState);
 
-    if(strcmp(state, "CHEKING"))
+    if (strcmp(state, "CHEKING"))
     {
         // Inizializza il generatore di numeri casuali con il tempo corrente
         std::srand(std::time(0));
@@ -36,15 +37,24 @@ int main() {
         // Genera un numero casuale tra 0 e RAND_MAX
         int n = std::rand();
 
-        // Invia se e' presente movimento a Redis
-        reply = (redisReply *)redisCommand(context, "SET new_color %s", n);
-        freeReplyObject(reply);
+        if (n % 2 == 0)
+        {
+            n = 1;
+            // Invia se e' presente movimento a Redis
+            reply = (redisReply *)redisCommand(context, "SET movment %s", n);
+            freeReplyObject(reply);
+        }
+        else
+        {
+            n = 0;
+            // Invia se e' presente movimento a Redis
+            reply = (redisReply *)redisCommand(context, "SET movment %s", n);
+            freeReplyObject(reply);
+        }
     }
-
 
     // Chiudi la connessione a Redis
     redisFree(context);
 
     return 0;
 }
-

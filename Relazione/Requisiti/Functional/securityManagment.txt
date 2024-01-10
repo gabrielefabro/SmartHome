@@ -9,5 +9,3 @@
 3. Emergency Management:
     Call the default emergency number in case of problems
 
-4. Security Check:
-    Home live check

@@ -7,7 +7,7 @@ Specification:
     1. Irrigation Management
     2. External Lighting Management
     3. Environmental Sensor Monitoring
-    4. Gate Management
+
 
 Requirement 2: Scenario Automation Management
 
@@ -30,7 +30,7 @@ Specification:
     2. Alarm Notifications
     3. Emergency Management
     4. Security Check
-    5. Security Recap
+
 
 
 Requirement 4: Temperature Management
@@ -43,19 +43,9 @@ Specification:
     2. Remote Control
     3. Time Schedule
     4. Temperature Tracking
-    5. Appliance Usage
 
 
-Requirement 5: Daily Recap
-
-Description: Provision of detailed event history for viewing recent activities
-
-Specification:
-    1. Recap
-    2. Analysis 
-
-
-Requirement 6: Devices Management
+Requirement 5: Devices Management
 
 Description:
     Customizable and modifiable Management of appliances and lights, including turning on, turning off, and 
@@ -64,10 +54,8 @@ Description:
 Specification:
     1. Turn on   
     2. Turn off
-    3. Adjusting Intensities
-    4. Time Schedule
+    3. Time Schedule
 
 
-Requirement 7: Lighting Requirement
+Requirement 6: Lighting Requirement
     1. Light Management
-    2. Shutter Management

@@ -8,6 +8,3 @@
 
 3. Environmental Sensor Monitoring:
     Automatic adjustment of watering and lighting in response to environmental conditions
-
-4. Gate Management:
-    Remote control of the gate and use of sensors based on the proximity of a magnetic key

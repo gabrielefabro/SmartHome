@@ -4,8 +4,5 @@
 2. Turn Off:
     Turn off the device
 
-3. Adjusting Intensities:
-    Modifies the intensity of the device's output
-
-4. Time Schedule:
+3. Time Schedule:
     Sets an activity period

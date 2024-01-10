@@ -51,6 +51,9 @@ int main()
             else
             {
                 sensor.setMovement(true);
+                std::string message = "movement detected";
+                redisReply *reply = (redisReply *)redisCommand(context, "PUBLISH channel %s", message.c_str());
+                freeReplyObject(reply);
             }
         }
 

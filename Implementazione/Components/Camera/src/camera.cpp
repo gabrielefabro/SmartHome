@@ -17,3 +17,8 @@ int Camera::getId() const
 {
     return id;
 }
+
+void Camera::setRecording()
+{
+    recording = true;
+}
