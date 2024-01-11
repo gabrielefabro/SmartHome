@@ -14,7 +14,7 @@ int main()
   char buf[200];
 
   // Inizializza database
-  Con2DB db1("localhost", "5432", "smarthome", "gabbo0?", "logdb_smarthome");
+  Con2DB db1("localhost", "5432", "smarthome", "12345", "logdb_smarthome");
 
   pid = getpid();
 
