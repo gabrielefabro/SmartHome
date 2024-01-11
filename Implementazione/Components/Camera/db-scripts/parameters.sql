@@ -1,2 +1,2 @@
-\set dbname logdb_Smarthome
-\set username Smarthome
+\set dbname logdb_smarthome
+\set username smarthome
