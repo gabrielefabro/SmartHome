@@ -41,7 +41,8 @@ CREATE TABLE IF NOT EXISTS LogTable (
         nanosec bigint NOT NULL,		-- nanseconds after second
         vid int NOT NULL,			-- variable id
         varvalue VarType,                       -- variable value
-	loginfo String4Info,                    -- extra info
+	loginfo String4Info,                    -- attual state
+        recording boolean,                      -- if recording is true
         PRIMARY KEY (nanosec, vid),
         CONSTRAINT vid_ref FOREIGN KEY(vid) REFERENCES TimeVar(vid)
 );

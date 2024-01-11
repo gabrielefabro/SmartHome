@@ -2,7 +2,7 @@
 
 /* buy stock  */
 
-void init_logdb(Con2DB db1, int pid)
+void init_logdb(Con2DB db1, int pid, int id, camera_type state)
 {
 
  PGresult *res;
@@ -16,8 +16,8 @@ void init_logdb(Con2DB db1, int pid)
       PQclear(res);
 
   sprintf(sqlcmd,
-"INSERT INTO Timevar VALUES (DEFAULT, %d, \'%s\', \'%s\', \'%s\', \'%s\') ON CONFLICT DO NOTHING",
-	  pid, "Camera", "x", "discrete", "Values: ON, Recording, OFF");
+"INSERT INTO Timevar VALUES (%d, %d, \'%s\', \'%d\', \'%s\', \'%s\') ON CONFLICT DO NOTHING",
+	  id, pid, "Camera", state, "discrete", "Values: ON, Waiting, OFF");
 
   res = db1.ExecSQLcmd(sqlcmd);
      PQclear(res);

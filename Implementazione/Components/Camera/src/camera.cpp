@@ -22,3 +22,8 @@ void Camera::setRecording()
 {
     recording = true;
 }
+
+bool Camera::getRecording()
+{
+    return recording;
+}

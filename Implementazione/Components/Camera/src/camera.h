@@ -31,6 +31,8 @@ public:
     int getId() const;
 
     void setRecording();
+
+    bool getRecording();
 };
 
 #endif // CAMERA_H

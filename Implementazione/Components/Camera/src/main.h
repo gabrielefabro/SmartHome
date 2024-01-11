@@ -30,8 +30,8 @@ void update_time();
 
 long int get_day_nanos(char *buf);
 void int2state(char *buf, camera_type x);
-void init_logdb(Con2DB db1, int pid);
-void log2db(Con2DB db1, int pid, long int nanos_day, camera_type x);
+void init_logdb(Con2DB db1, int pid, int id, camera_type state);
+void log2db(Con2DB db1, int pid, long int nanos_day, camera_type state, bool recording);
 long int nanos2day(char *buf, long int nanosec);
 void log2stdout(Con2DB db1, int pid);
 

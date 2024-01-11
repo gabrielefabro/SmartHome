@@ -9,9 +9,9 @@ void int2state(char *buf, camera_type x)
   {
     sprintf(buf, "ON");
   }
-  else if (x == RECORDING)
+  else if (x == WAITING)
   {
-    sprintf(buf, "Recording");
+    sprintf(buf, "Waiting");
   }
   else
   {

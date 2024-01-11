@@ -9,6 +9,16 @@ int main()
 {
 
   int t = 0;
+  int pid;
+  char buf[200];
+
+  // Inizializza database
+  Con2DB db1("localhost", "5432", "Smarthome", "12345", "logdb_Smarthome");
+
+  pid = getpid();
+
+    /* init time */
+  init_time();
 
   // Inizializza la connessione a Redis
   redisContext *context = redisConnect("127.0.0.1", 6379);
@@ -21,8 +31,13 @@ int main()
   // Inizializza un oggetto Sensor
   Camera camera = initCamera();
 
+  init_logdb(db1, pid, camera.getId(), camera.getState());
+
   while (t < HORIZON)
   {
+
+    nanos_day = nanos2day(buf, nanos);
+
     // Invia ID e STATE a Redis
     redisReply *reply = (redisReply *)redisCommand(context, "SET camera_id %d", camera.getId());
     freeReplyObject(reply);
@@ -54,6 +69,7 @@ int main()
       {
         std::cout << "NOTHING TO REGISTER" << std::endl;
       }
+      log2db(db1, pid, nanos, camera.getState(), camera.getRecording());
       freeReplyObject(reply_get);
       redisFree(context);
     }
@@ -68,6 +84,6 @@ int main()
     /* sleep   */
     micro_sleep(500);
   }
-
+  log2stdout(db1, pid);
   return 0;
 }
