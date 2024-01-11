@@ -32,7 +32,7 @@ void log2db(Con2DB db1, int pid, long int nanosec, camera_type state, bool recor
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO LogTable VALUES (%ld, %d, %d, \'%s\', %s) ON CONFLICT DO NOTHING",
+          "INSERT INTO LogTable VALUES (%ld, %d, %d, \'%s\', %d) ON CONFLICT DO NOTHING",
           nanosec,
           vid,
           state,

@@ -15,7 +15,6 @@
 #include <cerrno>
 #include "camera.h"
 #include "global.h"
-#include "initCamera.cpp"
 #include "../../../con2db/pgsql.h"
 
 #define DEBUG 1000

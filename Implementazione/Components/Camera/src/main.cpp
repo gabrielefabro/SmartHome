@@ -4,6 +4,7 @@
 #include <hiredis/hiredis.h>
 #include <ctime>
 #include <cstdlib>
+#include "global.h"
 
 int main()
 {

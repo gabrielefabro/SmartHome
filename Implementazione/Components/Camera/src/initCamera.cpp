@@ -1,4 +1,5 @@
 #include "camera.h"
+#include "global.h"
 #include <cstdlib>
 
 Camera initCamera()
