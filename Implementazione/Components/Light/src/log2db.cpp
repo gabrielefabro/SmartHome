@@ -24,7 +24,7 @@ void log2db(Con2DB db1, int pid, long int nanosec, light_type state, light_color
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO LogTable VALUES (%ld, %d, %d, \'%s\', %s, %d) ON CONFLICT DO NOTHING",
+          "INSERT INTO LogTable VALUES (%ld, %d, %d, \'%s\', %d, %d) ON CONFLICT DO NOTHING",
           nanosec,
           vid,
           state,

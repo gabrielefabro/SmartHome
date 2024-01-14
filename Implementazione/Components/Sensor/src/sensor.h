@@ -2,6 +2,8 @@
 #define SENSR_H
 
 #include <cstdlib>
+#include <iostream>
+#include <string>
 
 typedef enum
 {

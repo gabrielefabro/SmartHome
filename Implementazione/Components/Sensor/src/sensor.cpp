@@ -1,43 +1,31 @@
-#include <iostream>
-#include <string>
-#include <cstdlib>
 #include "sensor.h"
 
-class Sensor
+// Costruttore
+Sensor::Sensor(int id, sensor_type state) : state(state), id(id), movement(false) {}
+
+sensor_type Sensor::next()
 {
-private:
-    sensor_type state;
-    int id;
-    bool movement;
+    state = static_cast<sensor_type>(rand() % 3);
+    return state;
+}
 
-public:
-    // Costruttore
-    Sensor(int id, sensor_type state) : state(state), id(id), movement(false) {}
+// Funzione per controllare lo stato del sensore
+sensor_type Sensor::getState() const
+{
+    return state;
+}
 
-    sensor_type Sensor::next()
-    {
-        state = static_cast<sensor_type>(rand() % 3);
-        return state;
-    }
+int Sensor::getId() const
+{
+    return id;
+}
 
-    // Funzione per controllare lo stato del sensore
-    sensor_type getState() const
-    {
-        return state;
-    }
+void Sensor::setMovement(bool value)
+{
+    movement = value;
+}
 
-    int getId() const
-    {
-        return id;
-    }
-
-    void setMovement(bool value)
-    {
-        movement = value;
-    }
-
-    bool getMovement() const
-    {
-        return movement;
-    }
-};
+bool Sensor::getMovement() const
+{
+    return movement;
+}

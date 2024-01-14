@@ -32,11 +32,7 @@ int test()
 
     int2state(state, deviceState);
 
-<<<<<<< HEAD
-    if (strcmp(state, "programmed")==0)
-=======
     if (strcmp(state, "programmed") == 0)
->>>>>>> fafcb8787458e5e5d751f9e1493ab98848228c1b
     {
         int intervalloPrimo = changeInt();
         int intervalloSecondo = changeInt();
