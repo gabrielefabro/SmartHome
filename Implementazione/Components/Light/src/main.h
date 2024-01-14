@@ -15,7 +15,6 @@
 #include <cerrno>
 #include "light.h"
 #include "global.h"
-#include "initLight.cpp"
 #include "../../../con2db/pgsql.h"
 
 #define DEBUG 1000

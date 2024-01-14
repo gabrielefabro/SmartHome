@@ -4,8 +4,6 @@
 #include <hiredis/hiredis.h>
 #include <cstdlib>
 #include <ctime>
-#include "randomColor.cpp"
-#include "randomIntensity.cpp"
 
 
 int test() {
