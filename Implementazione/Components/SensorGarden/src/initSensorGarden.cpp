@@ -1,4 +1,5 @@
 #include "sensorGarden.h"
+#include "global.h"
 #include <cstdlib>
 
 SensorGarden initSensorGarden()

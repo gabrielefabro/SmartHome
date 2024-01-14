@@ -1,12 +1,11 @@
 #include "device.h"
 #include "main.h"
-#include "randomInter.cpp"
 #include <iostream>
 #include <hiredis/hiredis.h>
 #include <cstdlib>
 #include <ctime>
 
-int main()
+int test()
 {
     char state[20];
 
@@ -28,12 +27,12 @@ int main()
     freeReplyObject(reply);
 
     reply = (redisReply *)redisCommand(context, "GET nome_device");
-    nome_type deviceState = static_cast<nome_type>(atoi(reply->str));
+    nome_type devicename = static_cast<nome_type>(atoi(reply->str));
     freeReplyObject(reply);
 
     int2state(state, deviceState);
 
-    if (strcmp(state, "programmed"))
+    if (strcmp(state, "programmed")==0)
     {
         int intervalloPrimo = changeInt();
         int intervalloSecondo = changeInt();

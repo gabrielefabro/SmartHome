@@ -15,7 +15,6 @@
 #include <cerrno>
 #include "sensorGarden.h"
 #include "global.h"
-#include "initSensorGarden.cpp"
 #include "../../../con2db/pgsql.h"
 
 #define DEBUG 1000
@@ -29,11 +28,12 @@ void init_time();
 void update_time();
 
 long int get_day_nanos(char *buf);
-void int2state(char *buf, sensorGarden_type x);
-void init_logdb(Con2DB db1, int pid);
-void log2db(Con2DB db1, int pid, long int nanos_day, sensorGarden_type x);
+void int2state(char *buf, sensorGarden_type state);
+void init_logdb(Con2DB db1, int pid, int id, sensorGarden_type state);
+void log2db(Con2DB db1, int pid, long int nanos_day, sensorGarden_type state, int humidity, int temperature);
 long int nanos2day(char *buf, long int nanosec);
 void log2stdout(Con2DB db1, int pid);
+int test();
 
 using namespace std;
 

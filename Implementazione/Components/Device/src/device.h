@@ -1,6 +1,10 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 #include <cstdlib>
+#include <chrono>
+#include <thread>
+#include <iostream>
+#include <string>
 
 typedef enum
 {

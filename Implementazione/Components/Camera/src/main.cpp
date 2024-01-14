@@ -29,7 +29,7 @@ int main()
     return 1;
   }
 
-  // Inizializza un oggetto Sensor
+  // Inizializza un oggetto Camera
   Camera camera = initCamera();
 
   init_logdb(db1, pid, camera.getId(), camera.getState());

@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 
-int main()
+int test()
 {
 
     char state[20];

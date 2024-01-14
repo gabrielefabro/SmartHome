@@ -1,6 +1,7 @@
 #ifndef SENSOR_GARDEN_H
 #define SENSOR_GARDEN_H
-
+#include <iostream>
+#include <string>
 #include <cstdlib>
 
 typedef enum
@@ -31,6 +32,12 @@ public:
 
     // Funzione per ottenere l'ID del sensorGarden
     int getId() const;
+
+    // Funzione per ottenere l'ID del sensorGarden
+    int getHumidity() const;
+
+    // Funzione per ottenere l'ID del sensorGarden
+    int getTemperature() const;
 };
 
 #endif // SENSOR_GARDEN_H
