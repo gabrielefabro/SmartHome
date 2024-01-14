@@ -18,7 +18,7 @@ int main()
 
   pid = getpid();
 
-    /* init time */
+  /* init time */
   init_time();
 
   // Inizializza la connessione a Redis
@@ -72,7 +72,6 @@ int main()
       }
       log2db(db1, pid, nanos, camera.getState(), camera.getRecording());
       freeReplyObject(reply_get);
-      redisFree(context);
     }
 
     // Chiudi la connessione a Redis

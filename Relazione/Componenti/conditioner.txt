@@ -1,7 +1,7 @@
 Class Conditioner extends Device:
     attributes:
         state (true or false if the device is turned on or turned off)
-        level (level intesity)
+        temperature (temperature intesity)
     functions:
-        modifyTheLevel:
-            the function takes as input an integer that rapresent the level of the power of the conditioner
+        modifyThetemperature:
+            the function takes as input an integer that rapresent the temperature of the power of the conditioner

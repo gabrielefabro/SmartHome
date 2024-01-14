@@ -8,7 +8,7 @@
 #include "randomIntensity.cpp"
 
 
-int main() {
+int test() {
     
     char state[20];
 

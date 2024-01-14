@@ -33,7 +33,7 @@ int main()
 
     int2state(state, deviceState);
 
-    if (strcmp(state, "programmed"))
+    if (strcmp(state, "programmed") == 0)
     {
         int intervalloPrimo = changeInt();
         int intervalloSecondo = changeInt();

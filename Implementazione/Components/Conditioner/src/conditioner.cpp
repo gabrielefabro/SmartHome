@@ -1,48 +1,39 @@
-#include <iostream>
-#include <string>
-#include <cstdlib>
-#include "main.h"
 #include "conditioner.h"
 
-class Conditioner
+Conditioner::Conditioner(int id, int temperature, conditioner_type state) : id(id), temperature(temperature), state(state) {}
+
+conditioner_type Conditioner::next()
 {
-private:
-    conditioner_type state;
-    int level;
-    int id;
+    state = static_cast<conditioner_type>((state + rand() % 2) % 2);
+    return state;
+}
 
-public:
-    // Costruttore
-    Conditioner(int id, int level, conditioner_type state) : id(id), level(level), state(state) {}
+// Funzione per controllare lo stato della temperatura
+conditioner_type Conditioner::getState() const
+{
+    return state;
+}
 
-    conditioner_type next()
+// Modificare la temperatura
+void Conditioner::modifyTemperature(int newTemperature)
+{
+    if (getState() == ON)
     {
-        state = static_cast<conditioner_type>((state + rand() % 2) % 2);
-        return state;
+        temperature = newTemperature;
+        std::cout << " power temperature modified to " << temperature << std::endl;
     }
-
-    // Funzione per controllare lo stato della temperatura
-    conditioner_type getState() const
+    else
     {
-        return state;
+        std::cout << "Error: turned off. Turn it on first." << std::endl;
     }
+}
 
-    // Modificare la temperatura
-    void modifyTemperature(int newTemperature)
-    {
-        if (getState() == ON)
-        {
-            level = newTemperature;
-            std::cout << " power level modified to " << level << std::endl;
-        }
-        else
-        {
-            std::cout << "Error: turned off. Turn it on first." << std::endl;
-        }
-    }
+int Conditioner::getId() const
+{
+    return id;
+}
 
-    int getId() const
-    {
-        return id;
-    }
-};
+int Conditioner::getTemperature() const
+{
+    return temperature;
+}

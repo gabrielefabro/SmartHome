@@ -4,10 +4,10 @@
 #include <hiredis/hiredis.h>
 #include <cstdlib>
 #include <ctime>
-#include "randomLevel.cpp"
 
 
-int main() {
+
+int test() {
     
     char state[20];
 
@@ -29,7 +29,7 @@ int main() {
 
     int2state(state, conditionerState);
 
-    if(strcmp(state, "change_temperature"))
+    if(strcmp(state, "change_temperature") == 0)
     {
         // Invia il nuovo colore a Redis
         int newTemperature = changeRandomTemperature();

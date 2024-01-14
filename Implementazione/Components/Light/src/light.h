@@ -47,6 +47,10 @@ public:
 
     // Funzione per ottenere l'ID della luce
     int getId() const;
+
+    light_color getColor() const;
+
+    int getIntensity() const;
 };
 
 #endif // LIGHT_H

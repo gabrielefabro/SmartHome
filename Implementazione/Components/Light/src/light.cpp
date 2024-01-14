@@ -1,44 +1,41 @@
-#include <iostream>
-#include <string>
-#include <cstdlib>
 #include "light.h"
 
-class Light
+// Costruttore
+Light::Light(int id, light_type state, light_color color, int intensity) : id(id), state(state), color(color), intensity(intensity) {}
+
+light_type Light::next()
 {
-private:
-    light_type state;
-    light_color color;
-    int intensity;
-    int id;
+    state = static_cast<light_type>(rand() % 4);
+    return state;
+}
 
-public:
-    // Costruttore
-    Light(int id, light_type state, light_color color, int intensity) : id(id), state(state), color(color), intensity(intensity) {}
+// Funzione per controllare lo stato delle luci
+light_type Light::getState() const
+{
+    return state;
+}
 
-    light_type Light::next()
-    {
-        state = static_cast<light_type>(rand() % 4);
-        return state;
-    }
+int Light::getId() const
+{
+    return id;
+}
 
-    // Funzione per controllare lo stato delle luci
-    light_type getState() const
-    {
-        return state;
-    }
+void Light::setColor(light_color newColor)
+{
+    color = newColor;
+}
 
-    int getId() const
-    {
-        return id;
-    }
+void Light::setIntensity(int newIntensity)
+{
+    intensity = newIntensity;
+}
 
-    void setColor(light_color newColor)
-    {
-        color = newColor;
-    }
+light_color Light::getColor() const
+{
+    return color;
+}
 
-    void setIntensity(int newIntensity)
-    {
-        intensity = newIntensity;
-    }
-};
+int Light::getIntensity() const
+{
+    return intensity;
+}
