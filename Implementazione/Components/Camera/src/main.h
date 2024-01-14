@@ -33,6 +33,7 @@ void init_logdb(Con2DB db1, int pid, int id, camera_type state);
 void log2db(Con2DB db1, int pid, long int nanos_day, camera_type state, bool recording);
 long int nanos2day(char *buf, long int nanosec);
 void log2stdout(Con2DB db1, int pid);
+int test();
 
 using namespace std;
 

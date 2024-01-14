@@ -46,6 +46,8 @@ int main()
     reply = (redisReply *)redisCommand(context, "SET camera_state %d", camera.getState());
     freeReplyObject(reply);
 
+    test();
+
     // Aspetta una risposta dal tester
     reply = (redisReply *)redisCommand(context, "GET tester_response");
     if (reply != nullptr && reply->str != nullptr)
