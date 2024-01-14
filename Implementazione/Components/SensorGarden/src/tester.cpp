@@ -20,7 +20,7 @@ int test()
 
     // Leggi ID e STATE da Redis
     redisReply *reply = (redisReply *)redisCommand(context, "GET sensorGarden_id");
-    int lightId = atoi(reply->str);
+    int sensorGardenId = atoi(reply->str);
     freeReplyObject(reply);
 
     reply = (redisReply *)redisCommand(context, "GET sensorGarden_state");

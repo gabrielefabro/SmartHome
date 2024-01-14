@@ -58,8 +58,8 @@ int main()
         int humidity = reply->integer;
 
         char state[20];
-        sensorGarden_type sensorState = static_cast<sensorGarden_type>(atoi(reply->str));
-        int2state(state, sensorState);
+        sensorGarden_type sensorGardenState = static_cast<sensorGarden_type>(atoi(reply->str));
+        int2state(state, sensorGardenState);
 
         if (strcmp(state, "change_light") == 0)
         {
