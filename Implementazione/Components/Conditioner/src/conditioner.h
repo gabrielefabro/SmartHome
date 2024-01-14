@@ -1,17 +1,28 @@
 #ifndef CONDITIONER_H
 #define CONDITIONER_H
 #include <cstdlib>
+#include <iostream>
+
+
+typedef enum
+{
+    ON,
+    OFF,
+    change_temperature
+} conditioner_type;
+
+
 
 class Conditioner
 {
 private:
     conditioner_type state;
-    int level;
+    int temperature;
     int id;
 
 public:
     // Costruttore
-    Conditioner(int id, int level, conditioner_type state);
+    Conditioner(int id, int temperature, conditioner_type state);
 
     // Funzione per ottenere lo stato successivo
     conditioner_type next();
@@ -20,10 +31,12 @@ public:
     conditioner_type getState() const;
 
     // Funzione per cambiare la temperatura del conditioner
-    void modifyTemperature(int Temperature);
+    void modifyTemperature(int temperature);
 
     // Funzione per ottenere l'ID del conditioner
     int getId() const;
+
+    int getTemperature() const;
 };
 
 #endif // CONDITIONER_H

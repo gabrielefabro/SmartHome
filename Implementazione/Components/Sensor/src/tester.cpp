@@ -29,7 +29,7 @@ int main()
 
     int2state(state, sensorState);
 
-    if (strcmp(state, "CHEKING"))
+    if (strcmp(state, "CHEKING") == 0)
     {
         // Inizializza il generatore di numeri casuali con il tempo corrente
         std::srand(std::time(0));

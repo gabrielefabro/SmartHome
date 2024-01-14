@@ -22,6 +22,10 @@
 
 #define HORIZON 10 // TICKS
 
+light_color getRandomColor();
+int changeIntensity();
+int test();
+
 int msleep(long msec);
 int micro_sleep(long usec);
 int long get_nanos(void);
@@ -31,8 +35,8 @@ void update_time();
 long int get_day_nanos(char *buf);
 void int2state(char *buf, light_type x);
 light_color stringToLightColor(const char *colorStr);
-void init_logdb(Con2DB db1, int pid);
-void log2db(Con2DB db1, int pid, long int nanos_day, light_type x);
+void init_logdb(Con2DB db1, int pid, int id, light_type state);
+void log2db(Con2DB db1, int pid, long int nanosec, light_type state, light_color color, int intensity);
 long int nanos2day(char *buf, long int nanosec);
 void log2stdout(Con2DB db1, int pid);
 

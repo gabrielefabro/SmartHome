@@ -21,12 +21,8 @@
 
 #define HORIZON 10 // TICKS
 
-typedef enum
-{
-    ON,
-    OFF,
-    change_temperature
-} conditioner_type;
+int changeRandomTemperature();
+int test();
 
 int msleep(long msec);
 int micro_sleep(long usec);
@@ -36,8 +32,8 @@ void update_time();
 
 long int get_day_nanos(char *buf);
 void int2state(char *buf, conditioner_type x);
-void init_logdb(Con2DB db1, int pid);
-void log2db(Con2DB db1, int pid, long int nanos_day, conditioner_type x);
+void init_logdb(Con2DB db1, int pid, int id, conditioner_type state);
+void log2db(Con2DB db1, int pid, long int nanos_day, conditioner_type state, int temperature);
 long int nanos2day(char *buf, long int nanosec);
 void log2stdout(Con2DB db1, int pid);
 

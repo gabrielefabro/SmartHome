@@ -32,11 +32,11 @@ void operateConditionersAtScheduledTimes(const std::chrono::system_clock::time_p
     }
 }
 
-void modifyTemperature(std::vector<Conditioner> &conditioners, int newLevel)
+void modifyTemperature(std::vector<Conditioner> &conditioners, int newtemperature)
 {
     for (Conditioner &conditioner : conditioners)
     {
-        conditioner.modifyTheLevel(newLevel);
+        conditioner.modifyThecamera_type(newtemperature);
     }
 }
 
@@ -49,28 +49,28 @@ void autoTemperature(std::vector<Conditioner> &conditioners, Conditioner conditi
     {
         for (Conditioner &conditioner : conditioners)
         {
-            conditioner.modifyTheLevel(26);
+            conditioner.modifyThetemperature(26);
         }
     }
     else if (temperature > 18 && temperature < 35)
     {
         for (Conditioner &conditioner : conditioners)
         {
-            conditioner.modifyTheLevel(22);
+            conditioner.modifyThetemperature(22);
         }
     }
     else if (temperature <= 0)
     {
         for (Conditioner &conditioner : conditioners)
         {
-            conditioner.modifyTheLevel(29);
+            conditioner.modifyThetemperature(29);
         }
     }
     else
     {
         for (Conditioner &conditioner : conditioners)
         {
-            conditioner.modifyTheLevel(19);
+            conditioner.modifyThetemperature(19);
         }
     }
 }

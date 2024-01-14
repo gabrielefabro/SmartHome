@@ -4,9 +4,9 @@ Class SensorGarden:
         temperature (garden's temperature)
     funcitons:
         checkHumidity:
-            return the level of the humidity and set the variable
+            return the temperature of the humidity and set the variable
 
         checkTemperature:
-            return the level of the temperature and set the variable
+            return the temperature of the temperature and set the variable
         
         
