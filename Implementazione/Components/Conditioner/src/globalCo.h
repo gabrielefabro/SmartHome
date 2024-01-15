@@ -1,5 +1,5 @@
-#ifndef global_h
-#define global_h
+#ifndef globalco_h
+#define globalco_h
 
 #include "main.h"
 

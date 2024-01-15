@@ -14,8 +14,7 @@
 #include <cassert>
 #include <cerrno>
 #include "sensor.h"
-#include "global.h"
-#include "initSensor.cpp"
+#include "globalSe.h"
 #include "../../../con2db/pgsql.h"
 
 #define DEBUG 1000

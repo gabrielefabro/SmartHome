@@ -13,7 +13,7 @@
 #include <cassert>
 #include <cerrno>
 #include "device.h"
-#include "global.h"
+#include "globalDe.h"
 #include "../../../con2db/pgsql.h"
 
 #define DEBUG 1000

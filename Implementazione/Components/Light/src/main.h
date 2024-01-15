@@ -14,7 +14,7 @@
 #include <cassert>
 #include <cerrno>
 #include "light.h"
-#include "global.h"
+#include "globalLi.h"
 #include "../../../con2db/pgsql.h"
 
 #define DEBUG 1000

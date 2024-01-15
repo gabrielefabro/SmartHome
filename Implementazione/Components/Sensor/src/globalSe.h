@@ -1,5 +1,5 @@
-#ifndef global_h
-#define global_h
+#ifndef globalse_h
+#define globalse_h
 
 #include "main.h"
 
@@ -11,6 +11,6 @@ extern    long int  nanos_day;
 extern    double global_time_sec, timeadvance;
 extern    char sqlcmd[1000];
 
-SensorGarden initSensorGarden();
+Sensor initSensor();
 
 #endif

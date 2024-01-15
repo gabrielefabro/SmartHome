@@ -1,5 +1,5 @@
 #include "conditioner.h"
-#include "global.h"
+#include "globalCo.h"
 #include <cstdlib>
 
 Conditioner initConditioner()

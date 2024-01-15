@@ -1,5 +1,5 @@
-#ifndef LIGHT_H
-#define LIGHT_H
+#ifndef lightli_h
+#define lightli_h
 #include <cstdlib>
 
 typedef enum
