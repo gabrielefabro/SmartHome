@@ -1,4 +1,4 @@
-#include "main.h"
+#include "../../../main/main.h"
 
 light_color stringToLightColor(const char* colorStr)
 {

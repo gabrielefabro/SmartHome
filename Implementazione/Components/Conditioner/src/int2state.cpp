@@ -1,8 +1,8 @@
-#include "main.h"
+#include "../../../main/main.h"
 
 /* compute next state  */
 
-void int2state(char *buf, conditioner_type x)
+void int2stateConditioner(char *buf, conditioner_type x)
 {
 
   if (x == ON)

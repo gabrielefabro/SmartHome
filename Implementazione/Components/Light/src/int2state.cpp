@@ -1,8 +1,8 @@
-#include "main.h"
+#include "../../../main/main.h"
 
 /* compute next state  */
 
-void int2state(char *buf, light_type x)
+void int2stateLight(char *buf, light_type x)
 {
 
   if (x == ON)

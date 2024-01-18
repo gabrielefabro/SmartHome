@@ -53,4 +53,7 @@ public:
     int getIntensity() const;
 };
 
+
+
+
 #endif // LIGHT_H

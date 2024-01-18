@@ -1,6 +1,7 @@
-#include "main.h"
+#include "../../../main/main.h"
+#include <iostream>
 
-int initTestLight(Light light, Con2DB db1, int pid)
+int initTestLight(Light light)
 {
     // Inizializza la connessione a Redis
     redisContext *context = redisConnect("127.0.0.1", 6379);
@@ -24,7 +25,7 @@ int initTestLight(Light light, Con2DB db1, int pid)
 
     char state[20];
     light_type lightState = static_cast<light_type>(atoi(reply->str));
-    int2state(state, lightState);
+    int2stateLight(state, lightState);
 
     if (strcmp(state, "change_color") == 0)
     {
@@ -44,5 +45,5 @@ int initTestLight(Light light, Con2DB db1, int pid)
     // Chiudi la connessione a Redis
     redisFree(context);
 
-    
+    return 0;
 }

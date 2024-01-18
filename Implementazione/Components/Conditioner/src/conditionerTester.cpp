@@ -1,5 +1,5 @@
 #include "conditioner.h"
-#include "main.h"
+#include "../../../main/main.h"
 #include <iostream>
 #include <hiredis/hiredis.h>
 #include <cstdlib>
@@ -7,7 +7,7 @@
 
 
 
-int test() {
+int testConditioner() {
     
     char state[20];
 
@@ -27,7 +27,7 @@ int test() {
     conditioner_type conditionerState = static_cast<conditioner_type>(atoi(reply->str));
     freeReplyObject(reply);
 
-    int2state(state, conditionerState);
+    int2stateConditioner(state, conditionerState);
 
     if(strcmp(state, "change_temperature") == 0)
     {

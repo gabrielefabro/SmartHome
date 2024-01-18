@@ -9,15 +9,7 @@
 
 int main()
 {
-    Camera camera = initCamera();
-    Conditioner conditioner = initConditioner();
-    Device device = initDevice();
-    Light light = initLight();
-    Sensor sensor = initSensor();
-    SensorGarden SensorGarden = initSensorGarden();
-
-    // Itero su ogni elemento e controllo lo stato, in base allo stato gli faccio fare qualcosa
-
+    // variabili
     int t = 0;
     int pid;
     char buf[200];
@@ -25,20 +17,51 @@ int main()
     // Inizializza database
     Con2DB db1("localhost", "5432", "smarthome", "12345", "logdb_smarthome");
 
+    // pid processo
     pid = getpid();
 
-    /* init time */
+    // Init time
     init_time();
+
+    // inizializzo le componenti
+    Camera camera = initCamera();
+    log2cameradb(db1, camera.getId(), pid, nanos, camera.getState(), camera.getRecording());
+
+    Conditioner conditioner = initConditioner();
+    void log2conditionerdb(Con2DB db1, int id, int pid, long int nanosec, conditioner_type state, int temperature);
+
+    Device device = initDevice();
+
+
+    Light light = initLight();
+    log2lightdb(db1, light.getId(), pid, nanos, light.getState(), light.getColor(), light.getIntensity());
+
+    Sensor sensor = initSensor();
+    SensorGarden SensorGarden = initSensorGarden();
 
     while (t < HORIZON)
     {
 
         nanos_day = nanos2day(buf, nanos);
-        init_logdb(db1, pid, light.getId(), light.getState());
-        initTestLight(light,db1,pid);
 
-        log2db(db1, pid, nanos, light.getState(), light.getColor(), light.getIntensity());
+        // Test Camera
+        initTestCamera(camera);
+        log2cameradb(db1, camera.getId(), pid, nanos, camera.getState(), camera.getRecording());
+        camera.next();
 
+        // Test Conditioner
+        initTestConditioner(conditioner);
+        log2conditionerdb(db1, conditioner.getId(), pid, nanos, conditioner.getState(), conditioner.getTemperature());
+        conditioner.next();
+
+        // Test Device
+        initTestDevice(device);
+        log2devicedb(db1, device.getId(), pid, nanos, device.getState(), device.getNome());
+        device.next();
+
+        // Test luci
+        initTestLight(light);
+        log2lightdb(db1, light.getId(), pid, nanos, light.getState(), light.getColor(), light.getIntensity());
         light.next();
 
         t++;

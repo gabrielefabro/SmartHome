@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include "../../../main/main.h"
 
 light_color getRandomColor() {
     // Inizializza il seme per la generazione casuale

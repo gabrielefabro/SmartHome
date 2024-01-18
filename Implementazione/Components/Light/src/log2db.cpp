@@ -1,36 +1,28 @@
-#include "main.h"
+#include "../../../main/main.h"
+#include "../../../main/global.h"
 
-/* buy stock  */
 
-void log2db(Con2DB db1, int pid, long int nanosec, light_type state, light_color color, int intensity)
+void log2lightdb(Con2DB db1, int id, int pid, long int nanosec, light_type state, light_color color, int intensity)
 {
 
   PGresult *res;
   int rows, k;
   char cstate[20];
-  int vid = 0;
-  long int dbnanosec, nsafters;
-  char datebuf[1000];
 
-  int2state(cstate, state);
-
-  sprintf(sqlcmd, "SELECT vid FROM TimeVar where ((pid = %d) AND (varname = \'state\'))", pid);
-  res = db1.ExecSQLtuples(sqlcmd);
-  vid = atoi(PQgetvalue(res, 0, PQfnumber(res, "vid")));
-  PQclear(res);
+  int2stateLight(cstate, state);
 
   sprintf(sqlcmd, "BEGIN");
   res = db1.ExecSQLcmd(sqlcmd);
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO LogTable VALUES (%ld, %d, %d, \'%s\', %d, %d) ON CONFLICT DO NOTHING",
-          nanosec,
-          vid,
-          state,
+          "INSERT INTO Light VALUES (%d, %s, %s, %d, %d, %ld) ON CONFLICT DO NOTHING",
+          id,
           cstate,
           color,
-          intensity);
+          intensity,
+          pid,
+          nanosec);
 
   res = db1.ExecSQLcmd(sqlcmd);
   PQclear(res);

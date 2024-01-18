@@ -1,11 +1,11 @@
 #include "device.h"
-#include "main.h"
+#include "../../../main/main.h"
 #include <iostream>
 #include <hiredis/hiredis.h>
 #include <cstdlib>
 #include <ctime>
 
-int test()
+int testDevice()
 {
     char state[20];
 
@@ -30,7 +30,7 @@ int test()
     nome_type devicename = static_cast<nome_type>(atoi(reply->str));
     freeReplyObject(reply);
 
-    int2state(state, deviceState);
+    int2stateDevice(state, deviceState);
 
     if (strcmp(state, "programmed") == 0)
     {
