@@ -1,8 +1,9 @@
-#include "main.h"
+#include "../../../main/global.h"
+#include "../../../main/main.h"
 
 /* buy stock  */
 
-void log2db(Con2DB db1, int pid, long int nanosec, sensor_type state, bool movement)
+void log2sensordb(Con2DB db1, int id, int pid, long int nanosec, sensor_type state, bool movement)
 {
 
   PGresult *res;
@@ -12,20 +13,7 @@ void log2db(Con2DB db1, int pid, long int nanosec, sensor_type state, bool movem
   long int dbnanosec, nsafters;
   char datebuf[1000];
 
-  int2state(cstate, state);
-
-#if (DEBUG > 1000000)
-  fprintf(stderr, "log2db(): pid = %d, varname = %s\n", pid, "state");
-#endif
-
-  sprintf(sqlcmd, "SELECT vid FROM TimeVar where ((pid = %d) AND (varname = \'state\'))", pid);
-  res = db1.ExecSQLtuples(sqlcmd);
-  vid = atoi(PQgetvalue(res, 0, PQfnumber(res, "vid")));
-  PQclear(res);
-
-#if (DEBUG > 1000000)
-  fprintf(stderr, "log2db(): vid = %d\n", vid);
-#endif
+  int2stateSensor(cstate, state);
 
   sprintf(sqlcmd, "BEGIN");
   res = db1.ExecSQLcmd(sqlcmd);
@@ -33,11 +21,11 @@ void log2db(Con2DB db1, int pid, long int nanosec, sensor_type state, bool movem
 
   sprintf(sqlcmd,
           "INSERT INTO LogTable VALUES (%ld, %d, %d, \'%s\', %d) ON CONFLICT DO NOTHING",
-          nanosec,
-          vid,
-          state,
+          id,
           cstate,
-          movement);
+          movement,
+          pid,
+          nanosec);
 
   res = db1.ExecSQLcmd(sqlcmd);
   PQclear(res);
@@ -45,28 +33,5 @@ void log2db(Con2DB db1, int pid, long int nanosec, sensor_type state, bool movem
   sprintf(sqlcmd, "COMMIT");
   res = db1.ExecSQLcmd(sqlcmd);
   PQclear(res);
-
-#if (DEBUG > 0)
-
-  // fprintf(stderr, "log2db(): check insertion\n");
-
-  sprintf(sqlcmd, "SELECT * FROM LogTable where (nanosec = %ld)", nanosec);
-
-  res = db1.ExecSQLtuples(sqlcmd);
-  rows = PQntuples(res);
-
-  dbnanosec = strtol(PQgetvalue(res, 0, PQfnumber(res, "nanosec")), NULL, 10);
-
-  fprintf(stderr, "log2db(): inserted in LogTable (%ld, %d, %d, \'%s\')\n",
-          dbnanosec,
-          atoi(PQgetvalue(res, 0, PQfnumber(res, "vid"))),
-          atoi(PQgetvalue(res, 0, PQfnumber(res, "varvalue"))),
-          PQgetvalue(res, 0, PQfnumber(res, "loginfo")));
-  PQclear(res);
-
-  nsafters = nanos2day(datebuf, dbnanosec);
-
-  fprintf(stderr, "log2db(): ns = %ld = TIME_UTC = %s + %ld ns\n", dbnanosec, datebuf, nsafters);
-#endif
 
 } /*   log2db()  */

@@ -7,6 +7,8 @@
 #include "global.h"
 #include <hiredis/hiredis.h>
 
+//MODIFICARE CUERI
+
 int main()
 {
     // variabili
@@ -28,16 +30,19 @@ int main()
     log2cameradb(db1, camera.getId(), pid, nanos, camera.getState(), camera.getRecording());
 
     Conditioner conditioner = initConditioner();
-    void log2conditionerdb(Con2DB db1, int id, int pid, long int nanosec, conditioner_type state, int temperature);
+    log2conditionerdb(db1, conditioner.getId(), pid, nanos, conditioner.getState(), conditioner.getTemperature());
 
     Device device = initDevice();
-
+    log2devicedb(db1, device.getId(), pid, nanos, device.getState(), device.getNome());
 
     Light light = initLight();
     log2lightdb(db1, light.getId(), pid, nanos, light.getState(), light.getColor(), light.getIntensity());
 
     Sensor sensor = initSensor();
-    SensorGarden SensorGarden = initSensorGarden();
+    log2sensordb(db1, sensor.getId(), pid, nanos, sensor.getState(), sensor.getMovement());
+
+    SensorGarden sensorGarden = initSensorGarden();
+    log2sensorGardendb(db1, sensorGarden.getId(), pid, nanos, sensorGarden.getState(), sensorGarden.getHumidity(), sensorGarden.getTemperature());
 
     while (t < HORIZON)
     {
@@ -63,6 +68,16 @@ int main()
         initTestLight(light);
         log2lightdb(db1, light.getId(), pid, nanos, light.getState(), light.getColor(), light.getIntensity());
         light.next();
+
+        // Test sensor
+        initTestSensor(sensor);
+        log2sensordb(db1, sensor.getId(), pid, nanos, sensor.getState(), sensor.getMovement());
+        sensor.next();
+
+        // Test sensorGarden
+        initTestSensorGarden(sensorGarden);
+        log2sensorGardendb(db1, sensorGarden.getId(), pid, nanos, sensorGarden.getState(), sensorGarden.getHumidity(), sensorGarden.getTemperature());
+        sensorGarden.next();
 
         t++;
 

@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 
-int test()
+int testSensorGarden()
 {
 
     char state[20];
@@ -27,7 +27,7 @@ int test()
     sensorGarden_type sensorGardenState = static_cast<sensorGarden_type>(atoi(reply->str));
     freeReplyObject(reply);
 
-    int2state(state, sensorGardenState);
+    int2stateSensorGarden(state, sensorGardenState);
 
     if (strcmp(state, "change_light") == 0)
     {

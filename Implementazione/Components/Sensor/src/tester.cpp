@@ -1,13 +1,12 @@
-#include "sensor.h"
-#include "main.h"
+#include "device.h"
+#include "../../../main/main.h"
 #include <iostream>
 #include <hiredis/hiredis.h>
 #include <cstdlib>
 #include <ctime>
 
-int test()
+int testSensor()
 {
-
     char state[20];
 
     // Inizializza la connessione a Redis
@@ -27,7 +26,7 @@ int test()
     sensor_type sensorState = static_cast<sensor_type>(atoi(reply->str));
     freeReplyObject(reply);
 
-    int2state(state, sensorState);
+    int2stateSensor(state, sensorState);
 
     if (strcmp(state, "CHEKING") == 0)
     {

@@ -52,6 +52,17 @@ nome_type stringToNome(const char* nomeDev);
 int testDevice();
 int initTestDevice(Device device);
 
+// SENSOR FUNCTION
+void int2stateSensor(char *buf, sensor_type x);
+void log2sensordb(Con2DB db1, int id, int pid, long int nanosec, sensor_type state, bool movement);
+int testSensor();
+int initTestSensor(Sensor sensor);
+
+// SENSORGARDEN FUNCTION
+void int2stateSensorGarden(char *buf, sensorGarden_type x);
+void log2sensorGardendb(Con2DB db1, int id, int pid, long int nanosec, sensorGarden_type state, int humidity, int temperature);
+int testSensorGarden();
+int initTestSensorGarden(SensorGarden sensorGarden);
 
 
 int msleep(long msec);

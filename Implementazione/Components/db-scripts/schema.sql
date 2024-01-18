@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS Light (
         id int NOT NULL,
         state VARCHAR(15) NOT NULL,
         temperature int NOT NULL,
-        umidity int NOT NULL,
+        humidity int NOT NULL,
         pid int NOT NULL,
         nanosec bigint NOT NULL,
         PRIMARY KEY (nanosec, id),
