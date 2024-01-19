@@ -1,4 +1,4 @@
-#include "../../../main/main.h"
+#include "../../../main/src/main.h"
 #include <iostream>
 
 int initTestLight(Light light)

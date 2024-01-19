@@ -1,4 +1,4 @@
-#include "main.h"
+#include "../../../main/src/main.h"
 
 /* compute next state  */
 

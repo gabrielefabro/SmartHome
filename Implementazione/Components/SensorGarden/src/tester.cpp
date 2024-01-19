@@ -1,5 +1,5 @@
 #include "sensorGarden.h"
-#include "main.h"
+#include "../../../main/src/main.h"
 #include <iostream>
 #include <hiredis/hiredis.h>
 #include <cstdlib>

@@ -1,4 +1,4 @@
-#include "../../../main/main.h"
+#include "../../../main/src/main.h"
 
 nome_type stringToNome(const char* nomeDev)
 {

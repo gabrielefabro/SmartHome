@@ -1,5 +1,5 @@
-#include "../../../main/main.h"
-#include "../../../main/global.h"
+#include "../../../main/src/main.h"
+#include "../../../main/src/global.h"
 
 void log2stdout(Con2DB db1, int pid)
 {

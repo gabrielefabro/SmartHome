@@ -1,5 +1,5 @@
 #include "conditioner.h"
-#include "../../../main/global.h"
+#include "../../../main/src/global.h"
 #include <cstdlib>
 
 Conditioner initConditioner()

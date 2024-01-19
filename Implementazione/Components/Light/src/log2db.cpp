@@ -1,5 +1,5 @@
-#include "../../../main/main.h"
-#include "../../../main/global.h"
+#include "../../../main/src/main.h"
+#include "../../../main/src/global.h"
 
 
 void log2lightdb(Con2DB db1, int id, int pid, long int nanosec, light_type state, light_color color, int intensity)

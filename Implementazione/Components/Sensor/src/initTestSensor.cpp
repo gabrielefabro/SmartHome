@@ -1,5 +1,5 @@
-#include "../../../main/main.h"
-#include "../../../main/global.h"
+#include "../../../main/src/main.h"
+#include "../../../main/src/global.h"
 
 int initTestSensor(Sensor sensor)
 {

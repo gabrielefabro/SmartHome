@@ -1,4 +1,4 @@
-#include "../../../main/main.h"
+#include "../../../main/src/main.h"
 
 void log2stdout(Con2DB db1, int pid)
 {
