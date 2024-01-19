@@ -16,7 +16,7 @@ void log2conditionerdb(Con2DB db1, int id, int pid, long int nanosec, conditione
     PQclear(res);
 
     sprintf(sqlcmd,
-            "INSERT INTO Conditioner VALUES (%ld, %d, %d, \'%s\', %d) ON CONFLICT DO NOTHING",
+            "INSERT INTO Conditioner VALUES (%d, %s, %d, %d, %ld) ON CONFLICT DO NOTHING",
             id,
             cstate,
             temperature,

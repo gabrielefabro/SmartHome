@@ -8,13 +8,13 @@
 #include <stddef.h>
 #include <unistd.h>
 #include <string.h>
-#include "../con2db/pgsql.h"
-#include "camera.h"
-#include "device.h"
-#include "light.h"
-#include "conditioner.h"
-#include "sensor.h"
-#include "sensorGarden.h"
+#include "../../con2db/pgsql.h"
+#include "../../Components/Camera/src/camera.h"
+#include "../../Components/Device/src/device.h"
+#include "../../Components/Light/src/light.h"
+#include "../../Components/Conditioner/src/conditioner.h"
+#include "../../Components/Sensor/src/sensor.h"
+#include "../../Components/SensorGarden/src/sensorGarden.h"
 #include "global.h"
 
 #define DEBUG 1000

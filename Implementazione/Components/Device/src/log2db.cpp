@@ -16,7 +16,7 @@ void log2devicedb(Con2DB db1, int id, int pid, long int nanosec, device_type sta
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO LogTable VALUES (%ld, %d, %d, \'%s\', \'%d\') ON CONFLICT DO NOTHING",
+          "INSERT INTO LogTable VALUES (%d, %s, %s, %d, %ld) ON CONFLICT DO NOTHING",
           id,
           cstate,
           nome,

@@ -18,7 +18,7 @@ void log2cameradb(Con2DB db1, int id, int pid, long int nanosec, camera_type sta
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO Camera VALUES (%ld, %d, %d, \'%s\', %d) ON CONFLICT DO NOTHING",
+          "INSERT INTO Camera VALUES (%d, %s, %d, %d, %ld) ON CONFLICT DO NOTHING",
           id,
           cstate,
           recording,

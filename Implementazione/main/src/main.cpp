@@ -7,8 +7,6 @@
 #include "global.h"
 #include <hiredis/hiredis.h>
 
-//MODIFICARE CUERI
-
 int main()
 {
     // variabili
@@ -29,7 +27,7 @@ int main()
     Camera camera = initCamera();
     log2cameradb(db1, camera.getId(), pid, nanos, camera.getState(), camera.getRecording());
 
-    Conditioner conditioner = initConditioner();
+    Conditioner conditioner = initConditioner(); //gestione temperatura non può andare da 0 a 40 
     log2conditionerdb(db1, conditioner.getId(), pid, nanos, conditioner.getState(), conditioner.getTemperature());
 
     Device device = initDevice();
