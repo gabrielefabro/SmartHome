@@ -8,8 +8,8 @@
 
 typedef enum
 {
-    ON,
-    OFF,
+    DeviceON,
+    DeviceOFF,
     programmed,
 } device_type;
 

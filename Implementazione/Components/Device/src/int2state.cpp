@@ -5,13 +5,13 @@
 void int2stateDevice(char *buf, device_type x)
 {
 
-  if (x == ON)
+  if (x == DeviceON)
   {
-    sprintf(buf, "ON");
+    sprintf(buf, "DeviceON");
   }
-  else if (x == OFF)
+  else if (x == DeviceOFF)
   {
-    sprintf(buf, "OFF");
+    sprintf(buf, "DeviceOFF");
   }
   else if (x == programmed)
   {

@@ -5,9 +5,9 @@
 void int2stateCamera(char *buf, camera_type x)
 {
 
-  if (x == ON)
+  if (x == CameraON)
   {
-    sprintf(buf, "ON");
+    sprintf(buf, "CameraON");
   }
   else if (x == WAITING)
   {
@@ -15,7 +15,7 @@ void int2stateCamera(char *buf, camera_type x)
   }
   else
   {
-    sprintf(buf, "OFF");
+    sprintf(buf, "CameraOFF");
   }
 
 } /*   int2color()  */

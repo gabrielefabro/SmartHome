@@ -5,9 +5,9 @@
 void int2state(char *buf, sensorGarden_type x)
 {
 
-  if (x == ON)
+  if (x == SensorGardenON)
   {
-    sprintf(buf, "ON");
+    sprintf(buf, "SensorGardenON");
   }
   else if (x == change_light)
   {
@@ -19,7 +19,7 @@ void int2state(char *buf, sensorGarden_type x)
   }
   else
   {
-    sprintf(buf, "OFF");
+    sprintf(buf, "SensorGardenOFF");
   }
 
 } /*   int2state()  */

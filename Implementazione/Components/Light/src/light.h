@@ -4,8 +4,8 @@
 
 typedef enum
 {
-    ON,
-    OFF,
+    LightON,
+    LightOFF,
     change_intensity,
     change_color,
 } light_type;

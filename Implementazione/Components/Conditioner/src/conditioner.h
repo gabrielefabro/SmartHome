@@ -6,8 +6,8 @@
 
 typedef enum
 {
-    ON,
-    OFF,
+    ConditionerON,
+    ConditionerOFF,
     change_temperature
 } conditioner_type;
 

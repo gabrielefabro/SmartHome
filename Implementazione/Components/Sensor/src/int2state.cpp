@@ -5,13 +5,13 @@
 void int2stateSensor(char *buf, sensor_type x)
 {
 
-  if (x == ON)
+  if (x == SensorON)
   {
-    sprintf(buf, "ON");
+    sprintf(buf, "SensorON");
   }
-  else if (x == OFF)
+  else if (x == SensorOFF)
   {
-    sprintf(buf, "OFF");
+    sprintf(buf, "SensorOFF");
   }
   else
   {

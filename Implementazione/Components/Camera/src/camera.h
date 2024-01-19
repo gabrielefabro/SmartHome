@@ -5,9 +5,9 @@
 
 typedef enum
 {
-    ON,
+    CameraON,
     WAITING,
-    OFF
+    CameraOFF
 } camera_type;
 
 class Camera

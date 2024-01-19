@@ -1,10 +1,11 @@
-#include "camera.h"
-#include "conditioner.h"
-#include "device.h"
-#include "light.h"
-#include "sensor.h"
-#include "sensorGarden.h"
+#include "../../Components/Camera/src/camera.h"
+#include "../../Components/Device/src/device.h"
+#include "../../Components/Light/src/light.h"
+#include "../../Components/Conditioner/src/conditioner.h"
+#include "../../Components/Sensor/src/sensor.h"
+#include "../../Components/SensorGarden/src/sensorGarden.h"
 #include "global.h"
+#include "main.h"
 #include <hiredis/hiredis.h>
 
 int main()

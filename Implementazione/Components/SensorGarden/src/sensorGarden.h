@@ -6,10 +6,10 @@
 
 typedef enum
 {
-    ON,
+    SensorGardenON,
     change_light,
     set_sprinklers,
-    OFF
+    SensorGardenOFF
 } sensorGarden_type;
 
 class SensorGarden

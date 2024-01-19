@@ -7,9 +7,9 @@
 
 typedef enum
 {
-    ON,
+    SensorON,
     CHECKING,
-    OFF
+    SensorOFF
 } sensor_type;
 
 class Sensor

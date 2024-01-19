@@ -5,13 +5,13 @@
 void int2stateConditioner(char *buf, conditioner_type x)
 {
 
-  if (x == ON)
+  if (x == ConditionerON)
   {
-    sprintf(buf, "ON");
+    sprintf(buf, "ConditionerON");
   }
-  else if (x == OFF)
+  else if (x == ConditionerOFF)
   {
-    sprintf(buf, "OFF");
+    sprintf(buf, "ConditionerOFF");
   }
   else
   {

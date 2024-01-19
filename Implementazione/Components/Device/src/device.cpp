@@ -37,5 +37,5 @@ nome_type Device::getNome() const
 
 void Device::setState()
 {
-    state = ON;
+    state = DeviceON;
 }

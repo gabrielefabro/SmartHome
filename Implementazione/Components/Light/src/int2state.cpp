@@ -5,13 +5,13 @@
 void int2stateLight(char *buf, light_type x)
 {
 
-  if (x == ON)
+  if (x == LightON)
   {
-    sprintf(buf, "ON");
+    sprintf(buf, "LightON");
   }
-  else if (x == OFF)
+  else if (x == LightOFF)
   {
-    sprintf(buf, "OFF");
+    sprintf(buf, "LightOFF");
   }
   else if (x == change_intensity)
   {
