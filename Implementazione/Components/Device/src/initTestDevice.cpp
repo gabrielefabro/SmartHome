@@ -12,9 +12,6 @@ int initTestDevice(Device device)
         return 1;
     }
 
-    // Inizializza un oggetto Device
-    Device device = initDevice();
-
     // Invia ID e STATE e NOME a Redis
     redisReply *reply = (redisReply *)redisCommand(context, "SET device_id %d", device.getId());
     freeReplyObject(reply);

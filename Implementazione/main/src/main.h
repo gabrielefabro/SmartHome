@@ -8,7 +8,7 @@
 #include <stddef.h>
 #include <unistd.h>
 #include <string.h>
-#include "../../con2db/pgsql.h"
+#include "../../con2db/src/pgsql.h"
 #include "../../Components/Camera/src/camera.h"
 #include "../../Components/Device/src/device.h"
 #include "../../Components/Light/src/light.h"

@@ -2,7 +2,7 @@
 
 /* compute next state  */
 
-void int2state(char *buf, sensorGarden_type x)
+void int2stateSensorGarden(char *buf, sensorGarden_type x)
 {
 
   if (x == SensorGardenON)

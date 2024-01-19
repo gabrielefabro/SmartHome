@@ -12,9 +12,6 @@ int initTestSensorGarden(SensorGarden sensorGarden)
         return 1;
     }
 
-    // Inizializza un oggetto SensorGarden
-    SensorGarden sensorGarden = initSensorGarden();
-
     // Invia ID e STATE a Redis
     redisReply *reply = (redisReply *)redisCommand(context, "SET sensorGarden_id %d", sensorGarden.getId());
     freeReplyObject(reply);

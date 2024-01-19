@@ -12,9 +12,6 @@ int initTestSensor(Sensor sensor)
         return 1;
     }
 
-    // Inizializza un oggetto Sensor
-    Sensor sensor = initSensor();
-
     // Invia ID e STATE a Redis
     redisReply *reply = (redisReply *)redisCommand(context, "SET sensor_id %d", sensor.getId());
     freeReplyObject(reply);
