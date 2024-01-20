@@ -8,6 +8,8 @@
 #include <stddef.h>
 #include <unistd.h>
 #include <string.h>
+#include <ctime>
+#include <chrono>
 #include "../../con2db/src/pgsql.h"
 #include "../../Components/Camera/src/camera.h"
 #include "../../Components/Device/src/device.h"
@@ -16,7 +18,6 @@
 #include "../../Components/Sensor/src/sensor.h"
 #include "../../Components/SensorGarden/src/sensorGarden.h"
 #include "global.h"
-
 #define DEBUG 1000
 
 #define HORIZON 10 // TICKS
@@ -57,6 +58,7 @@ void int2stateSensor(char *buf, sensor_type x);
 void log2sensordb(Con2DB db1, int id, int pid, long int nanosec, sensor_type state, bool movement);
 int testSensor();
 int initTestSensor(Sensor sensor);
+void securityRecap(Con2DB db1, int pid);
 
 // SENSORGARDEN FUNCTION
 void int2stateSensorGarden(char *buf, sensorGarden_type x);
@@ -70,10 +72,12 @@ int micro_sleep(long usec);
 int long get_nanos(void);
 void init_time();
 void update_time();
-
+long long get_current_time_ns();
+void monitorResponseTime(const Con2DB& db, int pid, long nanos, long long requestTime, long responseTimeLimit);
 long int get_day_nanos(char *buf);
 long int nanos2day(char *buf, long int nanosec);
 void log2stdout(Con2DB db1, int pid);
+void logActivity(Con2DB db1, const char *functionName, int pid);
 
 using namespace std;
 

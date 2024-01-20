@@ -1,13 +1,6 @@
 -- Connessione al database
 \connect dbname=logdb_smarthome user=postgres password=12345 host=localhost port=5432
 
--- Creazione della tabella TimeVar (aggiungi colonne mancanti se necessario)
-CREATE TABLE IF NOT EXISTS TimeVar (
-    id SERIAL PRIMARY KEY,
-    -- Altri campi se necessario
-);
-
-
 -- Creazione della tabella Light
 CREATE TABLE IF NOT EXISTS Light (
     id SERIAL,
@@ -17,7 +10,6 @@ CREATE TABLE IF NOT EXISTS Light (
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
     PRIMARY KEY (nanosec, id),
-    CONSTRAINT light_id_ref FOREIGN KEY (id) REFERENCES TimeVar(id)
 );
 
 -- Creazione della tabella Camera
@@ -28,7 +20,6 @@ CREATE TABLE IF NOT EXISTS Camera (
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
     PRIMARY KEY (nanosec, id),
-    CONSTRAINT camera_id_ref FOREIGN KEY (id) REFERENCES TimeVar(id)
 );
 
 -- Creazione della tabella Conditioner
@@ -39,7 +30,6 @@ CREATE TABLE IF NOT EXISTS Conditioner (
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
     PRIMARY KEY (nanosec, id),
-    CONSTRAINT conditioner_id_ref FOREIGN KEY (id) REFERENCES TimeVar(id)
 );
 
 -- Creazione della tabella Device
@@ -51,7 +41,6 @@ CREATE TABLE IF NOT EXISTS Device (
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
     PRIMARY KEY (nanosec, id),
-    CONSTRAINT device_id_ref FOREIGN KEY (id) REFERENCES TimeVar(id)
 );
 
 -- Creazione della tabella Sensor
@@ -63,7 +52,6 @@ CREATE TABLE IF NOT EXISTS Sensor (
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
     PRIMARY KEY (nanosec, id),
-    CONSTRAINT sensor_id_ref FOREIGN KEY (id) REFERENCES TimeVar(id)
 );
 
 -- Creazione della tabella SensorGarden
@@ -75,5 +63,18 @@ CREATE TABLE IF NOT EXISTS SensorGarden (
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
     PRIMARY KEY (nanosec, id),
-    CONSTRAINT sensor_garden_id_ref FOREIGN KEY (id) REFERENCES TimeVar(id)
 );
+
+CREATE TABLE IF NOT EXISTS LogActivity (
+    name_activity varchar(20)NOT NULL,
+    nanosec BIGINT NOT NULL,
+    pid INT NOT NULL,
+    PRIMARY KEY (name_activity, nanosec),
+)
+
+CREATE TABLE IF NOT EXISTS SecurityRecap (
+    nanosec BIGINT NOT NULL,
+    pid INT NOT NULL,
+    PRIMARY KEY (nanosec),
+
+)
