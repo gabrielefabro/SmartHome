@@ -32,6 +32,7 @@ light_color stringToLightColor(const char* colorStr);
 void int2stateLight(char *buf, light_type x);
 light_color getRandomColor();
 int changeIntensity();
+const char* colorToString(light_color color);
 
 // CAMERA FUNCTION
 void int2stateCamera(char *buf, camera_type x);
@@ -49,7 +50,7 @@ void log2conditionerdb(Con2DB db1, int id, int pid, long int nanosec, conditione
 void int2stateDevice(char *buf, device_type x);
 void log2devicedb(Con2DB db1, int id, int pid, long int nanosec, device_type state, nome_type nome);
 int changeInt();
-nome_type stringToNome(const char* nomeDev);
+const char* nomeToString(nome_type nomeDev);
 int testDevice();
 int initTestDevice(Device device);
 

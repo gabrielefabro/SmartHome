@@ -9,8 +9,12 @@ void log2devicedb(Con2DB db1, int id, int pid, long int nanosec, device_type sta
   int rows, k;
   char cstate[20];
   char sqlcmd[1000];
+  char n[20];
 
   int2stateDevice(cstate, state);
+  nomeToString(nome);
+  strcpy(n, nomeToString(nome));
+
 
   sprintf(sqlcmd, "BEGIN");
   res = db1.ExecSQLcmd(sqlcmd);
@@ -20,7 +24,7 @@ void log2devicedb(Con2DB db1, int id, int pid, long int nanosec, device_type sta
           "INSERT INTO LogTable VALUES (%d, %s, %s, %d, %ld) ON CONFLICT DO NOTHING",
           id,
           cstate,
-          nome,
+          n,
           pid,
           nanosec);
 

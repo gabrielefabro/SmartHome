@@ -9,8 +9,10 @@ void log2lightdb(Con2DB db1, int id, int pid, long int nanosec, light_type state
   int rows, k;
   char cstate[20];
   char sqlcmd[1000];
+  char c[20];
 
   int2stateLight(cstate, state);
+  strcpy(c, colorToString(color));
 
   sprintf(sqlcmd, "BEGIN");
   res = db1.ExecSQLcmd(sqlcmd);
@@ -20,7 +22,7 @@ void log2lightdb(Con2DB db1, int id, int pid, long int nanosec, light_type state
           "INSERT INTO Light VALUES (%d, %s, %s, %d, %d, %ld) ON CONFLICT DO NOTHING",
           id,
           cstate,
-          color,
+          c,
           intensity,
           pid,
           nanosec);

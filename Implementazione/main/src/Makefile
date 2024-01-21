@@ -29,6 +29,12 @@ OBJ_SENSORGARDEN_DIR=../../Components/SensorGarden/obj
 SRC_DB_DIR=../../con2db/src
 OBJ_DB_DIR=../../con2db/obj
 
+SRC_FUNC_DIR=../../Monitors/Functional/src
+OBJ_FUNC_DIR=../../Monitors/Functional/obj
+
+SRC_NFUN_DIR=../../Monitors/NonFunctional/src
+OBJ_NFUN_DIR=../../Monitors/NonFunctional/obj
+
 # use this when connecting to Postgresql (library lpq)
 #CFLAGS=-std=c++11 -I. -I$(IDIR) -I/usr/include/postgresql -lpq -lm 
 CFLAGS=-std=c++20 -I. -I$(IDIR) -I/usr/include/postgresql -lpq -lm 
@@ -48,6 +54,7 @@ DEPS4 = $(wildcard $(SRC_LIGHT_DIR)/*.h)
 DEPS5 = $(wildcard $(SRC_SENSOR_DIR)/*.h)
 DEPS6 = $(wildcard $(SRC_SENSORGARDEN_DIR)/*.h)
 DEPS7 = $(wildcard $(SRC_DB_DIR)/*.h)
+
 
 SRC = $(wildcard *.cpp)
 OBJ = $(patsubst %.cpp, $(ODIR)/%.o, $(SRC))
@@ -72,6 +79,12 @@ OBJ_SENSORGARDEN = $(patsubst $(SRC_SENSORGARDEN_DIR)/%.cpp, $(OBJ_SENSORGARDEN_
 
 SRC_DB = $(wildcard $(SRC_DB_DIR)/*.cpp)
 OBJ_DB = $(patsubst $(SRC_DB_DIR)/%.cpp, $(OBJ_DB_DIR)/%.o, $(SRC_DB))
+
+SRC_FUNC = $(wildcard $(SRC_FUNC_DIR)/*.cpp)
+OBJ_FUNC = $(patsubst $(SRC_FUNC_DIR)/%.cpp, $(OBJ_FUNC_DIR)/%.o, $(SRC_FUNC))
+
+SRC_NFUN = $(wildcard $(SRC_NFUN_DIR)/*.cpp)
+OBJ_NFUN = $(patsubst $(SRC_NFUN_DIR)/%.cpp, $(OBJ_NFUN_DIR)/%.o, $(SRC_NFUN))
 
 
 all: $(BDIR)/main
@@ -100,8 +113,14 @@ $(OBJ_SENSORGARDEN_DIR)/%.o: $(SRC_SENSORGARDEN_DIR)/%.cpp $(DEPS6)
 $(OBJ_DB_DIR)/%.o: $(SRC_DB_DIR)/%.cpp $(DEPS7)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-$(BDIR)/main: $(OBJ) $(OBJ_CAMERA) $(OBJ_CONDITIONER) $(OBJ_DEVICE) $(OBJ_LIGHT) $(OBJ_SENSOR) $(OBJ_SENSORGARDEN) $(OBJ_DB) $(DEPS) $(DEPS1) $(DEPS2) $(DEPS3) $(DEPS4) $(DEPS5) $(DEPS6) $(DEPS7)
-	$(CC) -o $@ $(OBJ) $(OBJ_CAMERA) $(OBJ_CONDITIONER) $(OBJ_DEVICE) $(OBJ_LIGHT) $(OBJ_SENSOR) $(OBJ_SENSORGARDEN) $(OBJ_DB) $(CFLAGS) -L/path/to/redis/lib $(LIBS)
+$(OBJ_FUNC_DIR)/%.o: $(SRC_FUNC_DIR)/%.cpp
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+$(OBJ_NFUN_DIR)/%.o: $(SRC_NFUN_DIR)/%.cpp
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+$(BDIR)/main: $(OBJ) $(OBJ_CAMERA) $(OBJ_CONDITIONER) $(OBJ_DEVICE) $(OBJ_LIGHT) $(OBJ_SENSOR) $(OBJ_SENSORGARDEN) $(OBJ_DB) $(OBJ_FUNC) $(OBJ_NFUN) $(DEPS) $(DEPS1) $(DEPS2) $(DEPS3) $(DEPS4) $(DEPS5) $(DEPS6) $(DEPS7)
+	$(CC) -o $@ $(OBJ) $(OBJ_CAMERA) $(OBJ_CONDITIONER) $(OBJ_DEVICE) $(OBJ_LIGHT) $(OBJ_SENSOR) $(OBJ_SENSORGARDEN) $(OBJ_DB) $(OBJ_FUNC) $(OBJ_NFUN) $(CFLAGS) -L/path/to/redis/lib $(LIBS)
 
 .PHONY: clean
 
@@ -114,5 +133,7 @@ clean:
 	rm -f $(OBJ_SENSOR_DIR)/*.o *~ $(SRC_SENSOR_DIR)/*~ core
 	rm -f $(OBJ_SENSORGARDEN_DIR)/*.o *~ $(SRC_SENSORGARDEN_DIR)/*~ core
 	rm -f $(OBJ_DB_DIR)/*.o *~ $(SRC_DB_DIR)/*~ core
+	rm -f $(OBJ_FUNC_DIR)/*.o *~ $(SRC_FUNC_DIR)/*~ core
+	rm -f $(OBJ_NFUN_DIR)/*.o *~ $(SRC_NFUN_DIR)/*~ core
 
 	
