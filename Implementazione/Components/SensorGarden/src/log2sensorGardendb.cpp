@@ -1,4 +1,5 @@
 #include "../../../main/src/main.h"
+#include "../../../main/src/global.h"
 
 /* buy stock  */
 
@@ -17,7 +18,7 @@ void log2sensorGardendb(Con2DB db1, int id, int pid, long int nanosec, sensorGar
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO LogTable VALUES (%d, %s, %d, %d, %d, %ld) ON CONFLICT DO NOTHING",
+          "INSERT INTO SensorGarden VALUES (%d, '%s', %d, %d, %d, %ld) ON CONFLICT DO NOTHING",
           id,
           cstate,
           temperature,

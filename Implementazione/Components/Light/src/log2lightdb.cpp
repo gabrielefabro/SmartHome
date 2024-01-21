@@ -19,7 +19,7 @@ void log2lightdb(Con2DB db1, int id, int pid, long int nanosec, light_type state
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO Light VALUES (%d, %s, %s, %d, %d, %ld) ON CONFLICT DO NOTHING",
+          "INSERT INTO Light VALUES (%d, '%s', '%s', %d, %d, %ld) ON CONFLICT DO NOTHING",
           id,
           cstate,
           c,

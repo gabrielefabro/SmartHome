@@ -21,7 +21,7 @@ void log2sensordb(Con2DB db1, int id, int pid, long int nanosec, sensor_type sta
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO LogTable VALUES (%d, %s, %d, %d, %ld) ON CONFLICT DO NOTHING",
+          "INSERT INTO Sensor VALUES (%d, '%s', %d, %d, %ld) ON CONFLICT DO NOTHING",
           id,
           cstate,
           movement,

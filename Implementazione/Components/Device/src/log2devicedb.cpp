@@ -1,10 +1,11 @@
 #include "../../../main/src/main.h"
+#include "../../../main/src/global.h"
 
 /* buy stock  */
 
 void log2devicedb(Con2DB db1, int id, int pid, long int nanosec, device_type state, nome_type nome)
 {
-
+  std::cout << nanosec << std::endl;
   PGresult *res;
   int rows, k;
   char cstate[20];
@@ -15,13 +16,12 @@ void log2devicedb(Con2DB db1, int id, int pid, long int nanosec, device_type sta
   nomeToString(nome);
   strcpy(n, nomeToString(nome));
 
-
   sprintf(sqlcmd, "BEGIN");
   res = db1.ExecSQLcmd(sqlcmd);
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO LogTable VALUES (%d, %s, %s, %d, %ld) ON CONFLICT DO NOTHING",
+          "INSERT INTO Device VALUES (%d, '%s', '%s', %d, %ld) ON CONFLICT DO NOTHING",
           id,
           cstate,
           n,
