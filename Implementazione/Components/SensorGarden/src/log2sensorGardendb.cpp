@@ -3,7 +3,7 @@
 
 /* buy stock  */
 
-void log2sensorGardendb(Con2DB db1, int id, int pid, long int nanosec, sensorGarden_type state, int humidity, int temperature)
+void log2sensorGardendb(Con2DB db1, int id, int pid, long int nanosec, sensorGarden_type state, int humidity, int temperature, int t)
 {
 
   PGresult *res;
@@ -18,7 +18,8 @@ void log2sensorGardendb(Con2DB db1, int id, int pid, long int nanosec, sensorGar
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO SensorGarden VALUES (%d, '%s', %d, %d, %d, %ld) ON CONFLICT DO NOTHING",
+          "INSERT INTO SensorGarden VALUES (%d, %d, '%s', %d, %d, %d, %ld) ON CONFLICT DO NOTHING",
+          t,
           id,
           cstate,
           temperature,

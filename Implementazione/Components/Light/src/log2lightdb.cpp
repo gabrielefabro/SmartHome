@@ -2,7 +2,7 @@
 #include "../../../main/src/global.h"
 
 
-void log2lightdb(Con2DB db1, int id, int pid, long int nanosec, light_type state, light_color color, int intensity)
+void log2lightdb(Con2DB db1, int id, int pid, long int nanosec, light_type state, light_color color, int intensity, int t)
 {
 
   PGresult *res;
@@ -19,7 +19,8 @@ void log2lightdb(Con2DB db1, int id, int pid, long int nanosec, light_type state
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO Light VALUES (%d, '%s', '%s', %d, %d, %ld) ON CONFLICT DO NOTHING",
+          "INSERT INTO Light VALUES (%d, %d, '%s', '%s', %d, %d, %ld) ON CONFLICT DO NOTHING",
+          t,
           id,
           cstate,
           c,

@@ -3,7 +3,8 @@
 
 -- Creazione della tabella Light
 CREATE TABLE IF NOT EXISTS Light (
-    id SERIAL,
+    t INT NOT NULL,
+    id INT NOT NULL,
     stato VARCHAR(20) NOT NULL,
     color VARCHAR(20) NOT NULL,
     intensity INT NOT NULL,
@@ -14,7 +15,8 @@ CREATE TABLE IF NOT EXISTS Light (
 
 -- Creazione della tabella Camera
 CREATE TABLE IF NOT EXISTS Camera (
-    id SERIAL,
+    t INT NOT NULL,
+    id INT NOT NULL,
     stato VARCHAR(20) NOT NULL,
     recording INT NOT NULL,
     pid INT NOT NULL,
@@ -24,7 +26,8 @@ CREATE TABLE IF NOT EXISTS Camera (
 
 -- Creazione della tabella Conditioner
 CREATE TABLE IF NOT EXISTS Conditioner (
-    id SERIAL,
+    t INT NOT NULL,
+    id INT NOT NULL,
     stato VARCHAR(20) NOT NULL,
     temperature INT NOT NULL,
     pid INT NOT NULL,
@@ -34,7 +37,8 @@ CREATE TABLE IF NOT EXISTS Conditioner (
 
 -- Creazione della tabella Device
 CREATE TABLE IF NOT EXISTS Device (
-    id SERIAL,
+    t INT NOT NULL,
+    id INT NOT NULL,
     stato VARCHAR(20) NOT NULL,
     nome VARCHAR(20) NOT NULL,
     pid INT NOT NULL,
@@ -44,7 +48,8 @@ CREATE TABLE IF NOT EXISTS Device (
 
 -- Creazione della tabella Sensor
 CREATE TABLE IF NOT EXISTS Sensor (
-    id SERIAL,
+    t INT NOT NULL,
+    id INT NOT NULL,
     stato VARCHAR(15) NOT NULL,
     movement INT NOT NULL,
     pid INT NOT NULL,
@@ -54,7 +59,8 @@ CREATE TABLE IF NOT EXISTS Sensor (
 
 -- Creazione della tabella SensorGarden
 CREATE TABLE IF NOT EXISTS SensorGarden (
-    id SERIAL,
+    t INT NOT NULL,
+    id INT NOT NULL,
     stato VARCHAR(15) NOT NULL,
     temperature INT NOT NULL,
     humidity INT NOT NULL,

@@ -3,7 +3,7 @@
 
 /* buy stock  */
 
-void log2cameradb(Con2DB db1, int id, int pid, long int nanosec, camera_type state, bool recording)
+void log2cameradb(Con2DB db1, int id, int pid, long int nanosec, camera_type state, bool recording, int t)
 {
   int x;
   PGresult *res;
@@ -25,7 +25,8 @@ void log2cameradb(Con2DB db1, int id, int pid, long int nanosec, camera_type sta
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO Camera VALUES (%d, '%s', %d, %d, %ld) ON CONFLICT DO NOTHING",
+          "INSERT INTO Camera VALUES (%d, %d, '%s', %d, %d, %ld) ON CONFLICT DO NOTHING",
+          t,
           id,
           cstate,
           x,

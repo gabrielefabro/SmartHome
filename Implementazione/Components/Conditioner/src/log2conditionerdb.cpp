@@ -3,7 +3,7 @@
 
 /* buy stock  */
 
-void log2conditionerdb(Con2DB db1, int id, int pid, long int nanosec, conditioner_type state, int temperature)
+void log2conditionerdb(Con2DB db1, int id, int pid, long int nanosec, conditioner_type state, int temperature, int t)
 {
 
     PGresult *res;
@@ -18,7 +18,8 @@ void log2conditionerdb(Con2DB db1, int id, int pid, long int nanosec, conditione
     PQclear(res);
 
     sprintf(sqlcmd,
-            "INSERT INTO Conditioner VALUES (%d, '%s', %d, %d, %ld) ON CONFLICT DO NOTHING",
+            "INSERT INTO Conditioner VALUES (%d, %d, '%s', %d, %d, %ld) ON CONFLICT DO NOTHING",
+            t,
             id,
             cstate,
             temperature,

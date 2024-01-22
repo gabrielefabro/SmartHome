@@ -3,7 +3,7 @@
 
 /* buy stock  */
 
-void log2devicedb(Con2DB db1, int id, int pid, long int nanosec, device_type state, nome_type nome)
+void log2devicedb(Con2DB db1, int id, int pid, long int nanosec, device_type state, nome_type nome, int t)
 {
   PGresult *res;
   int rows, k;
@@ -20,7 +20,8 @@ void log2devicedb(Con2DB db1, int id, int pid, long int nanosec, device_type sta
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO Device VALUES (%d, '%s', '%s', %d, %ld) ON CONFLICT DO NOTHING",
+          "INSERT INTO Device VALUES (%d, %d, '%s', '%s', %d, %ld) ON CONFLICT DO NOTHING",
+          t,
           id,
           cstate,
           n,

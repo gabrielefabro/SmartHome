@@ -3,7 +3,7 @@
 
 /* buy stock  */
 
-void log2sensordb(Con2DB db1, int id, int pid, long int nanosec, sensor_type state, bool movement)
+void log2sensordb(Con2DB db1, int id, int pid, long int nanosec, sensor_type state, bool movement, int t)
 {
   int x;
   PGresult *res;
@@ -29,7 +29,8 @@ void log2sensordb(Con2DB db1, int id, int pid, long int nanosec, sensor_type sta
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO Sensor VALUES (%d, '%s', %d, %d, %ld) ON CONFLICT DO NOTHING",
+          "INSERT INTO Sensor VALUES (%d, %d, '%s', %d, %d, %ld) ON CONFLICT DO NOTHING",
+          t,
           id,
           cstate,
           x,
