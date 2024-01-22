@@ -5,7 +5,7 @@
 
 void log2sensordb(Con2DB db1, int id, int pid, long int nanosec, sensor_type state, bool movement)
 {
-
+  int x;
   PGresult *res;
   int rows, k;
   char cstate[20];
@@ -15,6 +15,14 @@ void log2sensordb(Con2DB db1, int id, int pid, long int nanosec, sensor_type sta
   char sqlcmd[1000];
 
   int2stateSensor(cstate, state);
+  if (movement == true)
+  {
+    x = 1;
+  }
+  else
+  {
+    x = 0;
+  }
 
   sprintf(sqlcmd, "BEGIN");
   res = db1.ExecSQLcmd(sqlcmd);
@@ -24,7 +32,7 @@ void log2sensordb(Con2DB db1, int id, int pid, long int nanosec, sensor_type sta
           "INSERT INTO Sensor VALUES (%d, '%s', %d, %d, %ld) ON CONFLICT DO NOTHING",
           id,
           cstate,
-          movement,
+          x,
           pid,
           nanosec);
 

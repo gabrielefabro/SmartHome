@@ -50,6 +50,15 @@ int main()
 
         long long requestTime = get_current_time_ns();
 
+        // Test sensor
+        initTestSensor(sensor);
+        logActivity(db1, "Test Sensor", pid);
+        log2sensordb(db1, sensor.getId(), pid, nanos, sensor.getState(), sensor.getMovement());
+        if (sensor.getMovement() == true) {
+            securityRecap(db1, pid);
+        }
+        sensor.next();
+
         // Test Camera
         logActivity(db1, "Test Camera", pid);
         initTestCamera(camera);
@@ -74,15 +83,6 @@ int main()
         log2lightdb(db1, light.getId(), pid, nanos, light.getState(), light.getColor(), light.getIntensity());
         light.next();
 
-        // Test sensor
-        initTestSensor(sensor);
-        logActivity(db1, "Test Sensor", pid);
-        log2sensordb(db1, sensor.getId(), pid, nanos, sensor.getState(), sensor.getMovement());
-        if (sensor.getMovement() == true) {
-            securityRecap(db1, pid);
-        }
-        sensor.next();
-
         // Test sensorGarden
         logActivity(db1, "Test SensorGarden", pid);
         initTestSensorGarden(sensorGarden);
@@ -92,7 +92,7 @@ int main()
         monitorResponseTime(db1, pid, nanos, requestTime, 5000000000); // Limite di 5 secondi
 
         t++;
-
+        std::cout << t << std::endl;
         /* sleep   */
         micro_sleep(500);
 

@@ -5,7 +5,6 @@
 
 void log2devicedb(Con2DB db1, int id, int pid, long int nanosec, device_type state, nome_type nome)
 {
-  std::cout << nanosec << std::endl;
   PGresult *res;
   int rows, k;
   char cstate[20];

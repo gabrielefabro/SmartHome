@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS Conditioner (
 CREATE TABLE IF NOT EXISTS Device (
     id SERIAL,
     stato VARCHAR(20) NOT NULL,
-    name VARCHAR(20) NOT NULL,
+    nome VARCHAR(20) NOT NULL,
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
     PRIMARY KEY (nanosec, id)
@@ -46,8 +46,7 @@ CREATE TABLE IF NOT EXISTS Device (
 CREATE TABLE IF NOT EXISTS Sensor (
     id SERIAL,
     stato VARCHAR(15) NOT NULL,
-    checking BOOLEAN NOT NULL,
-    movement BOOLEAN NOT NULL,
+    movement INT NOT NULL,
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
     PRIMARY KEY (nanosec, id)
@@ -66,13 +65,13 @@ CREATE TABLE IF NOT EXISTS SensorGarden (
 
 CREATE TABLE IF NOT EXISTS LogActivity (
     name_activity varchar(20)NOT NULL,
-    nanosec BIGINT NOT NULL,
+    temp VARCHAR(25) NOT NULL,
     pid INT NOT NULL,
-    PRIMARY KEY (name_activity, nanosec)
+    PRIMARY KEY (name_activity, temp)
 );
 
 CREATE TABLE IF NOT EXISTS SecurityRecap (
     nanosec BIGINT NOT NULL,
     pid INT NOT NULL,
-    PRIMARY KEY (nanosec)
+    PRIMARY KEY (nanosec, pid)
 );

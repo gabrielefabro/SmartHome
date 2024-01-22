@@ -40,14 +40,14 @@ int testSensor()
         {
             n = 1;
             // Invia se e' presente movimento a Redis
-            reply = (redisReply *)redisCommand(context, "SET movment %s", n);
+            reply = (redisReply *)redisCommand(context, "SET movment %d", n);
             freeReplyObject(reply);
         }
         else
         {
             n = 0;
             // Invia se e' presente movimento a Redis
-            reply = (redisReply *)redisCommand(context, "SET movment %s", n);
+            reply = (redisReply *)redisCommand(context, "SET movment %d", n);
             freeReplyObject(reply);
         }
     }

@@ -3,7 +3,8 @@
 
 int initTestSensor(Sensor sensor)
 {
-
+    int sensorId;
+    sensor_type sensorState;
     // Inizializza la connessione a Redis
     redisContext *context = redisConnect("127.0.0.1", 6379);
     if (context == nullptr || context->err)
@@ -12,29 +13,31 @@ int initTestSensor(Sensor sensor)
         return 1;
     }
 
+    sensorId = sensor.getId();
+    sensorState = sensor.getState();
+
     // Invia ID e STATE a Redis
-    redisReply *reply = (redisReply *)redisCommand(context, "SET sensor_id %d", sensor.getId());
+    redisReply *reply = (redisReply *)redisCommand(context, "SET sensor_id %d", sensorId);
     freeReplyObject(reply);
 
-    reply = (redisReply *)redisCommand(context, "SET sensor_state %d", sensor.getState());
+    reply = (redisReply *)redisCommand(context, "SET sensor_state %d", sensorState);
     freeReplyObject(reply);
 
     testSensor();
 
     // Aspetta una risposta dal tester
-    reply = (redisReply *)redisCommand(context, "GET tester_response");
-    if (reply != nullptr && reply->str != nullptr)
-    {
-        freeReplyObject(reply);
-    }
 
     char state[20];
-    sensor_type sensorState = static_cast<sensor_type>(atoi(reply->str));
     int2stateSensor(state, sensorState);
     if (strcmp(state, "CHECKING") == 0)
     {
+        reply = (redisReply *)redisCommand(context, "GET movment");
+        if (reply != nullptr && reply->str != nullptr)
+        {
+            freeReplyObject(reply);
+        }
         int movement;
-        sscanf(reply->str, "%d", &movement); // converte reply in int
+        movement = reply->integer; // converte reply in int
         if (movement == 0)
         {
             sensor.setMovement(false);

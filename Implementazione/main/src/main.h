@@ -4,6 +4,7 @@
 #include <hiredis/hiredis.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 #include <time.h>
 #include <stddef.h>
 #include <unistd.h>

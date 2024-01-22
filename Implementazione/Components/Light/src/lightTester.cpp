@@ -36,7 +36,7 @@ int testLight()
     {
         // Invia il nuovo colore a Redis
         light_color newColor = getRandomColor();
-        reply = (redisReply *)redisCommand(context, "SET tester_response %s", newColor);
+        reply = (redisReply *)redisCommand(context, "SET tester_response %s", colorToString(newColor));
         freeReplyObject(reply);
     }
     else if (strcmp(state, "change_intensity") == 0)
