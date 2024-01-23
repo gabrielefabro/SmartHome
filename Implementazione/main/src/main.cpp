@@ -56,7 +56,8 @@ int main()
         initTestSensor(sensor);
         logActivity(db1, "Test Sensor", pid);
         log2sensordb(db1, sensor.getId(), pid, nanos, sensor.getState(), sensor.getMovement(), t);
-        if (sensor.getMovement() == true) {
+        if (sensor.getMovement() == true)
+        {
             securityRecap(db1, pid);
         }
         sensor.setState(sensor.next());
@@ -95,9 +96,8 @@ int main()
 
         t++;
         /* sleep   */
-        micro_sleep(500);  
-        update_time();  
-
+        micro_sleep(500);
+        update_time();
     }
 
     // log2stdout(db1,pid); Va rifatta

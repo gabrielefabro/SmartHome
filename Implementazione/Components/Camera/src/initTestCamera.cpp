@@ -1,6 +1,6 @@
 #include "../../../main/src/main.h"
 
-int initTestCamera(Camera camera)
+int initTestCamera(Camera &camera)
 {
   camera_type cameraState;
   char state[20];

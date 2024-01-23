@@ -31,16 +31,16 @@ int testSensorGarden()
 
     if (strcmp(state, "change_light") == 0)
     {
-        std::srand(std::time(0));
+
         int humidity = std::rand() % 101;
-        std::srand(std::time(0));
+
         int temperature = std::rand() % 46;
 
         redisReply *reply = (redisReply *)redisCommand(context, "MSET humidity %d temperature %d", humidity, temperature);
     }
     else if (strcmp(state, "set_sprinklers") == 0)
     {
-        std::srand(std::time(0));
+
         int humidity = std::rand() % 101;
 
         reply = (redisReply *)redisCommand(context, "SET humidity %d", humidity);

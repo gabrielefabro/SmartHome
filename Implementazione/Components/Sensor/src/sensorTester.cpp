@@ -28,14 +28,12 @@ int testSensor()
 
     int2stateSensor(state, sensorState);
 
-    if (strcmp(state, "CHEKING") == 0)
+    if (strcmp(state, "CHECKING") == 0)
     {
         // Inizializza il generatore di numeri casuali con il tempo corrente
-        std::srand(std::time(0));
 
         // Genera un numero casuale tra 0 e RAND_MAX
         int n = std::rand();
-
         if (n % 2 == 0)
         {
             n = 1;
@@ -46,6 +44,7 @@ int testSensor()
         else
         {
             n = 0;
+            std::cout << n << std::endl;
             // Invia se e' presente movimento a Redis
             reply = (redisReply *)redisCommand(context, "SET movment %d", n);
             freeReplyObject(reply);

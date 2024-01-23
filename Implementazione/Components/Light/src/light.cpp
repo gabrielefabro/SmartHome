@@ -8,10 +8,7 @@ light_type Light::next()
 {
     
     int number = rand() % 4;
-    std::cout << "ciao" << std::endl;
-    std::cout << number << std::endl;
     state = static_cast<light_type>(number);
-    std::cout << state << std::endl;
     return state;
 }
 
@@ -28,7 +25,6 @@ int Light::getId() const
 
 void Light::setColor(light_color newColor)
 {
-    std::cout << "cambio colore" << std::endl;
     color = newColor;
 }
 
@@ -49,5 +45,6 @@ int Light::getIntensity() const
 
 void Light::setState(light_type newState)
 {
+    
     state = newState;
 }

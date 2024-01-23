@@ -31,7 +31,6 @@ int testLight()
 
     int2stateLight(state, lightState);
 
-
     if (strcmp(state, "change_color") == 0)
     {
         // Invia il nuovo colore a Redis

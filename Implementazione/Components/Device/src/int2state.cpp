@@ -15,11 +15,7 @@ void int2stateDevice(char *buf, device_type x)
   }
   else if (x == programmed)
   {
-    sprintf(buf, "change_intensity");
-  }
-  else
-  {
-    sprintf(buf, "change_color");
+    sprintf(buf, "programmed");
   }
 
 } 

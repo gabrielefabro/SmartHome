@@ -1,7 +1,7 @@
 #include "../../../main/src/main.h"
 #include <iostream>
 
-int initTestLight(Light light)
+int initTestLight(Light &light)
 {
     int lightId;
     light_type lightState;
@@ -28,23 +28,20 @@ int initTestLight(Light light)
 
     char state[20];
     int2stateLight(state, lightState);
-        std::cout << state << std::endl;
 
-    if (strcmp(state, "change color") == 0 || strcmp(state, "change_intensity") == 0)
+    if (strcmp(state, "change_color") == 0 || strcmp(state, "change_intensity") == 0)
     {
         reply = (redisReply *)redisCommand(context, "GET tester_response");
         if (strcmp(state, "change_color") == 0)
         {
-            std::cout << "sono qui" << std::endl;
             char colorStr[20];
             sscanf(reply->str, "%s", colorStr);
-            std::cout << colorStr << std::endl;
             light_color newColor = stringToLightColor(colorStr);
             light.setColor(newColor);
         }
         else if (strcmp(state, "change_intensity") == 0)
         {
-            int newIntensity = reply->integer;
+            int newIntensity = std::stoi(reply->str);
             light.setIntensity(newIntensity);
         }
 

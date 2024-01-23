@@ -26,7 +26,7 @@
 
 
 // LIGHT FUNCTION
-int initTestLight(Light light);
+int initTestLight(Light &light);
 int testLight();
 void log2lightdb(Con2DB db1, int id, int pid, long int nanosec, light_type state, light_color color, int intensity, int t);
 light_color stringToLightColor(const char* colorStr);
@@ -38,7 +38,7 @@ const char* colorToString(light_color color);
 // CAMERA FUNCTION
 void int2stateCamera(char *buf, camera_type x);
 void log2cameradb(Con2DB db1, int id, int pid, long int nanosec, camera_type state, bool recording, int t);
-int initTestCamera(Camera camera);
+int initTestCamera(Camera &camera);
 
 // CONDITIONER FUNCTION
 int changeRandomTemperature();
@@ -59,7 +59,7 @@ int initTestDevice(Device device);
 void int2stateSensor(char *buf, sensor_type x);
 void log2sensordb(Con2DB db1, int id, int pid, long int nanosec, sensor_type state, bool movement, int t);
 int testSensor();
-int initTestSensor(Sensor sensor);
+int initTestSensor(Sensor &sensor);
 void securityRecap(Con2DB db1, int pid);
 
 // SENSORGARDEN FUNCTION

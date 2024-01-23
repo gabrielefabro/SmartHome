@@ -1,7 +1,7 @@
 #include "../../../main/src/main.h"
 #include "../../../main/src/global.h"
 
-int initTestSensor(Sensor sensor)
+int initTestSensor(Sensor &sensor)
 {
     int sensorId;
     sensor_type sensorState;
@@ -32,12 +32,8 @@ int initTestSensor(Sensor sensor)
     if (strcmp(state, "CHECKING") == 0)
     {
         reply = (redisReply *)redisCommand(context, "GET movment");
-        if (reply != nullptr && reply->str != nullptr)
-        {
-            freeReplyObject(reply);
-        }
-        int movement;
-        movement = reply->integer; // converte reply in int
+        
+        int movement = std::stoi(reply->str);
         if (movement == 0)
         {
             sensor.setMovement(false);
