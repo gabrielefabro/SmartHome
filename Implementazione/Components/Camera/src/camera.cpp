@@ -27,3 +27,8 @@ bool Camera::getRecording()
 {
     return recording;
 }
+
+void Camera::setState(camera_type newState)
+{
+    state = newState;
+}

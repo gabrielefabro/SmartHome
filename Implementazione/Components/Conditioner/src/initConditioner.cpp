@@ -4,6 +4,6 @@
 
 Conditioner initConditioner()
 {
-    Conditioner conditioner(rand(), rand(), static_cast<conditioner_type>(rand() % 2));
+    Conditioner conditioner(rand(), rand() % 45, static_cast<conditioner_type>(rand() % 3));
     return conditioner;
 }

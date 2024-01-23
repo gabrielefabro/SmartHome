@@ -29,3 +29,8 @@ bool Sensor::getMovement() const
 {
     return movement;
 }
+
+void Sensor::setState(sensor_type newState)
+{
+    state = newState;
+}

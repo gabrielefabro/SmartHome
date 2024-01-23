@@ -59,25 +59,25 @@ int main()
         if (sensor.getMovement() == true) {
             securityRecap(db1, pid);
         }
-        sensor.next();
+        sensor.setState(sensor.next());
 
         // Test Camera
         logActivity(db1, "Test Camera", pid);
         initTestCamera(camera);
         log2cameradb(db1, camera.getId(), pid, nanos, camera.getState(), camera.getRecording(), t);
-        camera.next();
+        camera.setState(camera.next());
 
         // Test Conditioner
         logActivity(db1, "Test Conditioner", pid);
         initTestConditioner(conditioner);
         log2conditionerdb(db1, conditioner.getId(), pid, nanos, conditioner.getState(), conditioner.getTemperature(), t);
-        conditioner.next();
+        conditioner.setState(conditioner.next());
 
         // Test Device
         logActivity(db1, "Test Device", pid);
         initTestDevice(device);
         log2devicedb(db1, device.getId(), pid, nanos, device.getState(), device.getNome(), t);
-        device.next();
+        device.setState(device.next());
 
         // Test luci
         logActivity(db1, "Test Light", pid);
@@ -89,7 +89,7 @@ int main()
         logActivity(db1, "Test SensorGarden", pid);
         initTestSensorGarden(sensorGarden);
         log2sensorGardendb(db1, sensorGarden.getId(), pid, nanos, sensorGarden.getState(), sensorGarden.getHumidity(), sensorGarden.getTemperature(), t);
-        sensorGarden.next();
+        sensorGarden.setState(sensorGarden.next());
 
         monitorResponseTime(db1, pid, nanos, requestTime, 5000000000); // Limite di 5 secondi
 

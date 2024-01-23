@@ -37,3 +37,8 @@ int Conditioner::getTemperature() const
 {
     return temperature;
 }
+
+void Conditioner::setState(conditioner_type newState)
+{
+    state = newState;
+}

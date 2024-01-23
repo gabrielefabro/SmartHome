@@ -33,6 +33,8 @@ public:
     void setRecording();
 
     bool getRecording();
+
+    void setState(camera_type newState);
 };
 
 #endif // CAMERA_H

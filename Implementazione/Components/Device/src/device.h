@@ -52,6 +52,8 @@ public:
     int getId() const;
 
     void setState();
+
+    void setState(device_type newState);
 };
 
 #endif // DEVICE_H

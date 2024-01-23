@@ -37,6 +37,8 @@ public:
     int getId() const;
 
     int getTemperature() const;
+
+    void setState(conditioner_type newState);
 };
 
 #endif // CONDITIONER_H

@@ -39,3 +39,8 @@ void Device::setState()
 {
     state = DeviceON;
 }
+
+void Device::setState(device_type newState)
+{
+    state = newState;
+}

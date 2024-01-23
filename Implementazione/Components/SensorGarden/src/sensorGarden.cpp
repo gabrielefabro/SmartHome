@@ -29,3 +29,8 @@ int SensorGarden::getTemperature() const
 {
     return temperature;
 }
+
+void SensorGarden::setState(sensorGarden_type newState)
+{
+    state = newState;
+}

@@ -37,6 +37,8 @@ public:
 
     // Funzione per ottenere il valore di movement
     bool getMovement() const;
+
+    void setState(sensor_type newState);
 };
 
 #endif // CAMERA_H

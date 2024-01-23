@@ -38,6 +38,8 @@ public:
 
     // Funzione per ottenere l'ID del sensorGarden
     int getTemperature() const;
+
+    void setState(sensorGarden_type newState);
 };
 
 #endif // SENSOR_GARDEN_H
