@@ -11,5 +11,5 @@ int changeIntensity()
     std::srand(std::time(0));
 
     // Genera un numero casuale tra 1 e 10 (inclusi)
-    return (std::rand() % 10) + 1;
+    return (rand() % 10) + 1;
 }

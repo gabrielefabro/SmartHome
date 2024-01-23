@@ -5,7 +5,7 @@ Device::Device(int id, device_type state, nome_type name) : id(id), state(state)
 
 device_type Device::next()
 {
-    state = static_cast<device_type>((state + rand() % 2) % 4);
+    state = static_cast<device_type>(rand() % 3);
     return state;
 }
 

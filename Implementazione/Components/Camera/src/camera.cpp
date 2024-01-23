@@ -4,7 +4,7 @@ Camera::Camera(int id, camera_type state) : id(id), state(state) {}
 
 camera_type Camera::next()
 {
-    state = static_cast<camera_type>((state + rand() % 2) % 3);
+    state = static_cast<camera_type>(rand() % 3);
     return state;
 }
 

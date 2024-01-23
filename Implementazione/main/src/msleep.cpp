@@ -90,26 +90,16 @@ long int get_day_nanos(char* buf) {
 long int nanos2day(char* buf, long int nanosec) {
    struct tm *info;
    struct timespec ts;
-
-#if (DEBUG > 1000000)
-   fprintf(stderr, "nanos2day(): nanosec = %ld\n", nanosec);
-#endif
    
    ts.tv_sec = nanosec/1000000000L;
    ts.tv_nsec = (nanosec % 1000000000L);
-       
-#if (DEBUG > 1000000)
-   fprintf(stderr, "nanos2day(): ts.tv_sec = %ld, ts.tv_nsec = %ld, \n", ts.tv_sec, ts.tv_nsec);
-#endif
+
 
 
    /* info is not NULL */
    
    info = localtime( &(ts.tv_sec) );
 
-#if (DEBUG > 1000000)
-   fprintf(stderr, "nanos2day(): info computed\n");
-#endif
    
    // ISO	ISO 8601, SQL standard	1997-12-17 07:37:16-08
    sprintf(buf, "%.4d-%.2d-%.2d %.2d:%.2d:%.2d",
@@ -120,11 +110,6 @@ long int nanos2day(char* buf, long int nanosec) {
 	   info -> tm_min,
 	   info -> tm_sec
 	   );
-
-#if (DEBUG > 1000000)
-   fprintf(stderr, "nanos2day(): day: %s, nanosec after sec = %ld\n", buf, ts.tv_nsec);
-#endif
-
      
    return (ts.tv_nsec);
 }

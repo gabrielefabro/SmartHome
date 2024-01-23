@@ -1,5 +1,5 @@
 -- Connessione al database
-\connect dbname=logdb_smarthome user=postgres password=12345 host=localhost port=5432
+\c :dbname
 
 -- Creazione della tabella Light
 CREATE TABLE IF NOT EXISTS Light (
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS Light (
     intensity INT NOT NULL,
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
-    PRIMARY KEY (t)
+    PRIMARY KEY (t, pid)
 );
 
 -- Creazione della tabella Camera
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Camera (
     recording INT NOT NULL,
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
-    PRIMARY KEY (t)
+    PRIMARY KEY (t, pid)
 );
 
 -- Creazione della tabella Conditioner
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS Conditioner (
     temperature INT NOT NULL,
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
-    PRIMARY KEY (t)
+    PRIMARY KEY (t, pid)
 );
 
 -- Creazione della tabella Device
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS Device (
     nome VARCHAR(20) NOT NULL,
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
-    PRIMARY KEY (t)
+    PRIMARY KEY (t, pid)
 );
 
 -- Creazione della tabella Sensor
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS Sensor (
     movement INT NOT NULL,
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
-    PRIMARY KEY (t)
+    PRIMARY KEY (t, pid)
 );
 
 -- Creazione della tabella SensorGarden
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS SensorGarden (
     humidity INT NOT NULL,
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
-    PRIMARY KEY (t)
+    PRIMARY KEY (t, pid)
 );
 
 CREATE TABLE IF NOT EXISTS LogActivity (

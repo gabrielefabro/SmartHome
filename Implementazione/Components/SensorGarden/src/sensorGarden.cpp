@@ -5,7 +5,7 @@ SensorGarden::SensorGarden(int id, sensorGarden_type state, int humidity, int te
 
 sensorGarden_type SensorGarden::next()
 {
-    state = static_cast<sensorGarden_type>((state + rand() % 2) % 4);
+    state = static_cast<sensorGarden_type>(rand() % 4);
     return state;
 }
 

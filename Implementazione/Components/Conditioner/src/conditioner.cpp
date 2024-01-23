@@ -4,7 +4,7 @@ Conditioner::Conditioner(int id, int temperature, conditioner_type state) : id(i
 
 conditioner_type Conditioner::next()
 {
-    state = static_cast<conditioner_type>((state + rand() % 2) % 2);
+    state = static_cast<conditioner_type>(rand() % 3);
     return state;
 }
 

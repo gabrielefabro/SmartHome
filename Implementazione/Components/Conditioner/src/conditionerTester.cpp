@@ -46,7 +46,6 @@ int testConditioner()
     {
         // Invia il nuovo colore a Redis
         int newTemperature = changeRandomTemperature();
-        std::cout << newTemperature << std::endl;
         reply = (redisReply *)redisCommand(context, "SET new_temperature %d", newTemperature);
         freeReplyObject(reply);
     }

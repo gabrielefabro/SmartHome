@@ -24,6 +24,11 @@ int main()
     // Init time
     init_time();
 
+    auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    std::srand(static_cast<unsigned>(seed));
+
+    nanos = get_nanos();
+
     // inizializzo le componenti
     Camera camera = initCamera();
     log2cameradb(db1, camera.getId(), pid, nanos, camera.getState(), camera.getRecording(), t);
@@ -45,9 +50,6 @@ int main()
 
     while (t < HORIZON)
     {
-
-        nanos_day = nanos2day(buf, nanos);
-
         long long requestTime = get_current_time_ns();
 
         // Test sensor
@@ -81,7 +83,7 @@ int main()
         logActivity(db1, "Test Light", pid);
         initTestLight(light);
         log2lightdb(db1, light.getId(), pid, nanos, light.getState(), light.getColor(), light.getIntensity(), t);
-        light.next();
+        light.setState(light.next());
 
         // Test sensorGarden
         logActivity(db1, "Test SensorGarden", pid);
@@ -92,9 +94,9 @@ int main()
         monitorResponseTime(db1, pid, nanos, requestTime, 5000000000); // Limite di 5 secondi
 
         t++;
-        std::cout << t << std::endl;
         /* sleep   */
-        micro_sleep(500);    
+        micro_sleep(500);  
+        update_time();  
 
     }
 

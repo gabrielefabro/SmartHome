@@ -51,6 +51,8 @@ public:
     light_color getColor() const;
 
     int getIntensity() const;
+
+    void setState(light_type newState);
 };
 
 
