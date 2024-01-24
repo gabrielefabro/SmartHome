@@ -14,14 +14,16 @@ int initTestCamera(Camera &camera)
 
   cameraState = camera.getState();
   int2stateCamera(state, cameraState);
-  if (strcmp(state, "WAITING") == 0)
+  if (strcmp(state, "Waiting") == 0)
   {
-    redisReply *reply_subscribe = (redisReply *)redisCommand(context, "SUBSCRIBE channel");
-    freeReplyObject(reply_subscribe);
+    std::cout << "Sono in waiting" << std::endl;
 
     redisReply *reply_get = (redisReply *)redisCommand(context, "GET message");
+    std::string redisValue(reply_get->str);
+    std::cout << "Valore ottenuto da Redis: " << redisValue << std::endl;
     if (strcmp(reply_get->str, "movement detected") == 0)
     {
+      std::cout << "camera accenditi" << std::endl;
       camera.setRecording();
     }
     freeReplyObject(reply_get);

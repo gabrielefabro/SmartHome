@@ -60,7 +60,7 @@ void int2stateSensor(char *buf, sensor_type x);
 void log2sensordb(Con2DB db1, int id, int pid, long int nanosec, sensor_type state, bool movement, int t);
 int testSensor();
 int initTestSensor(Sensor &sensor);
-void securityRecap(Con2DB db1, int pid);
+void securityRecap(Con2DB db1, int pid, long int nanos);
 
 // SENSORGARDEN FUNCTION
 void int2stateSensorGarden(char *buf, sensorGarden_type x);

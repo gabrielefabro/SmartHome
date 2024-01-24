@@ -6,7 +6,7 @@
 #include "../../Components/SensorGarden/src/sensorGarden.h"
 #include "global.h"
 #include "main.h"
-#include <hiredis/hiredis.h>
+
 
 int main()
 {
@@ -58,7 +58,7 @@ int main()
         log2sensordb(db1, sensor.getId(), pid, nanos, sensor.getState(), sensor.getMovement(), t);
         if (sensor.getMovement() == true)
         {
-            securityRecap(db1, pid);
+            securityRecap(db1, pid, nanos);
         }
         sensor.setState(sensor.next());
 

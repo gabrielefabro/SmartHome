@@ -40,9 +40,10 @@ int initTestSensor(Sensor &sensor)
         }
         else
         {
+            std::cout << "TROVATO MOVIMENTO" << std::endl;
             sensor.setMovement(true);
             std::string message = "movement detected";
-            redisReply *reply = (redisReply *)redisCommand(context, "PUBLISH channel %s", message.c_str());
+            redisReply *reply = (redisReply *)redisCommand(context, "SET message %s", message.c_str());
             freeReplyObject(reply);
         }
     }
