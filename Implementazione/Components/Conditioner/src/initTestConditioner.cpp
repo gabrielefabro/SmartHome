@@ -2,10 +2,10 @@
 #include "../../../main/src/main.h"
 #include "../../../main/src/global.h"
 
-int initTestConditioner(Conditioner conditioner)
+int initTestConditioner(Conditioner &conditioner)
 {
     char state[20];
-    int conditionerId;
+    int conditionerId, conditionerTemperature;
     conditioner_type conditionerState;
     // Inizializza la connessione a Redis
     redisContext *context = redisConnect("127.0.0.1", 6379);
@@ -16,6 +16,7 @@ int initTestConditioner(Conditioner conditioner)
     }
     conditionerId = conditioner.getId();
     conditionerState = conditioner.getState();
+    conditionerTemperature = conditioner.getTemperature();
 
     // Invia ID e STATE a Redis
     redisReply *reply = (redisReply *)redisCommand(context, "SET conditioner_id %d", conditionerId);
@@ -24,16 +25,18 @@ int initTestConditioner(Conditioner conditioner)
     reply = (redisReply *)redisCommand(context, "SET conditioner_state %d", conditionerState);
     freeReplyObject(reply);
 
+    reply = (redisReply *)redisCommand(context, "SET conditioner_temperature %d", conditionerTemperature);
+    freeReplyObject(reply);
+
     testConditioner();
 
-    // Aspetta una risposta dal tester
-    reply = (redisReply *)redisCommand(context, "GET new_temperature");
     int2stateConditioner(state, conditionerState);
 
     if (strcmp(state, "change_temperature") == 0)
     {
+        reply = (redisReply *)redisCommand(context, "GET new_temperature");
         int newTemperature;
-        newTemperature = reply->integer;
+        newTemperature = std::stoi(reply->str);
         conditioner.modifyTemperature(newTemperature);
     }
 

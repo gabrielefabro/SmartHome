@@ -41,6 +41,8 @@ CREATE TABLE IF NOT EXISTS Device (
     id INT NOT NULL,
     stato VARCHAR(20) NOT NULL,
     nome VARCHAR(20) NOT NULL,
+    inizio INT NOT NULL,
+    fine INT NOT NULL,
     pid INT NOT NULL,
     nanosec BIGINT NOT NULL,
     PRIMARY KEY (t, pid)
@@ -59,13 +61,14 @@ CREATE TABLE IF NOT EXISTS Sensor (
 
 -- Creazione della tabella SensorGarden
 CREATE TABLE IF NOT EXISTS SensorGarden (
-    t INT NOT NULL,
-    id INT NOT NULL,
-    stato VARCHAR(15) NOT NULL,
-    temperature INT NOT NULL,
-    humidity INT NOT NULL,
-    pid INT NOT NULL,
-    nanosec BIGINT NOT NULL,
+    t INT,
+    id INT,
+    stato VARCHAR(15),
+    temperature INT,
+    humidity INT,
+    descr VARCHAR(30),
+    pid INT,
+    nanosec BIGINT,
     PRIMARY KEY (t, pid)
 );
 

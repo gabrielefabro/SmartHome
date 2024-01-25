@@ -17,15 +17,8 @@ conditioner_type Conditioner::getState() const
 // Modificare la temperatura
 void Conditioner::modifyTemperature(int newTemperature)
 {
-    if (getState() == ConditionerON)
-    {
-        temperature = newTemperature;
-        std::cout << " power temperature modified to " << temperature << std::endl;
-    }
-    else
-    {
-        std::cout << "Error: turned off. Turn it on first." << std::endl;
-    }
+
+    temperature = newTemperature;
 }
 
 int Conditioner::getId() const

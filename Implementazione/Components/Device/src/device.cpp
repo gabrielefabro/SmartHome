@@ -13,8 +13,9 @@ device_type Device::next()
 void Device::programmed_device(int intervalloPrimo, int intervalloSecondo)
 {
     {
+        inizio = intervalloPrimo;
+        fine = intervalloSecondo;
         std::this_thread::sleep_for(std::chrono::milliseconds(intervalloPrimo));
-        setState();
         std::this_thread::sleep_for(std::chrono::milliseconds(intervalloSecondo));
             
     }
@@ -43,4 +44,8 @@ void Device::setState()
 void Device::setState(device_type newState)
 {
     state = newState;
+}
+
+std::tuple<int, int> Device::getProgrammed() {
+    return std::make_tuple(inizio, fine);
 }

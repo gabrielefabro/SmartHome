@@ -1,10 +1,11 @@
 #include "../../../main/src/main.h"
 #include "../../../main/src/global.h"
 
-int initTestSensorGarden(SensorGarden sensorGarden)
+int initTestSensorGarden(SensorGarden &sensorGarden)
 {
     int sensorGardenId;
     sensorGarden_type sensorGardenState;
+    int sensorGardenTemperature, sensorGardenHumidity;
 
     // Inizializza la connessione a Redis
     redisContext *context = redisConnect("127.0.0.1", 6379);
@@ -16,12 +17,21 @@ int initTestSensorGarden(SensorGarden sensorGarden)
 
     sensorGardenId = sensorGarden.getId();
     sensorGardenState = sensorGarden.getState();
+    sensorGardenTemperature = sensorGarden.getTemperature();
+    sensorGardenHumidity = sensorGarden.getHumidity();
 
     // Invia ID e STATE a Redis
     redisReply *reply = (redisReply *)redisCommand(context, "SET sensorGarden_id %d", sensorGardenId);
     freeReplyObject(reply);
 
     reply = (redisReply *)redisCommand(context, "SET sensorGarden_state %d", sensorGardenState);
+    freeReplyObject(reply);
+
+    // Invia ID e STATE a Redis
+    reply = (redisReply *)redisCommand(context, "SET sensorGarden_temperature %d", sensorGardenTemperature);
+    freeReplyObject(reply);
+
+    reply = (redisReply *)redisCommand(context, "SET sensorGarden_humidity %d", sensorGardenHumidity);
     freeReplyObject(reply);
 
     testSensorGarden();
@@ -33,47 +43,18 @@ int initTestSensorGarden(SensorGarden sensorGarden)
     {
         // Aspetta una risposta dal tester
         reply = (redisReply *)redisCommand(context, "GET humidity");
-        if (reply != nullptr && reply->str != nullptr)
-        {
-            freeReplyObject(reply);
-        }
+        int humidity = std::atoi(reply->str);
+        sensorGarden.setHumidity(humidity);
+        std::cout << "la nuova umidità dovrebbe essere: " << humidity << std::endl;
+        freeReplyObject(reply);
+        // Aspetta una risposta dal tester
+        std::cout << "cambiare luci" << std::endl;
+        reply = (redisReply *)redisCommand(context, "GET temperature");
+        int temperature = std::atoi(reply->str);
+        freeReplyObject(reply);
+        sensorGarden.setTemperature(temperature);
 
-        int humidity = reply->integer;
-        if (strcmp(state, "change_light") == 0)
-        {
-            // Aspetta una risposta dal tester
-            reply = (redisReply *)redisCommand(context, "GET temperature");
-            if (reply != nullptr && reply->str != nullptr)
-            {
-                freeReplyObject(reply);
-            }
-
-            int temperature = reply->integer;
-
-            // Adjust the lights based on humidity and temperature conditions
-            if (humidity > 50 && temperature > 25)
-            {
-                std::cout << "luci spente" << std::endl;
-            }
-            else
-            {
-                std::cout << "luci accese" << std::endl;
-            }
-        }
-        else if (strcmp(state, "set_sprinklers") == 0)
-        {
-            // Adjust irrigation based on humidity conditions
-            if (humidity < 30)
-            {
-                std::cout << "irrigatori accesi" << std::endl;
-            }
-            else
-            {
-                std::cout << "irrigatori spenti" << std::endl;
-            }
-        }
     }
-
     // Chiudi la connessione a Redis
     redisFree(context);
 

@@ -5,6 +5,7 @@
 #include <thread>
 #include <iostream>
 #include <string>
+#include <tuple>
 
 typedef enum
 {
@@ -31,6 +32,8 @@ private:
     device_type state;
     nome_type nome;
     int id;
+    int inizio;
+    int fine;
 
 public:
     // Costruttore
@@ -54,6 +57,8 @@ public:
     void setState();
 
     void setState(device_type newState);
+
+    std::tuple<int, int> getProgrammed();
 };
 
 #endif // DEVICE_H

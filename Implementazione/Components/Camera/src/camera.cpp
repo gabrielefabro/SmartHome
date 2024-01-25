@@ -18,9 +18,9 @@ int Camera::getId() const
     return id;
 }
 
-void Camera::setRecording()
+void Camera::setRecording(bool rec)
 {
-    recording = true;
+    recording = rec;
 }
 
 bool Camera::getRecording()

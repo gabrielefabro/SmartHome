@@ -29,22 +29,29 @@ int initTestSensor(Sensor &sensor)
 
     char state[20];
     int2stateSensor(state, sensorState);
-    if (strcmp(state, "CHECKING") == 0)
+
+    if (strcmp(state, "SensorOFF") == 0)
+    {
+        sensor.setMovement(false);
+    }
+    else if (strcmp(state, "CHECKING") == 0)
     {
         reply = (redisReply *)redisCommand(context, "GET movment");
         
         int movement = std::stoi(reply->str);
-        if (movement == 0)
-        {
-            sensor.setMovement(false);
-        }
-        else
+        if (movement == 1)
         {
             std::cout << "TROVATO MOVIMENTO" << std::endl;
             sensor.setMovement(true);
+            std::cout << "lo stato è " << sensor.getMovement() << std::endl;
             std::string message = "movement detected";
             redisReply *reply = (redisReply *)redisCommand(context, "SET message %s", message.c_str());
             freeReplyObject(reply);
+            
+        }
+        else
+        {
+            sensor.setMovement(false);
         }
     }
 

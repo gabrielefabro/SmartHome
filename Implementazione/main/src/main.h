@@ -44,16 +44,16 @@ int initTestCamera(Camera &camera);
 int changeRandomTemperature();
 void int2stateConditioner(char *buf, conditioner_type x);
 int testConditioner();
-int initTestConditioner(Conditioner conditioner);
+int initTestConditioner(Conditioner &conditioner);
 void log2conditionerdb(Con2DB db1, int id, int pid, long int nanosec, conditioner_type state, int temperature, int t);
 
 // DEVICE FUNCTION
 void int2stateDevice(char *buf, device_type x);
-void log2devicedb(Con2DB db1, int id, int pid, long int nanosec, device_type state, nome_type nome, int t);
+void log2devicedb(Con2DB db1, int id, int pid, long int nanosec, device_type state, nome_type nome, int t, int inizio, int fine);
 int changeInt();
 const char* nomeToString(nome_type nomeDev);
 int testDevice();
-int initTestDevice(Device device);
+int initTestDevice(Device &device);
 
 // SENSOR FUNCTION
 void int2stateSensor(char *buf, sensor_type x);
@@ -66,7 +66,7 @@ void securityRecap(Con2DB db1, int pid, long int nanos);
 void int2stateSensorGarden(char *buf, sensorGarden_type x);
 void log2sensorGardendb(Con2DB db1, int id, int pid, long int nanosec, sensorGarden_type state, int humidity, int temperature, int t);
 int testSensorGarden();
-int initTestSensorGarden(SensorGarden sensorGarden);
+int initTestSensorGarden(SensorGarden &sensorGarden);
 
 
 int msleep(long msec);

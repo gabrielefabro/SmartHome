@@ -30,7 +30,7 @@ public:
     // Funzione per ottenere l'ID della fotocamera
     int getId() const;
 
-    void setRecording();
+    void setRecording(bool rec);
 
     bool getRecording();
 

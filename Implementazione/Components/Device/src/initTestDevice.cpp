@@ -1,7 +1,7 @@
 #include "../../../main/src/main.h"
 #include "../../../main/src/global.h"
 
-int initTestDevice(Device device)
+int initTestDevice(Device &device)
 {
     int deviceId;
     device_type deviceState;
@@ -35,21 +35,14 @@ int initTestDevice(Device device)
     if (strcmp(state, "programmed") == 0)
     {
         reply = (redisReply *)redisCommand(context, "GET new_int1");
-        if (reply != nullptr && reply->str != nullptr)
-        {
-            freeReplyObject(reply);
-        }
-
-        int interval1 = reply->integer;
+        int interval1 = std::atoi(reply->str);
+        freeReplyObject(reply);
 
         reply = (redisReply *)redisCommand(context, "GET new_int2");
-        if (reply != nullptr && reply->str != nullptr)
-        {
-            freeReplyObject(reply);
-        }
-
-        int interval2 = reply->integer;
+        
+        int interval2 = std::atoi(reply->str);
         device.programmed_device(interval1, interval2);
+        freeReplyObject(reply);
     }
 
     // Chiudi la connessione a Redis

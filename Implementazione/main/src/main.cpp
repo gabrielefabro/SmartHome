@@ -7,7 +7,6 @@
 #include "global.h"
 #include "main.h"
 
-
 int main()
 {
     // variabili
@@ -37,7 +36,10 @@ int main()
     log2conditionerdb(db1, conditioner.getId(), pid, nanos, conditioner.getState(), conditioner.getTemperature(), t);
 
     Device device = initDevice();
-    log2devicedb(db1, device.getId(), pid, nanos, device.getState(), device.getNome(), t);
+    std::tuple<int, int> risultato = device.getProgrammed();
+    int inizio = std::get<0>(risultato);
+    int fine = std::get<1>(risultato);
+    log2devicedb(db1, device.getId(), pid, nanos, device.getState(), device.getNome(), t, inizio, fine);
 
     Light light = initLight();
     log2lightdb(db1, light.getId(), pid, nanos, light.getState(), light.getColor(), light.getIntensity(), t);
@@ -77,7 +79,10 @@ int main()
         // Test Device
         logActivity(db1, "Test Device", pid);
         initTestDevice(device);
-        log2devicedb(db1, device.getId(), pid, nanos, device.getState(), device.getNome(), t);
+        std::tuple<int, int> risultato = device.getProgrammed();
+        inizio = std::get<0>(risultato);
+        fine = std::get<1>(risultato);
+        log2devicedb(db1, device.getId(), pid, nanos, device.getState(), device.getNome(), t, inizio, fine);
         device.setState(device.next());
 
         // Test luci

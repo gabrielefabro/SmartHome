@@ -34,3 +34,13 @@ void SensorGarden::setState(sensorGarden_type newState)
 {
     state = newState;
 }
+
+void SensorGarden::setTemperature(int newTemperature)
+{
+    temperature = newTemperature;
+}
+
+void SensorGarden::setHumidity(int newHumidity)
+{
+    humidity = newHumidity;
+}

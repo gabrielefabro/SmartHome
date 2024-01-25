@@ -40,6 +40,10 @@ public:
     int getTemperature() const;
 
     void setState(sensorGarden_type newState);
+
+    void setTemperature(int newTemperature);
+
+    void setHumidity(int newHumidity);
 };
 
 #endif // SENSOR_GARDEN_H
