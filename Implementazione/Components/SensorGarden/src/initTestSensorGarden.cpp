@@ -45,10 +45,8 @@ int initTestSensorGarden(SensorGarden &sensorGarden)
         reply = (redisReply *)redisCommand(context, "GET humidity");
         int humidity = std::atoi(reply->str);
         sensorGarden.setHumidity(humidity);
-        std::cout << "la nuova umidità dovrebbe essere: " << humidity << std::endl;
         freeReplyObject(reply);
         // Aspetta una risposta dal tester
-        std::cout << "cambiare luci" << std::endl;
         reply = (redisReply *)redisCommand(context, "GET temperature");
         int temperature = std::atoi(reply->str);
         freeReplyObject(reply);

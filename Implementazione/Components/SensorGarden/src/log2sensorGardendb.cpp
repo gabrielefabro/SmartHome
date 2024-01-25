@@ -19,12 +19,10 @@ void log2sensorGardendb(Con2DB db1, int id, int pid, long int nanosec, sensorGar
     // Adjust the lights based on humidity and temperature conditions
     if (humidity > 50 && temperature > 25)
     {
-      std::cout << "luci spente" << std::endl;
       sprintf(descr, "luci_spente");
     }
     else
     {
-      std::cout << "luci accese" << std::endl;
       sprintf(descr, "luci_accese");
     }
   }
@@ -33,12 +31,10 @@ void log2sensorGardendb(Con2DB db1, int id, int pid, long int nanosec, sensorGar
     // Adjust irrigation based on humidity conditions
     if (humidity < 30)
     {
-      std::cout << "irrigatori accese" << std::endl;
       sprintf(descr, "irrigatori_accesi");
     }
     else
     {
-      std::cout << "irrigatori spenti" << std::endl;
       sprintf(descr, "irrigatori_spenti");
     }
   }
