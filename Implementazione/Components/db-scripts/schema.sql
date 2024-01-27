@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS Light (
     color VARCHAR(20) NOT NULL,
     intensity INT NOT NULL,
     pid INT NOT NULL,
-    nanosec BIGINT NOT NULL,
+    temp VARCHAR(25) NOT NULL,
     PRIMARY KEY (t, pid)
 );
 
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS Camera (
     stato VARCHAR(20) NOT NULL,
     recording INT NOT NULL,
     pid INT NOT NULL,
-    nanosec BIGINT NOT NULL,
+    temp VARCHAR(25) NOT NULL,
     PRIMARY KEY (t, pid)
 );
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS Conditioner (
     stato VARCHAR(20) NOT NULL,
     temperature INT NOT NULL,
     pid INT NOT NULL,
-    nanosec BIGINT NOT NULL,
+    temp VARCHAR(25) NOT NULL,
     PRIMARY KEY (t, pid)
 );
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS Device (
     inizio INT NOT NULL,
     fine INT NOT NULL,
     pid INT NOT NULL,
-    nanosec BIGINT NOT NULL,
+    temp VARCHAR(25) NOT NULL,
     PRIMARY KEY (t, pid)
 );
 
@@ -55,20 +55,20 @@ CREATE TABLE IF NOT EXISTS Sensor (
     stato VARCHAR(15) NOT NULL,
     movement INT NOT NULL,
     pid INT NOT NULL,
-    nanosec BIGINT NOT NULL,
+    temp VARCHAR(25) NOT NULL,
     PRIMARY KEY (t, pid)
 );
 
 -- Creazione della tabella SensorGarden
 CREATE TABLE IF NOT EXISTS SensorGarden (
-    t INT,
-    id INT,
-    stato VARCHAR(15),
-    temperature INT,
-    humidity INT,
-    descr VARCHAR(30),
-    pid INT,
-    nanosec BIGINT,
+    t INT NOT NULL,
+    id INT NOT NULL,
+    stato VARCHAR(15) NOT NULL,
+    temperature INT NOT NULL,
+    humidity INT NOT NULL,
+    descr VARCHAR(30) NOT NULL,
+    pid INT NOT NULL,
+    temp VARCHAR(25) NOT NULL,
     PRIMARY KEY (t, pid)
 );
 
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS LogActivity (
 );
 
 CREATE TABLE IF NOT EXISTS SecurityRecap (
-    nanosec BIGINT NOT NULL,
+    temp VARCHAR(25) NOT NULL,
     pid INT NOT NULL,
-    PRIMARY KEY (nanosec, pid)
+    PRIMARY KEY (temp, pid)
 );

@@ -1,6 +1,6 @@
 #include "camera.h"
 
-Camera::Camera(int id, camera_type state) : id(id), state(state) {}
+Camera::Camera(int id, camera_type state) : id(id), state(state), recording(false) {}
 
 camera_type Camera::next()
 {

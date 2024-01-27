@@ -44,7 +44,6 @@ int testSensor()
         else
         {
             n = 0;
-            std::cout << n << std::endl;
             // Invia se e' presente movimento a Redis
             reply = (redisReply *)redisCommand(context, "SET movment %d", n);
             freeReplyObject(reply);

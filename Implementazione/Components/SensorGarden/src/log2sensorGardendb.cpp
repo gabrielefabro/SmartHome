@@ -3,13 +3,14 @@
 
 /* buy stock  */
 
-void log2sensorGardendb(Con2DB db1, int id, int pid, long int nanosec, sensorGarden_type state, int humidity, int temperature, int t)
+void log2sensorGardendb(Con2DB db1, int id, int pid, sensorGarden_type state, int humidity, int temperature, int t)
 {
 
   PGresult *res;
   char cstate[20];
   char sqlcmd[1000];
   char descr[20];
+  char timeString[25];
 
   int2stateSensorGarden(cstate, state);
 
@@ -38,16 +39,19 @@ void log2sensorGardendb(Con2DB db1, int id, int pid, long int nanosec, sensorGar
       sprintf(descr, "irrigatori_spenti");
     }
   }
-  else{
+  else
+  {
     sprintf(descr, "nothing_happened");
   }
+
+  timeFlies(timeString);
 
   sprintf(sqlcmd, "BEGIN");
   res = db1.ExecSQLcmd(sqlcmd);
   PQclear(res);
 
   sprintf(sqlcmd,
-          "INSERT INTO SensorGarden VALUES (%d, %d, '%s', %d, %d, '%s', %d, %ld) ON CONFLICT DO NOTHING",
+          "INSERT INTO SensorGarden VALUES (%d, %d, '%s', %d, %d, '%s', %d, '%s') ON CONFLICT DO NOTHING",
           t,
           id,
           cstate,
@@ -55,7 +59,7 @@ void log2sensorGardendb(Con2DB db1, int id, int pid, long int nanosec, sensorGar
           humidity,
           descr,
           pid,
-          nanosec);
+          timeString);
 
   res = db1.ExecSQLcmd(sqlcmd);
   PQclear(res);

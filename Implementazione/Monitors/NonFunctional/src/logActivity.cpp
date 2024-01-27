@@ -3,18 +3,11 @@
 // Definizione della funzione per il logging
 void logActivity(Con2DB db1, const char *functionName, int pid)
 {
-    char sqlcmd[200];  // Aumentato la dimensione dell'array per gestire la stringa SQL più lunga
-    time_t currentTime;
-    struct tm *localTime;
+    char sqlcmd[200]; // Aumentato la dimensione dell'array per gestire la stringa SQL più lunga
     PGresult *res;
+    char timeString[25];
 
-    // Ottenere l'orario corrente
-    time(&currentTime);
-    localTime = localtime(&currentTime);
-    
-    // Converti l'orario in un formato leggibile per la stringa SQL
-    char timeString[20];
-    strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", localTime);
+    timeFlies(timeString);
 
     sprintf(sqlcmd, "BEGIN");
     res = db1.ExecSQLcmd(sqlcmd);

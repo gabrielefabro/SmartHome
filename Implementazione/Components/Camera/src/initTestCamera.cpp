@@ -20,7 +20,7 @@ int initTestCamera(Camera &camera)
     camera.setRecording(false);
   }
 
-  else if (strcmp(state, "Waiting") == 0)
+  if (strcmp(state, "Waiting") == 0)
   {
     std::cout << "Sono in waiting" << std::endl;
 
