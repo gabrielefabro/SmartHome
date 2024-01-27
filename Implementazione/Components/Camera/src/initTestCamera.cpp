@@ -22,25 +22,20 @@ int initTestCamera(Camera &camera)
 
   if (strcmp(state, "Waiting") == 0)
   {
-    std::cout << "Sono in waiting" << std::endl;
 
     redisReply *reply_get = (redisReply *)redisCommand(context, "GET message");
     std::string redisValue(reply_get->str);
-    std::cout << "Valore ottenuto da Redis: " << redisValue << std::endl;
     if (strcmp(reply_get->str, "movement detected") == 0)
     {
-      std::cout << "camera accenditi" << std::endl;
       camera.setRecording(true);
-      std::cout << "lo stato della camera è " << camera.getRecording() << std::endl;
     }
     else
     {
       camera.setRecording(false);
-      std::cout << "lo stato della camera è " << camera.getRecording() << std::endl;
     }
     freeReplyObject(reply_get);
   }
-  
+
   // Chiudi la connessione a Redis
   redisFree(context);
 

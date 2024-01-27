@@ -104,7 +104,7 @@ int main()
         update_time();
     }
 
-    // log2stdout(db1,pid); Va rifatta
+    log2stdout(db1,pid);
 
     return 0;
 }

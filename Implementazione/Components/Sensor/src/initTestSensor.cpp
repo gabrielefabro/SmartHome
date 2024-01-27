@@ -45,9 +45,7 @@ int initTestSensor(Sensor &sensor)
         freeReplyObject(reply);
         if (movement == 1)
         {
-            std::cout << "TROVATO MOVIMENTO" << std::endl;
             sensor.setMovement(true);
-            std::cout << "lo stato è " << sensor.getMovement() << std::endl;
             std::string message = "movement detected";
             redisReply *reply = (redisReply *)redisCommand(context, "SET message %s", message.c_str());
             freeReplyObject(reply);

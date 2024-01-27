@@ -11,6 +11,7 @@
 #include <string.h>
 #include <ctime>
 #include <chrono>
+#include <vector>
 #include "../../con2db/src/pgsql.h"
 #include "../../Components/Camera/src/camera.h"
 #include "../../Components/Device/src/device.h"
@@ -78,9 +79,10 @@ long long get_current_time_ns();
 void monitorResponseTime(const Con2DB& db, int pid, long nanos, long long requestTime, long responseTimeLimit);
 long int get_day_nanos(char *buf);
 long int nanos2day(char *buf, long int nanosec);
-void log2stdout(Con2DB db1, int pid);
+int log2stdout(Con2DB db1, int pid);
 void logActivity(Con2DB db1, const char *functionName, int pid);
 void timeFlies(char *buf);
+void printTableData(PGresult *res);
 
 using namespace std;
 
