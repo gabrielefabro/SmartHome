@@ -1,6 +1,7 @@
 #include <string.h>
 #include "../../../main/src/main.h"
 
+// Funzione che ritorna la striga di un colore passato come argomento alla funzione
 const char* colorToString(light_color color)
 {
     switch (color)

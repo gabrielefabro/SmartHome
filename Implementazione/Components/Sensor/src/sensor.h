@@ -41,4 +41,4 @@ public:
     void setState(sensor_type newState);
 };
 
-#endif // CAMERA_H
+#endif

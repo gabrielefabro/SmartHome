@@ -1,7 +1,6 @@
 #include "../../../main/src/main.h"
 
-/* compute next state  */
-
+// Funzione che inserisce in un buffer la stringa dello stato della luce
 void int2stateLight(char *buf, light_type x)
 {
 
@@ -22,4 +21,4 @@ void int2stateLight(char *buf, light_type x)
     sprintf(buf, "change_color");
   }
 
-} /*   int2color()  */
+}

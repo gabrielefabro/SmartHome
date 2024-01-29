@@ -4,7 +4,7 @@
 #include <iostream>
 #include "../../../main/src/main.h"
 
+// Funzione che genera un colore casuale per la luce
 light_color getRandomColor() {    
-    // Converti l'indice casuale in un valore di enumerazione
     return static_cast<light_color>(rand() % 7);
 }

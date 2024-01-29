@@ -1,5 +1,6 @@
 #include "../../../main/src/main.h"
 
+// Funzione che inserisce nel buffer la stringa che rappresenta il colore della luce
 light_color stringToLightColor(const char* colorStr)
 {
 
