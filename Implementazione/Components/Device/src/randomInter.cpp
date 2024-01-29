@@ -2,8 +2,8 @@
 #include <ctime>
 #include <iostream>
 
+// Funzione che genera un numero casuale per modificare l'orario di programmazione
 int changeInt()
 {
-    // Genera un numero casuale tra 1 e 24 (inclusi)
     return (std::rand() % 23) + 1;
 }

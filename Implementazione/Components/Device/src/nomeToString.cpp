@@ -1,5 +1,6 @@
 #include "../../../main/src/main.h"
 
+// Funzione che ritorna la stringa rappresentate il nome del device passato come argomento
 const char* nomeToString(nome_type nomeDev)
 {
   switch (nomeDev)

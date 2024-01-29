@@ -1,10 +1,8 @@
 #include "../../../main/src/main.h"
 
-/* compute next state  */
-
+// Funzione che inserisce in un buffer la stringa che rappresenta lo stato dell'oggetto Dispositivo
 void int2stateDevice(char *buf, device_type x)
 {
-
   if (x == DeviceON)
   {
     sprintf(buf, "DeviceON");
@@ -17,5 +15,4 @@ void int2stateDevice(char *buf, device_type x)
   {
     sprintf(buf, "programmed");
   }
-
-} 
+}
