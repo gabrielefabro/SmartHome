@@ -1,7 +1,6 @@
 #include "../../../main/src/main.h"
 
-/* compute next state  */
-
+// Funzione che inserisce nel buffer la stringa che rappresenta lo stato del SensoreGiardino
 void int2stateSensorGarden(char *buf, sensorGarden_type x)
 {
 
@@ -22,4 +21,4 @@ void int2stateSensorGarden(char *buf, sensorGarden_type x)
     sprintf(buf, "SensorGardenOFF");
   }
 
-} /*   int2state()  */
+}

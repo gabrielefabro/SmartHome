@@ -1,9 +1,11 @@
 #ifndef SENSOR_GARDEN_H
 #define SENSOR_GARDEN_H
+
 #include <iostream>
 #include <string>
 #include <cstdlib>
 
+// Enumerazione dei possibili stati del sensore da giardino
 typedef enum
 {
     SensorGardenON,
@@ -15,34 +17,45 @@ typedef enum
 class SensorGarden
 {
 private:
+
+    // Stato attuale del sensore da giardino
     sensorGarden_type state;
+
+    // ID univoco del sensore da giardino
     int id;
+
+    // Livello di umidità rilevato dal sensore da giardino
     int humidity;
+    
+    // Temperatura rilevata dal sensore da giardino
     int temperature;
 
 public:
-    // Costruttore
+    // Costruttore del sensore da giardino
     SensorGarden(int id, sensorGarden_type state, int humidity, int temperature);
 
-    // Funzione per ottenere lo stato successivo
+    // Funzione per ottenere lo stato successivo del sensore da giardino
     sensorGarden_type next();
 
-    // Funzione per controllare lo stato del sensorGarden
+    // Funzione per ottenere lo stato attuale del sensore da giardino
     sensorGarden_type getState() const;
 
-    // Funzione per ottenere l'ID del sensorGarden
+    // Funzione per ottenere l'ID del sensore da giardino
     int getId() const;
 
-    // Funzione per ottenere l'ID del sensorGarden
+    // Funzione per ottenere il livello di umidità rilevato dal sensore da giardino
     int getHumidity() const;
 
-    // Funzione per ottenere l'ID del sensorGarden
+    // Funzione per ottenere la temperatura rilevata dal sensore da giardino
     int getTemperature() const;
 
+    // Funzione per impostare lo stato del sensore da giardino
     void setState(sensorGarden_type newState);
 
+    // Funzione per impostare la temperatura rilevata dal sensore da giardino
     void setTemperature(int newTemperature);
 
+    // Funzione per impostare il livello di umidità rilevato dal sensore da giardino
     void setHumidity(int newHumidity);
 };
 

@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 
+// Funzione di test per il sensore da giardino
 int testSensorGarden()
 {
     bool corretto;
@@ -19,7 +20,7 @@ int testSensorGarden()
         return 1;
     }
 
-    // Leggi ID STATE TEMPERATURE HUMIDITY da Redis
+    // Leggi ID, STATE, TEMPERATURE, HUMIDITY da Redis
     redisReply *reply = (redisReply *)redisCommand(context, "GET sensorGarden_id");
     int sensorGardenId = atoi(reply->str);
     freeReplyObject(reply);
@@ -38,22 +39,24 @@ int testSensorGarden()
 
     int2stateSensorGarden(state, sensorGardenState);
 
+    // Verifica se lo stato richiede una simulazione di cambiamento
     if (strcmp(state, "change_light") == 0 || strcmp(state, "set_sprinklers") == 0)
     {
         corretto = true;
+        // Genera nuovi valori di umidità e temperatura
         while (corretto)
         {
             humidity = std::rand() % 101;
             temperature = std::rand() % 46;
-            if ((humidity < sensorGardenHumidity + 5) && (humidity > sensorGardenHumidity - 5))
+            // Verifica se i nuovi valori sono vicini ai valori attuali
+            if ((humidity < sensorGardenHumidity + 5) && (humidity > sensorGardenHumidity - 5) &&
+                (temperature < sensorGardenTemperature + 5) && (temperature > sensorGardenTemperature - 5))
             {
-                if ((temperature < sensorGardenTemperature + 5) && (temperature > sensorGardenTemperature - 5))
-                {
-                    corretto = false;
-                }
+                corretto = false;
             }
         }
 
+        // Aggiorna i valori di umidità e temperatura in Redis
         redisReply *reply = (redisReply *)redisCommand(context, "MSET humidity %d temperature %d", humidity, temperature);
         freeReplyObject(reply);
     }
