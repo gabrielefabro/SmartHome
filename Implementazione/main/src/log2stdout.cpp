@@ -1,6 +1,7 @@
 #include "main.h"
 #include <iostream>
 
+// Funzione che printa sul terminale tutte le tabelle alla fine dell'esecuzione del programma
 int log2stdout(Con2DB db1, int pid)
 {
     PGresult *res;
@@ -10,18 +11,17 @@ int log2stdout(Con2DB db1, int pid)
 
     for (const auto &tableName : tableNames)
     {
-        // Construct the SQL query to select all rows from the current table
+        // Selezione tutte le tabelle nel database
         char sqlcmd[1000];
         sprintf(sqlcmd, "SELECT * FROM %s", tableName);
 
-        // Execute the SQL query
+        // Esegui il comando per selezionare le tabelle
         PGresult *res = db1.ExecSQLtuples(sqlcmd);
 
-        // Process and print the data for the current table
+        // Printa i dati delle tabelle
         std::cout << "Table: " << tableName << "\n";
         printTableData(res);
 
-        // Clear the result
         PQclear(res);
     }
 

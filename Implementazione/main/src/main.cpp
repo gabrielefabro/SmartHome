@@ -23,10 +23,11 @@ int main()
     // Init time
     init_time();
 
+    // Inizializzazione del random
     auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
     std::srand(static_cast<unsigned>(seed));
 
-    // inizializzo le componenti
+    // inizializzo le componenti e le carico nel db
     Camera camera = initCamera();
     log2cameradb(db1, camera.getId(), pid, camera.getState(), camera.getRecording(), t);
 
@@ -99,7 +100,6 @@ int main()
         monitorResponseTime(db1, pid, nanos, requestTime, 5000000000); // Limite di 5 secondi
 
         t++;
-        /* sleep   */
         micro_sleep(500);
         update_time();
     }
