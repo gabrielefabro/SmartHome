@@ -3,8 +3,8 @@
 #include <ctime>
 #include <iostream>
 
+// Funzione che genera un numero casuale per modificare la temperatura
 int changeRandomTemperature()
 {
-    // Genera un numero casuale tra 1 e 10 (inclusi)
     return (std::rand() % 40) + 1;
 }

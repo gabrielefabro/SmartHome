@@ -1,9 +1,10 @@
 #ifndef CONDITIONER_H
 #define CONDITIONER_H
+
 #include <cstdlib>
 #include <iostream>
 
-
+// Enumerazione che rappresenta i possibili stati del condizionatore.
 typedef enum
 {
     ConditionerON,
@@ -11,34 +12,40 @@ typedef enum
     change_temperature
 } conditioner_type;
 
-
-
+// Dichiarazione della classe Conditioner.
 class Conditioner
 {
 private:
+    // Variabile di stato del condizionatore.
     conditioner_type state;
+
+    // Variabile che rappresenta la temperatura del condizionatore.
     int temperature;
+
+    // Variabile che rappresenta l'identificatore del condizionatore.
     int id;
 
 public:
-    // Costruttore
+    // Costruttore della classe Conditioner.
     Conditioner(int id, int temperature, conditioner_type state);
 
-    // Funzione per ottenere lo stato successivo
+    // Funzione per generare casualmente uno stato successivo per il condizionatore.
     conditioner_type next();
 
-    // Funzione per controllare lo stato del conditioner
+    // Funzione per ottenere lo stato corrente del condizionatore.
     conditioner_type getState() const;
 
-    // Funzione per cambiare la temperatura del conditioner
+    // Funzione per modificare manualmente la temperatura del condizionatore.
     void modifyTemperature(int temperature);
 
-    // Funzione per ottenere l'ID del conditioner
+    // Funzione per ottenere l'ID del condizionatore.
     int getId() const;
 
+    // Funzione per ottenere la temperatura corrente del condizionatore.
     int getTemperature() const;
 
+    // Funzione per impostare manualmente lo stato del condizionatore.
     void setState(conditioner_type newState);
 };
 
-#endif // CONDITIONER_H
+#endif

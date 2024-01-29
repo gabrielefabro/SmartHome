@@ -1,7 +1,6 @@
 #include "../../../main/src/main.h"
 
-/* compute next state  */
-
+// Funzione che inserisce in un buffer la stringa che rappresenta lo stato dell'oggetto condizionatore
 void int2stateConditioner(char *buf, conditioner_type x)
 {
 
@@ -18,4 +17,4 @@ void int2stateConditioner(char *buf, conditioner_type x)
     sprintf(buf, "change_temperature");
   }
 
-} /*   int2state()  */
+}
