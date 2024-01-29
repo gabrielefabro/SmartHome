@@ -7,7 +7,7 @@ int log2stdout(Con2DB db1, int pid)
     PGresult *res;
 // Table names
     const char *tableNames[] = {
-        "Light", "Camera", "Conditioner", "Device", "Sensor", "SensorGarden", "LogActivity"};
+        "Light", "Camera", "Conditioner", "Device", "Sensor", "SensorGarden", "LogActivity", "SecurityRecap"};
 
     for (const auto &tableName : tableNames)
     {
