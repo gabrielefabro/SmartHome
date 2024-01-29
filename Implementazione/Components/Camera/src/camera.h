@@ -24,17 +24,20 @@ public:
     // Funzione per ottenere lo stato successivo
     camera_type next();
 
+    // Funzione per cambiare stato
+    void setState(camera_type newState);
+
     // Funzione per controllare lo stato di registrazione
     camera_type getState() const;
 
     // Funzione per ottenere l'ID della fotocamera
     int getId() const;
 
+    // Funzione per impostare lostato di registrazione
     void setRecording(bool rec);
 
+    // Funzione per controllare la registrazione
     bool getRecording();
-
-    void setState(camera_type newState);
 };
 
 #endif // CAMERA_H

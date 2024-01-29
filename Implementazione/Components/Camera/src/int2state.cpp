@@ -1,7 +1,6 @@
 #include "../../../main/src/main.h"
 
-/* compute next state  */
-
+// Funzione che inserisce in un buffer la stringa che rappresenta lo stato dell'oggetto camera
 void int2stateCamera(char *buf, camera_type x)
 {
 
@@ -17,5 +16,4 @@ void int2stateCamera(char *buf, camera_type x)
   {
     sprintf(buf, "CameraOFF");
   }
-
-} /*   int2color()  */
+}
