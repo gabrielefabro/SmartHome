@@ -1,7 +1,6 @@
 #include "../../../main/src/main.h"
 
-/* compute next state  */
-
+// Funzione che inserisce nel buffer la stringa che rappresenta lo stato del Sensore
 void int2stateSensor(char *buf, sensor_type x)
 {
 
@@ -18,4 +17,4 @@ void int2stateSensor(char *buf, sensor_type x)
     sprintf(buf, "CHECKING");
   }
 
-} /*   int2state()  */
+}

@@ -15,14 +15,7 @@ void log2cameradb(Con2DB db1, int id, int pid, camera_type state, bool recording
   int2stateCamera(cstate, state);
 
   // Imposta x in base allo stato della registrazione per inserirlo nel database.
-  if (recording == true)
-  {
-    x = 1;
-  }
-  else
-  {
-    x = 0;
-  }
+  x = recording ? 1 : 0;
 
   // Ottieni la rappresentazione di stringa del timestamp corrente.
   timeFlies(timeString);

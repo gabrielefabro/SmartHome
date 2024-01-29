@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 
+// Funzione di test per il sensore
 int testSensor()
 {
     char state[20];
@@ -17,9 +18,9 @@ int testSensor()
         return 1;
     }
 
-    // Leggi ID e STATE da Redis
+    // Legge l'ID e lo stato del sensore da Redis
     redisReply *reply = (redisReply *)redisCommand(context, "GET sensor_id");
-    int Sensor = atoi(reply->str);
+    int sensorId = atoi(reply->str);
     freeReplyObject(reply);
 
     reply = (redisReply *)redisCommand(context, "GET sensor_state");
@@ -30,27 +31,25 @@ int testSensor()
 
     if (strcmp(state, "CHECKING") == 0)
     {
-        // Inizializza il generatore di numeri casuali con il tempo corrente
-
-        // Genera un numero casuale tra 0 e RAND_MAX
+        // Genera un numero casuale, se è pari allora fai che sia stato rilevato movimento, altrimenti no
         int n = std::rand();
         if (n % 2 == 0)
         {
             n = 1;
-            // Invia se e' presente movimento a Redis
+            // Invia al Redis se è presente movimento
             reply = (redisReply *)redisCommand(context, "SET movment %d", n);
             freeReplyObject(reply);
         }
         else
         {
             n = 0;
-            // Invia se e' presente movimento a Redis
+            // Invia al Redis se non è presente movimento
             reply = (redisReply *)redisCommand(context, "SET movment %d", n);
             freeReplyObject(reply);
         }
     }
 
-    // Chiudi la connessione a Redis
+    // Chiude la connessione a Redis
     redisFree(context);
 
     return 0;
