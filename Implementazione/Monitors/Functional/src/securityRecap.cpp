@@ -1,6 +1,6 @@
 #include "../../../main/src/main.h"
 
-// Funzione per registrare un riassunto di sicurezza nel database
+// Monitor per il requisito funzionale per registrare un riassunto di sicurezza nel database
 void securityRecap(Con2DB db1, int pid)
 {
     char sqlcmd[100];

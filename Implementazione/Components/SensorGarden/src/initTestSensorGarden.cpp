@@ -53,8 +53,8 @@ int initTestSensorGarden(SensorGarden &sensorGarden)
         // Aspetta una risposta dal tester per la temperatura
         reply = (redisReply *)redisCommand(context, "GET temperature");
         int temperature = std::atoi(reply->str);
-        freeReplyObject(reply);
         sensorGarden.setTemperature(temperature);
+        freeReplyObject(reply);
     }
 
     // Chiude la connessione a Redis

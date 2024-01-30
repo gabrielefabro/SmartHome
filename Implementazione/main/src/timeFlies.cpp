@@ -2,6 +2,7 @@
 #include <ctime>
 #include <cstdio>
 
+// Funzione che ritorna un buffer contenente il tempo corrente sotto forma di stringa
 void timeFlies(char *buf)
 {
     time_t currentTime;

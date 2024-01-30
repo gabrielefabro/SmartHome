@@ -40,4 +40,4 @@ public:
     bool getRecording();
 };
 
-#endif // CAMERA_H
+#endif

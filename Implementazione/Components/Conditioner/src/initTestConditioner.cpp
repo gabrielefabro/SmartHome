@@ -46,6 +46,7 @@ int initTestConditioner(Conditioner &conditioner)
         int newTemperature;
         newTemperature = std::stoi(reply->str);
         conditioner.modifyTemperature(newTemperature);
+        freeReplyObject(reply);
     }
 
     // Chiudi la connessione a Redis.

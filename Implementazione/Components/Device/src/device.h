@@ -74,4 +74,4 @@ public:
     // Funzione per ottenere gli intervalli di tempo programmato per l'attivazione del dispositivo.
     std::tuple<int, int> getProgrammed();
 };
-#endif // DEVICE_H
+#endif

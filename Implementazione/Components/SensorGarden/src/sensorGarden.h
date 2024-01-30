@@ -59,4 +59,4 @@ public:
     void setHumidity(int newHumidity);
 };
 
-#endif // SENSOR_GARDEN_H
+#endif

@@ -1,6 +1,6 @@
 #include "../../../main/src/main.h"
 
-// Definizione della funzione per il logging delle attività
+// Monitor per il requisito non funzionale per il logging delle attività
 void logActivity(Con2DB db1, const char *functionName, int pid)
 {
     char sqlcmd[200]; // Dimensione dell'array aumentata per gestire la stringa SQL più lunga
