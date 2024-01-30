@@ -60,6 +60,7 @@ int initTestSensor(Sensor &sensor)
             std::string message = "movement detected";
             reply = (redisReply *)redisCommand(context, "SET message %s", message.c_str());
             freeReplyObject(reply);
+            std::cout << "ATTENZIONE MOVIMENTO RILEVATO, INVIO MESSAGGIO ALLARME IN CORSO" << std::endl; // Simulaziodi di una notifica per le emergenze
         }
         else
         {
