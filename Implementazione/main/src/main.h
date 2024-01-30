@@ -2,6 +2,7 @@
 #define main_h
 
 #include <hiredis/hiredis.h>
+#include <postgresql/libpq-fe.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>

@@ -1,5 +1,6 @@
 
 #include "pgsql.h"
+#include "main.h"
 
 #define DEBUG 1000
 
