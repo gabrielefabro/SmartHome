@@ -1,7 +1,0 @@
-Class Sensor:
-    attributes:
-        movement (true if the sensore reval some movement)    
-    functions:
-        checkMovement:
-            control if there are some movement around here and set movement at true else false
-        

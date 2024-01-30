@@ -1,4 +1,0 @@
-1. Lighting Management:
-    Modify lighting settings and colors as needed
-
-

@@ -1,2 +1,0 @@
-1. Expansion Capability:
-    The system must allow the addition of new devices and features without causing performance problems.

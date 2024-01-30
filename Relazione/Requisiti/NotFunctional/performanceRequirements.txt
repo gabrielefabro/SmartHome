@@ -1,4 +1,0 @@
-1. Response Time:
-    The system must ensure a quick response, with a maximum time of 5 seconds for user requests.
-2. Reliability:
-    The system must be operational at least 99% of the time.

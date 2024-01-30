@@ -1,8 +1,0 @@
-1. Turn On:
-    Turn on the device
-
-2. Turn Off:
-    Turn off the device
-
-3. Time Schedule:
-    Sets an activity period
