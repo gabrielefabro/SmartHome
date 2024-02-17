@@ -4,7 +4,7 @@
 #include "../../con2db/src/pgsql.h"
 #include <postgresql/libpq-fe.h>
 #include <unistd.h>
-#include "camera.h"
+#include "sensor.h"
 #include <string.h>
 
 int main()
@@ -44,7 +44,7 @@ int main()
            (long)pid, (long)getppid());
 
     /* init traffic light state */
-    Camera camera = initCamera();
+    Sensor sensor = initSensor();
 
     redisReply *reply;
 
@@ -70,16 +70,16 @@ int main()
                 std::string received_message = reply->element[2]->str;
                 std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
 
-                if (strcmp(received_message.c_str(), "CameraOFF") == 0)
+                if (strcmp(received_message.c_str(), "SensorON") == 0)
                 {
-                    camera.setRecording(false);
+                    sensor.setCheck(true);
                 }
-                else if (strcmp(received_message.c_str(), "CameraON") == 0)
+                else if (strcmp(received_message.c_str(), "SensorOFF") == 0)
                 {
-                    camera.setRecording(true);
+                    sensor.setCheck(false);
                 }
 
-                log2cameradb(db1, camera.getId(), pid, camera.getState(), camera.getRecording());
+                log2sensordb(db1, sensor.getId(), pid, sensor.getState(), sensor.getCheck());
 
                 // Scriviamo una risposta sulla stessa stream
                 redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH cameraChannel %s", response);

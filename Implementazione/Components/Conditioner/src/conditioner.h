@@ -48,4 +48,8 @@ public:
     void setState(conditioner_type newState);
 };
 
+Conditioner initConditioner();
+void log2conditionerdb(Con2DB db1, int id, int pid, conditioner_type state, int temperature);
+
+
 #endif

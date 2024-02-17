@@ -9,8 +9,6 @@
 typedef enum
 {
     SensorGardenON,
-    change_light,
-    set_sprinklers,
     SensorGardenOFF
 } sensorGarden_type;
 
@@ -58,5 +56,8 @@ public:
     // Funzione per impostare il livello di umidità rilevato dal sensore da giardino
     void setHumidity(int newHumidity);
 };
+
+SensorGarden initSensorGarden();
+void log2sensorGardendb(Con2DB db1, int id, int pid, sensorGarden_type state, int humidity, int temperature);
 
 #endif

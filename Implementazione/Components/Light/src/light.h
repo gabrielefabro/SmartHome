@@ -68,4 +68,8 @@ public:
     void setState(light_type newState);
 };
 
+Light initLight();
+void log2lightdb(Con2DB db1, int id, int pid, light_type state, light_color color, int intensity);
+
+
 #endif

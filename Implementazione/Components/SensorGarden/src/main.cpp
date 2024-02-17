@@ -4,7 +4,7 @@
 #include "../../con2db/src/pgsql.h"
 #include <postgresql/libpq-fe.h>
 #include <unistd.h>
-#include "camera.h"
+#include "sensorGarden.h"
 #include <string.h>
 
 int main()
@@ -40,11 +40,11 @@ int main()
 
     pid = getpid();
 
-    printf("Start camera with pid %ld, ppid %ld \n",
+    printf("Start light with pid %ld, ppid %ld \n",
            (long)pid, (long)getppid());
 
     /* init traffic light state */
-    Camera camera = initCamera();
+    SensorGarden sensorGarden = initSensorGarden();
 
     redisReply *reply;
 
@@ -53,6 +53,10 @@ int main()
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dis(0, 100);
+        int countMessage = 0;
+        int humidity, temperature;
+        sensorGarden_type state;
+        int intensity;
 
         if (dis(gen) > 5)
         {
@@ -70,16 +74,18 @@ int main()
                 std::string received_message = reply->element[2]->str;
                 std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
 
-                if (strcmp(received_message.c_str(), "CameraOFF") == 0)
+                if (strcmp(received_message.c_str(), "SensorGardenON") == 0)
                 {
-                    camera.setRecording(false);
+                    humidity = std::rand() % 101;
+                    temperature = std::rand() % 46;
                 }
-                else if (strcmp(received_message.c_str(), "CameraON") == 0)
+                else if (strcmp(received_message.c_str(), "SensorGardenOFF") == 0)
                 {
-                    camera.setRecording(true);
+                    humidity = 0;
+                    temperature = 0;
                 }
 
-                log2cameradb(db1, camera.getId(), pid, camera.getState(), camera.getRecording());
+                log2sensorGardendb(db1, sensorGarden.getId(), pid, sensorGarden.getState(), sensorGarden.getHumidity(), sensorGarden.getTemperature());
 
                 // Scriviamo una risposta sulla stessa stream
                 redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH cameraChannel %s", response);
@@ -99,7 +105,7 @@ int main()
         {
             response = "no";
             // Scriviamo una risposta sulla stessa stream
-            redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH cameraChannel %s", response);
+            redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH response_channel %s", response);
             if (publish_reply == NULL)
             {
                 std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;

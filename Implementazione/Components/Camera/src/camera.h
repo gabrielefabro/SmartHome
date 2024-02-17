@@ -7,7 +7,6 @@
 typedef enum
 {
     CameraON,
-    changeTemperature,
     CameraOFF
 } camera_type;
 
@@ -42,5 +41,6 @@ public:
 };
 
 Camera initCamera();
+void log2cameradb(Con2DB db1, int id, int pid, camera_type state, bool recording);
 
 #endif

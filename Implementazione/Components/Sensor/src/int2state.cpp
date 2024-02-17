@@ -12,9 +12,4 @@ void int2stateSensor(char *buf, sensor_type x)
   {
     sprintf(buf, "SensorOFF");
   }
-  else
-  {
-    sprintf(buf, "CHECKING");
-  }
-
 }

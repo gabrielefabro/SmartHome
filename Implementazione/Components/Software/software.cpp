@@ -242,44 +242,18 @@ int main()
                     break;
                 case SensorGarden:
                     reply = (redisReply *)redisCommand(context, "GET comando");
-                    conditioner_type state = static_cast<conditioner_type>(atoi(reply->str));
+                    camera_type state = static_cast<camera_type>(atoi(reply->str));
                     freeReplyObject(reply);
 
-                    reply = (redisReply *)redisCommand(context, "GET humidity");
-                    int humidity = (atoi(reply->str));
+                    reply = (redisReply *)redisCommand(context, "PUBLISH cameraChannel %s", state);
                     freeReplyObject(reply);
 
-                    reply = (redisReply *)redisCommand(context, "GET temperature");
-                    int temperature = (atoi(reply->str));
-                    freeReplyObject(reply);
-
-                    // Definisci un array contenente i valori da inviare
-                    int values[] = {state, temperature, humidity};
-                    const int NUM_MESSAGES = sizeof(values) / sizeof(values[0]);
-
-                    for (int i = 0; i < NUM_MESSAGES; ++i)
-                    {
-                        // Invia il messaggio a Redis
-                        reply = (redisReply *)redisCommand(context, "PUBLISH sensorGardenChannel %d", values[i]);
-                        if (reply != NULL)
-                        {
-                            freeReplyObject(reply);
-                        }
-                        else
-                        {
-                            std::cerr << "Errore nell'invio del messaggio " << i + 1 << " a Redis." << std::endl;
-                        }
-
-                        // Attendi un breve periodo di tempo tra l'invio dei messaggi
-                        usleep(1000000); // Attendi 1 secondo (1000000 microsecondi)
-                    }
-                    freeReplyObject(reply);
                     // Ricevi i messaggi per un periodo di tempo
                     const int TIMEOUT_SECONDS = 1;
                     time_t startTime = time(NULL);
                     while (difftime(time(NULL), startTime) < TIMEOUT_SECONDS)
                     {
-                        reply = (redisReply *)redisCommand(context, "GET sensorGardenChannel");
+                        reply = (redisReply *)redisCommand(context, "GET cameraChannel");
                         if (reply != NULL && reply->type == REDIS_REPLY_ARRAY && strcmp(reply->element[0]->str, "message") == 0)
                         {
                             std::string message = reply->element[2]->str;

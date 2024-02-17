@@ -30,7 +30,7 @@ int main()
     
 
     Conditioner conditioner = initConditioner(); // gestione temperatura non può andare da 0 a 40
-    log2conditionerdb(db1, conditioner.getId(), pid, conditioner.getState(), conditioner.getTemperature(), t);
+    
 
     Device device = initDevice();
     std::tuple<int, int> risultato = device.getProgrammed();
@@ -42,7 +42,7 @@ int main()
     log2lightdb(db1, light.getId(), pid, light.getState(), light.getColor(), light.getIntensity(), t);
 
     Sensor sensor = initSensor();
-    log2sensordb(db1, sensor.getId(), pid, sensor.getState(), sensor.getMovement(), t);
+    
 
     SensorGarden sensorGarden = initSensorGarden();
     log2sensorGardendb(db1, sensorGarden.getId(), pid, sensorGarden.getState(), sensorGarden.getHumidity(), sensorGarden.getTemperature(), t);
@@ -64,7 +64,7 @@ int main()
         // Test Camera
         logActivity(db1, "Test Camera", pid);
         initTestCamera(camera);
-        log2cameradb(db1, camera.getId(), pid, camera.getState(), camera.getRecording(), t);
+        
         camera.setState(camera.next());
 
         // Test Conditioner

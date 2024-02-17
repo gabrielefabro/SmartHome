@@ -48,7 +48,7 @@ int main()
         {
             auto comando = static_cast<conditioner_type>(rand() % 3);
             int value = 0;
-            if (comando == changeTemperature)
+            if (comando == change_temperature)
             {
                 value = changeRandomTemperature();
             }
@@ -58,6 +58,7 @@ int main()
         case Device:
         {
             auto comando = static_cast<device_type>(rand() % 3);
+            auto nomeDev = static_cast<nome_type>(rand() % 8);
             int inizio = 0;
             int fine = 0;
             if (comando == programmed)
@@ -65,7 +66,7 @@ int main()
                 inizio = changeInt();
                 fine = changeInt();
             }
-            reply = (redisReply *)redisCommand(redis_conn, "SET comp:%d comando:%d inizio:%d fine:%d", comp, comando, inizio, fine);
+            reply = (redisReply *)redisCommand(redis_conn, "SET comp:%d comando:%d nomeDev: %d inizio:%d fine:%d", comp, comando, nomeDev, inizio, fine);
             break;
         }
         case Light:
@@ -93,14 +94,7 @@ int main()
         case SensorGarden:
         {
             auto comando = static_cast<sensorGarden_type>(rand() % 4);
-            int humidity = 0;
-            int temperature = 0;
-            if (comando == change_light || comando == set_sprinklers)
-            {
-                humidity = std::rand() % 101;
-                temperature = std::rand() % 46;
-            }
-            reply = (redisReply *)redisCommand(redis_conn, "SET comp:%d comando:%d humidity:%d temperature:%d", comp, comando, humidity, temperature);
+            reply = (redisReply *)redisCommand(redis_conn, "SET comp:%d comando:%d humidity:%d temperature:%d", comp, comando);
             break;
         }
         default:

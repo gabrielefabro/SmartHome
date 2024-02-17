@@ -2,7 +2,7 @@
 #include "../../../main/src/main.h"
 
 // Funzione per registrare informazioni sulla telecamera in un database PostgreSQL.
-void log2cameradb(Con2DB db1, int id, int pid, camera_type state, bool recording, int t)
+void log2cameradb(Con2DB db1, int id, int pid, camera_type state, bool recording)
 {
   int x;
   PGresult *res;
@@ -28,7 +28,6 @@ void log2cameradb(Con2DB db1, int id, int pid, camera_type state, bool recording
   // Crea e esegui un comando SQL per inserire informazioni sulla telecamera nella tabella "Camera" del database.
   sprintf(sqlcmd,
           "INSERT INTO Camera VALUES (%d, %d, '%s', %d, %d, '%s') ON CONFLICT DO NOTHING",
-          t,
           id,
           cstate,
           x,

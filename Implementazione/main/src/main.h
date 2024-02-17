@@ -30,7 +30,6 @@
 // LIGHT FUNCTIONS
 int initTestLight(Light &light);
 int testLight();
-void log2lightdb(Con2DB db1, int id, int pid, light_type state, light_color color, int intensity, int t);
 light_color stringToLightColor(const char* colorStr);
 void int2stateLight(char *buf, light_type x);
 light_color getRandomColor();
@@ -47,11 +46,10 @@ int initTestCamera(Camera &camera);
 void int2stateConditioner(char *buf, conditioner_type x);
 int testConditioner();
 int initTestConditioner(Conditioner &conditioner);
-void log2conditionerdb(Con2DB db1, int id, int pid, conditioner_type state, int temperature, int t);
 
 // DEVICE FUNCTIONS
 void int2stateDevice(char *buf, device_type x);
-void log2devicedb(Con2DB db1, int id, int pid, device_type state, nome_type nome, int t, int inizio, int fine);
+void log2devicedb(Con2DB db1, int id, int pid, device_type state, nome_type nome, int inizio, int fine);
 int changeInt();
 const char* nomeToString(nome_type nomeDev);
 int testDevice();
@@ -59,14 +57,12 @@ int initTestDevice(Device &device);
 
 // SENSOR FUNCTIONS
 void int2stateSensor(char *buf, sensor_type x);
-void log2sensordb(Con2DB db1, int id, int pid, sensor_type state, bool movement, int t);
 int testSensor();
 int initTestSensor(Sensor &sensor);
 void securityRecap(Con2DB db1, int pid);
 
 // SENSORGARDEN FUNCTIONS
 void int2stateSensorGarden(char *buf, sensorGarden_type x);
-void log2sensorGardendb(Con2DB db1, int id, int pid, sensorGarden_type state, int humidity, int temperature, int t);
 int testSensorGarden();
 int initTestSensorGarden(SensorGarden &sensorGarden);
 

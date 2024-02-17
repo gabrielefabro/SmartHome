@@ -4,7 +4,7 @@
 #include "../../con2db/src/pgsql.h"
 #include <postgresql/libpq-fe.h>
 #include <unistd.h>
-#include "camera.h"
+#include "conditioner.h"
 #include <string.h>
 
 int main()
@@ -40,11 +40,11 @@ int main()
 
     pid = getpid();
 
-    printf("Start camera with pid %ld, ppid %ld \n",
+    printf("Start conditioner with pid %ld, ppid %ld \n",
            (long)pid, (long)getppid());
 
     /* init traffic light state */
-    Camera camera = initCamera();
+    Conditioner conditioner = initConditioner();
 
     redisReply *reply;
 
@@ -53,53 +53,62 @@ int main()
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dis(0, 100);
+        int countMessage = 0;
+        int temperature = 0;
+        conditioner_type state;
 
         if (dis(gen) > 5)
         {
             response = "ok";
             // Utilizziamo redisGetReply per ottenere la risposta da Redis
-            reply = (redisReply *)redisCommand(redis_conn, "SUBSCRIBE cameraChannel");
-            if (reply == NULL)
+            const int TIMEOUT_SECONDS = 1;
+            time_t startTime = time(NULL);
+            while (difftime(time(NULL), startTime) < TIMEOUT_SECONDS)
             {
-                std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
-                exit(1);
+                reply = (redisReply *)redisCommand(redis_conn, "GET deviceChannel");
+
+                std::string message = reply->element[2]->str;
+                std::cout << "Messaggio ricevuto da Redis: " << message << std::endl;
+
+                if (countMessage == 0)
+                {
+                    state = static_cast<conditioner_type>(atoi(reply->str));
+                }
+                else if (countMessage == 1)
+                {
+                    temperature = (atoi(reply->str));
+                }
+
+                freeReplyObject(reply);
             }
 
-            if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
+            if (state == change_temperature)
             {
-                std::string received_message = reply->element[2]->str;
-                std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
-
-                if (strcmp(received_message.c_str(), "CameraOFF") == 0)
-                {
-                    camera.setRecording(false);
-                }
-                else if (strcmp(received_message.c_str(), "CameraON") == 0)
-                {
-                    camera.setRecording(true);
-                }
-
-                log2cameradb(db1, camera.getId(), pid, camera.getState(), camera.getRecording());
-
-                // Scriviamo una risposta sulla stessa stream
-                redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH cameraChannel %s", response);
-                if (publish_reply == NULL)
-                {
-                    std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
-                }
-                else
-                {
-                    std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
-                    freeReplyObject(publish_reply);
-                }
+                conditioner.modifyTemperature(temperature);
             }
+            conditioner.setState(state);
+            log2conditionerdb(db1, conditioner.getId(), pid, conditioner.getState(), conditioner.getTemperature());
+
+            // Scriviamo una risposta sulla stessa stream
+            redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH cameraChannel %s", response);
+            if (publish_reply == NULL)
+            {
+                std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
+            }
+            else
+            {
+                std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
+                freeReplyObject(publish_reply);
+            }
+            
+
             freeReplyObject(reply);
         }
         else
         {
             response = "no";
             // Scriviamo una risposta sulla stessa stream
-            redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH cameraChannel %s", response);
+            redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH response_channel %s", response);
             if (publish_reply == NULL)
             {
                 std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;

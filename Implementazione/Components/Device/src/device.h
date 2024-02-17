@@ -74,4 +74,6 @@ public:
     // Funzione per ottenere gli intervalli di tempo programmato per l'attivazione del dispositivo.
     std::tuple<int, int> getProgrammed();
 };
+
+void log2devicedb(Con2DB db1, int id, int pid, device_type state, nome_type nome, int inizio, int fine);
 #endif

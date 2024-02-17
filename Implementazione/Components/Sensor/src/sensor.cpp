@@ -1,7 +1,7 @@
 #include "sensor.h"
 
 // Costruttore della classe Sensor
-Sensor::Sensor(int id, sensor_type state) : state(state), id(id), movement(false) {}
+Sensor::Sensor(int id, sensor_type state) : state(state), id(id), check(false) {}
 
 // Funzione per ottenere lo stato successivo del sensore in modo casuale
 sensor_type Sensor::next()
@@ -23,15 +23,15 @@ int Sensor::getId() const
 }
 
 // Funzione per impostare lo stato di movimento del sensore
-void Sensor::setMovement(bool value)
+void Sensor::setCheck(bool value)
 {
-    movement = value;
+    check = value;
 }
 
 // Funzione per ottenere lo stato di movimento del sensore
-bool Sensor::getMovement() const
+bool Sensor::getCheck() const
 {
-    return movement;
+    return check;
 }
 
 // Funzione per impostare manualmente lo stato del sensore

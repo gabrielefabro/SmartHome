@@ -9,7 +9,6 @@
 typedef enum
 {
     SensorON, 
-    CHECKING, 
     SensorOFF 
 } sensor_type;
 
@@ -24,7 +23,7 @@ private:
     int id;
 
     // Flag per indicare se è stato rilevato un movimento
-    bool movement;
+    bool check;
 
 public:
     // Costruttore della classe Sensor
@@ -40,13 +39,17 @@ public:
     int getId() const;
 
     // Funzione per impostare manualmente il valore di movement
-    void setMovement(bool value);
+    void setCheck(bool value);
 
     // Funzione per ottenere il valore di movement
-    bool getMovement() const;
+    bool getCheck() const;
 
     // Funzione per impostare manualmente lo stato del sensore
     void setState(sensor_type newState);
 };
+
+Sensor initSensor();
+void log2sensordb(Con2DB db1, int id, int pid, sensor_type state, bool check);
+
 
 #endif
