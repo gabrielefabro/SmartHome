@@ -3,13 +3,6 @@
 // Costruttore della classe Sensor
 Sensor::Sensor(int id, sensor_type state) : state(state), id(id), check(false) {}
 
-// Funzione per ottenere lo stato successivo del sensore in modo casuale
-sensor_type Sensor::next()
-{
-    state = static_cast<sensor_type>(rand() % 3);
-    return state;
-}
-
 // Funzione per ottenere lo stato attuale del sensore
 sensor_type Sensor::getState() const
 {

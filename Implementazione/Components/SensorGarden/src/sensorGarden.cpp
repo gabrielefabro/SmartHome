@@ -3,13 +3,6 @@
 // Costruttore del sensore da giardino
 SensorGarden::SensorGarden(int id, sensorGarden_type state, int humidity, int temperature) : id(id), state(state), humidity(humidity), temperature(temperature) {}
 
-// Funzione per ottenere lo stato successivo del sensore da giardino
-sensorGarden_type SensorGarden::next()
-{
-    state = static_cast<sensorGarden_type>(rand() % 4);
-    return state;
-}
-
 // Funzione per ottenere lo stato attuale del sensore da giardino
 sensorGarden_type SensorGarden::getState() const
 {

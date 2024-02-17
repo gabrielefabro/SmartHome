@@ -3,13 +3,6 @@
 // Implementazione del costruttore della classe Conditioner.
 Conditioner::Conditioner(int id, int temperature, conditioner_type state) : id(id), temperature(temperature), state(state) {}
 
-// Funzione per generare casualmente uno stato successivo per il condizionatore.
-conditioner_type Conditioner::next()
-{
-    state = static_cast<conditioner_type>(rand() % 3);
-    return state;
-}
-
 // Funzione per ottenere lo stato corrente del condizionatore.
 conditioner_type Conditioner::getState() const
 {

@@ -21,9 +21,6 @@ public:
     // Costruttore
     Camera(int id, camera_type state);
 
-    // Funzione per ottenere lo stato successivo
-    camera_type next();
-
     // Funzione per cambiare stato
     void setState(camera_type newState);
 

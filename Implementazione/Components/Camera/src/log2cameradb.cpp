@@ -1,5 +1,5 @@
-#include "../../../main/src/global.h"
-#include "../../../main/src/main.h"
+#include "camera.h"
+#include "../../../con2db/src/pgsql.h"
 
 // Funzione per registrare informazioni sulla telecamera in un database PostgreSQL.
 void log2cameradb(Con2DB db1, int id, int pid, camera_type state, bool recording)

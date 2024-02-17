@@ -3,13 +3,6 @@
 // Costruttore
 Camera::Camera(int id, camera_type state) : id(id), state(state), recording(false) {}
 
-// Metodo per generare casualmente uno stato successivo per la telecamera.
-camera_type Camera::next()
-{
-    state = static_cast<camera_type>(rand() % 3);
-    return state;
-}
-
 // Metodo per ottenere lo stato corrente della telecamera.
 camera_type Camera::getState() const
 {

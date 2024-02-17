@@ -29,9 +29,6 @@ public:
     // Costruttore della classe Conditioner.
     Conditioner(int id, int temperature, conditioner_type state);
 
-    // Funzione per generare casualmente uno stato successivo per il condizionatore.
-    conditioner_type next();
-
     // Funzione per ottenere lo stato corrente del condizionatore.
     conditioner_type getState() const;
 

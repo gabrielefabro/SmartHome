@@ -32,9 +32,6 @@ public:
     // Costruttore del sensore da giardino
     SensorGarden(int id, sensorGarden_type state, int humidity, int temperature);
 
-    // Funzione per ottenere lo stato successivo del sensore da giardino
-    sensorGarden_type next();
-
     // Funzione per ottenere lo stato attuale del sensore da giardino
     sensorGarden_type getState() const;
 

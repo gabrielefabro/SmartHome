@@ -4,14 +4,6 @@
 // Costruttore della classe Light.
 Light::Light(int id, light_type state, light_color color, int intensity) : id(id), state(state), color(color), intensity(intensity) {}
 
-// Funzione per ottenere il prossimo stato casuale della luce.
-light_type Light::next()
-{
-    int number = rand() % 4;
-    state = static_cast<light_type>(number);
-    return state;
-}
-
 // Funzione per ottenere lo stato attuale della luce.
 light_type Light::getState() const
 {

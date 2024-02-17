@@ -3,12 +3,6 @@
 // Costruttore della classe Device.
 Device::Device(int id, device_type state, nome_type name) : id(id), state(state), nome(name) {}
 
-// Funzione per generare casualmente uno stato successivo per il dispositivo.
-device_type Device::next()
-{
-    state = static_cast<device_type>(rand() % 3);
-    return state;
-}
 
 // Funzione per programmare l'attivazione di un dispositivo in un intervallo di tempo.
 void Device::programmed_device(int intervalloPrimo, int intervalloSecondo)

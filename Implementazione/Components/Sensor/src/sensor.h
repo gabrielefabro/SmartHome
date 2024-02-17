@@ -29,9 +29,6 @@ public:
     // Costruttore della classe Sensor
     Sensor(int id, sensor_type state);
 
-    // Funzione per ottenere lo stato successivo del sensore
-    sensor_type next();
-
     // Funzione per controllare lo stato attuale del sensore
     sensor_type getState() const;
 

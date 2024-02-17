@@ -8,10 +8,6 @@ void int2stateCamera(char *buf, camera_type x)
   {
     sprintf(buf, "CameraON");
   }
-  else if (x == WAITING)
-  {
-    sprintf(buf, "Waiting");
-  }
   else
   {
     sprintf(buf, "CameraOFF");

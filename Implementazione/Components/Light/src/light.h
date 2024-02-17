@@ -43,9 +43,6 @@ public:
     // Costruttore della classe Light.
     Light(int id, light_type state, light_color color, int intensity);
 
-    // Funzione per ottenere il prossimo stato casuale della luce.
-    light_type next();
-
     // Funzione per cambiare il colore delle luci.
     void setColor(light_color newColor);
 

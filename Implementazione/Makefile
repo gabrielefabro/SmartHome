@@ -1,39 +1,39 @@
 
-
-#IDIR=../hdr
-IDIR=.
-ODIR=../obj
-BDIR=../bin
-
 CC=g++
 
 # Additional Directories
-SRC_CAMERA_DIR=../../Components/Camera/src
-OBJ_CAMERA_DIR=../../Components/Camera/obj
+SRC_CAMERA_DIR=./Components/Camera/src
+OBJ_CAMERA_DIR=./Components/Camera/obj
 
-SRC_CONDITIONER_DIR=../../Components/Conditioner/src
-OBJ_CONDITIONER_DIR=../../Components/Conditioner/obj
+SRC_CONDITIONER_DIR=./Components/Conditioner/src
+OBJ_CONDITIONER_DIR=./Components/Conditioner/obj
 
-SRC_DEVICE_DIR=../../Components/Device/src
-OBJ_DEVICE_DIR=../../Components/Device/obj
+SRC_DEVICE_DIR=./Components/Device/src
+OBJ_DEVICE_DIR=./Components/Device/obj
 
-SRC_LIGHT_DIR=../../Components/Light/src
-OBJ_LIGHT_DIR=../../Components/Light/obj
+SRC_LIGHT_DIR=./Components/Light/src
+OBJ_LIGHT_DIR=./Components/Light/obj
 
-SRC_SENSOR_DIR=../../Components/Sensor/src
-OBJ_SENSOR_DIR=../../Components/Sensor/obj
+SRC_SENSOR_DIR=./Components/Sensor/src
+OBJ_SENSOR_DIR=./Components/Sensor/obj
 
-SRC_SENSORGARDEN_DIR=../../Components/SensorGarden/src
-OBJ_SENSORGARDEN_DIR=../../Components/SensorGarden/obj
+SRC_SENSORGARDEN_DIR=./Components/SensorGarden/src
+OBJ_SENSORGARDEN_DIR=./Components/SensorGarden/obj
 
-SRC_DB_DIR=../../con2db/src
-OBJ_DB_DIR=../../con2db/obj
+SRC_DB_DIR=./con2db/src
+OBJ_DB_DIR=./con2db/obj
 
-SRC_FUNC_DIR=../../Monitors/Functional/src
-OBJ_FUNC_DIR=../../Monitors/Functional/obj
+SRC_FUNC_DIR=./Monitors/Functional/src
+OBJ_FUNC_DIR=./Monitors/Functional/obj
 
-SRC_NFUN_DIR=../../Monitors/NonFunctional/src
-OBJ_NFUN_DIR=../../Monitors/NonFunctional/obj
+SRC_NFUN_DIR=./Monitors/NonFunctional/src
+OBJ_NFUN_DIR=./Monitors/NonFunctional/obj
+
+SRC_COMMAND_DIR=./Components/Command/src
+OBJ_COMMAND_DIR=./Components/Command/obj
+
+SRC_SOFTWARE_DIR=./Components/Software/src
+OBJ_SOFTWARE_DIR=./Components/Software/obj
 
 # use this when connecting to Postgresql (library lpq)
 #CFLAGS=-std=c++11 -I. -I$(IDIR) -I/usr/include/postgresql -lpq -lm 
@@ -54,10 +54,10 @@ DEPS4 = $(wildcard $(SRC_LIGHT_DIR)/*.h)
 DEPS5 = $(wildcard $(SRC_SENSOR_DIR)/*.h)
 DEPS6 = $(wildcard $(SRC_SENSORGARDEN_DIR)/*.h)
 DEPS7 = $(wildcard $(SRC_DB_DIR)/*.h)
+DEPS8 = $(wildcard $(SRC_COMMAND_DIR)/*.h)
+DEPS9 = $(wildcard $(SRC_SOFTWARE_DIR)/*.h)
 
 
-SRC = $(wildcard *.cpp)
-OBJ = $(patsubst %.cpp, $(ODIR)/%.o, $(SRC))
 
 SRC_CAMERA = $(wildcard $(SRC_CAMERA_DIR)/*.cpp)
 OBJ_CAMERA = $(patsubst $(SRC_CAMERA_DIR)/%.cpp, $(OBJ_CAMERA_DIR)/%.o, $(SRC_CAMERA))
@@ -86,6 +86,11 @@ OBJ_FUNC = $(patsubst $(SRC_FUNC_DIR)/%.cpp, $(OBJ_FUNC_DIR)/%.o, $(SRC_FUNC))
 SRC_NFUN = $(wildcard $(SRC_NFUN_DIR)/*.cpp)
 OBJ_NFUN = $(patsubst $(SRC_NFUN_DIR)/%.cpp, $(OBJ_NFUN_DIR)/%.o, $(SRC_NFUN))
 
+SRC_COMMAND = $(wildcard $(SRC_COMMAND_DIR)/*.cpp)
+OBJ_COMMAND = $(patsubst $(SRC_COMMAND_DIR)/%.cpp, $(OBJ_COMMAND_DIR)/%.o, $(SRC_COMMAND))
+
+SRC_SOFTWARE = $(wildcard $(SRC_SOFTWARE_DIR)/*.cpp)
+OBJ_SOFTWARE = $(patsubst $(SRC_SOFTWARE_DIR)/%.cpp, $(OBJ_SOFTWARE_DIR)/%.o, $(SRC_SOFTWARE))
 
 all: $(BDIR)/main
 
@@ -118,6 +123,13 @@ $(OBJ_FUNC_DIR)/%.o: $(SRC_FUNC_DIR)/%.cpp
 
 $(OBJ_NFUN_DIR)/%.o: $(SRC_NFUN_DIR)/%.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
+
+$(OBJ_COMMAND_DIR)/%.o: $(SRC_COMMAND_DIR)/%.cpp
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+$(OBJ_SOFTWARE_DIR)/%.o: $(SRC_SOFTWARE_DIR)/%.cpp
+	$(CC) -c -o $@ $< $(CFLAGS)
+
 
 $(BDIR)/main: $(OBJ) $(OBJ_CAMERA) $(OBJ_CONDITIONER) $(OBJ_DEVICE) $(OBJ_LIGHT) $(OBJ_SENSOR) $(OBJ_SENSORGARDEN) $(OBJ_DB) $(OBJ_FUNC) $(OBJ_NFUN) $(DEPS) $(DEPS1) $(DEPS2) $(DEPS3) $(DEPS4) $(DEPS5) $(DEPS6) $(DEPS7)
 	$(CC) -o $@ $(OBJ) $(OBJ_CAMERA) $(OBJ_CONDITIONER) $(OBJ_DEVICE) $(OBJ_LIGHT) $(OBJ_SENSOR) $(OBJ_SENSORGARDEN) $(OBJ_DB) $(OBJ_FUNC) $(OBJ_NFUN) $(CFLAGS) -L/path/to/redis/lib $(LIBS)

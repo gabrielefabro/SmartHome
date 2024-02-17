@@ -50,9 +50,6 @@ public:
     // Costruttore della classe Device.
     Device(int id, device_type state, nome_type nome);
 
-    // Funzione per generare casualmente uno stato successivo per il dispositivo.
-    device_type next();
-
     // Funzione per programmare l'attivazione del dispositivo in un intervallo di tempo.
     void programmed_device(int intervalloPrimo, int intervalloSecondo);
 
