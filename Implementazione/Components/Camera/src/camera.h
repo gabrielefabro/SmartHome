@@ -3,10 +3,11 @@
 
 #include <cstdlib>
 
+
 typedef enum
 {
     CameraON,
-    WAITING,
+    changeTemperature,
     CameraOFF
 } camera_type;
 
@@ -39,5 +40,7 @@ public:
     // Funzione per controllare la registrazione
     bool getRecording();
 };
+
+Camera initCamera();
 
 #endif

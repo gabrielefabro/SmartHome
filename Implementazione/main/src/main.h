@@ -43,7 +43,7 @@ void log2cameradb(Con2DB db1, int id, int pid, camera_type state, bool recording
 int initTestCamera(Camera &camera);
 
 // CONDITIONER FUNCTIONS
-int changeRandomTemperature();
+
 void int2stateConditioner(char *buf, conditioner_type x);
 int testConditioner();
 int initTestConditioner(Conditioner &conditioner);
@@ -87,6 +87,7 @@ long int get_day_nanos(char *buf);
 long int nanos2day(char *buf, long int nanosec);
 void timeFlies(char *buf);
 
+int cameraObject();
 
 using namespace std;
 

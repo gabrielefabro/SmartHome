@@ -27,9 +27,7 @@ int main()
     auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
     std::srand(static_cast<unsigned>(seed));
 
-    // inizializzo le componenti e le carico nel db
-    Camera camera = initCamera();
-    log2cameradb(db1, camera.getId(), pid, camera.getState(), camera.getRecording(), t);
+    
 
     Conditioner conditioner = initConditioner(); // gestione temperatura non può andare da 0 a 40
     log2conditionerdb(db1, conditioner.getId(), pid, conditioner.getState(), conditioner.getTemperature(), t);
