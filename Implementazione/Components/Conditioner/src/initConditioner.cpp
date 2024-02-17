@@ -1,5 +1,4 @@
 #include "conditioner.h"
-#include "../../../main/src/global.h"
 #include <cstdlib>
 
 // Funzione che inizializza l'oggetto condizionatore

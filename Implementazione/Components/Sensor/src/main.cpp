@@ -58,7 +58,7 @@ int main()
         {
             response = "ok";
             // Utilizziamo redisGetReply per ottenere la risposta da Redis
-            reply = (redisReply *)redisCommand(redis_conn, "SUBSCRIBE cameraChannel");
+            reply = (redisReply *)redisCommand(redis_conn, "SUBSCRIBE sensorChannel");
             if (reply == NULL)
             {
                 std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
@@ -82,7 +82,7 @@ int main()
                 log2sensordb(db1, sensor.getId(), pid, sensor.getState(), sensor.getCheck());
 
                 // Scriviamo una risposta sulla stessa stream
-                redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH cameraChannel %s", response);
+                redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH sensorChannel %s", response);
                 if (publish_reply == NULL)
                 {
                     std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
@@ -99,7 +99,7 @@ int main()
         {
             response = "no";
             // Scriviamo una risposta sulla stessa stream
-            redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH cameraChannel %s", response);
+            redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH response_channel %s", response);
             if (publish_reply == NULL)
             {
                 std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;

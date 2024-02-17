@@ -1,5 +1,6 @@
-#include "../../../main/src/main.h"
-#include "../../../main/src/global.h"
+#include "sensorGarden.h"
+#include "../../con2db/src/pgsql.h"
+#include <cstring>
 
 // Funzione per registrare i dati del sensore da giardino nel database
 void log2sensorGardendb(Con2DB db1, int id, int pid, sensorGarden_type state, int humidity, int temperature)

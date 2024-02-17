@@ -1,5 +1,4 @@
 #include "light.h"
-#include "main.h"
 
 // Costruttore della classe Light.
 Light::Light(int id, light_type state, light_color color, int intensity) : id(id), state(state), color(color), intensity(intensity) {}

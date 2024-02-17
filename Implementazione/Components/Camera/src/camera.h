@@ -2,6 +2,7 @@
 #define CAMERA_H
 
 #include <cstdlib>
+#include "../../con2db/src/pgsql.h"
 
 
 typedef enum
@@ -39,5 +40,7 @@ public:
 
 Camera initCamera();
 void log2cameradb(Con2DB db1, int id, int pid, camera_type state, bool recording);
+void int2stateCamera(char *buf, camera_type x);
+void timeFlies(char *buf);
 
 #endif

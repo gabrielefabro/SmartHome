@@ -1,5 +1,5 @@
-#include "../../../main/src/main.h"
-#include "../../../main/src/global.h"
+#include "conditioner.h"
+#include "../../con2db/src/pgsql.h"
 
 // Funzione per registrare informazioni sul condizionatore in un database PostgreSQL.
 void log2conditionerdb(Con2DB db1, int id, int pid, conditioner_type state, int temperature)

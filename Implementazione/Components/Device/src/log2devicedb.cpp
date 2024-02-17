@@ -1,5 +1,6 @@
-#include "../../../main/src/main.h"
-#include "../../../main/src/global.h"
+#include "device.h"
+#include "../../con2db/src/pgsql.h"
+#include <cstring>
 
 // Funzione per registrare le informazioni di un dispositivo nel database.
 void log2devicedb(Con2DB db1, int id, int pid, device_type state, nome_type nome, int inizio, int fine)

@@ -1,4 +1,5 @@
-#include "../../../main/src/main.h"
+#include "light.h"
+#include <cstdio>
 
 // Funzione che inserisce in un buffer la stringa dello stato della luce
 void int2stateLight(char *buf, light_type x)

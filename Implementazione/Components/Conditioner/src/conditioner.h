@@ -3,6 +3,8 @@
 
 #include <cstdlib>
 #include <iostream>
+#include "../../con2db/src/pgsql.h"
+void timeFlies(char *buf);
 
 // Enumerazione che rappresenta i possibili stati del condizionatore.
 typedef enum
@@ -47,6 +49,6 @@ public:
 
 Conditioner initConditioner();
 void log2conditionerdb(Con2DB db1, int id, int pid, conditioner_type state, int temperature);
-
+void int2stateConditioner(char *cstate , conditioner_type state);
 
 #endif

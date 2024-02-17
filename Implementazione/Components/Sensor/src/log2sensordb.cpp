@@ -1,5 +1,5 @@
-#include "../../../main/src/global.h"
-#include "../../../main/src/main.h"
+#include "sensor.h"
+#include "../../con2db/src/pgsql.h"
 
 // Funzione per registrare i dati di un sensore nel database.
 void log2sensordb(Con2DB db1, int id, int pid, sensor_type state, bool check)

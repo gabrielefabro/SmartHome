@@ -1,4 +1,4 @@
-#include "../../../main/src/main.h"
+#include "sensor.h"
 
 // Funzione che inserisce nel buffer la stringa che rappresenta lo stato del Sensore
 void int2stateSensor(char *buf, sensor_type x)

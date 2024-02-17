@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-#include "../../../main/src/main.h"
 
 // Funzione che genera un colore casuale per la luce
 light_color getRandomColor() {    

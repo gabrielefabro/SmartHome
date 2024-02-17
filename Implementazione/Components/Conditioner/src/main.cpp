@@ -90,7 +90,7 @@ int main()
             log2conditionerdb(db1, conditioner.getId(), pid, conditioner.getState(), conditioner.getTemperature());
 
             // Scriviamo una risposta sulla stessa stream
-            redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH cameraChannel %s", response);
+            redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH conditionerChannel %s", response);
             if (publish_reply == NULL)
             {
                 std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;

@@ -66,7 +66,7 @@ int main()
             time_t startTime = time(NULL);
             while (difftime(time(NULL), startTime) < TIMEOUT_SECONDS)
             {
-                reply = (redisReply *)redisCommand(redis_conn, "GET deviceChannel");
+                reply = (redisReply *)redisCommand(redis_conn, "GET lightChannel");
 
                 std::string message = reply->element[2]->str;
                 std::cout << "Messaggio ricevuto da Redis: " << message << std::endl;
@@ -100,7 +100,7 @@ int main()
             log2lightdb(db1, light.getId(), pid, light.getState(), light.getColor(), light.getIntensity());
 
             // Scriviamo una risposta sulla stessa stream
-            redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH cameraChannel %s", response);
+            redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH lightChannel %s", response);
             if (publish_reply == NULL)
             {
                 std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
