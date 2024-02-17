@@ -1,11 +1,6 @@
-#include <iostream>
-#include <random>
-#include <hiredis/hiredis.h>
-#include "../../con2db/src/pgsql.h"
-#include <postgresql/libpq-fe.h>
-#include <unistd.h>
 #include "camera.h"
-#include <string.h>
+#include <hiredis/hiredis.h>
+
 
 int main()
 {
@@ -29,10 +24,7 @@ int main()
     }
 
     Con2DB db1("localhost", "5432", "smarthome", "12345", "logdb_smarthome");
-    PGresult *res;
-    char buf[200];
     int pid;
-    int t = 0;
     const char *response;
 
     /* init random number generator  */

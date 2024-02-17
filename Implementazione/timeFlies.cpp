@@ -1,4 +1,3 @@
-#include "main.h"
 #include <ctime>
 #include <cstdio>
 

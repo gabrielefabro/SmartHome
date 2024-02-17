@@ -3,12 +3,20 @@ SRCDIR := ./src
 OBJDIR := ./obj
 BINDIR := ./bin
 
+DIRSRCPSQ := ../../con2db/src
+DIROBJPSQ := ../../con2db/obj
+
 # Lista dei file sorgente (.cpp) e degli header (.h)
 SRCS := $(wildcard $(SRCDIR)/*.cpp)
 HDRS := $(wildcard $(SRCDIR)/*.h)
 
+SACS := $(wildcard $(DIRSRCPSQ)/*.cpp)
+HARS := $(wildcard $(DIRSRCPSQ)/*.h)
+
 # Genera la lista dei file oggetto (.o)
 OBJS := $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SRCS))
+
+OBJP := $(patsubst $(DIRSRCPSQ)/%.cpp,$(DIROBJPSQ)/%.o,$(SACS))
 
 # Nome del file eseguibile
 EXEC := $(BINDIR)/main
@@ -17,12 +25,17 @@ EXEC := $(BINDIR)/main
 CXX := g++
 CXXFLAGS := -Wall -Wextra -std=c++11
 
+LIBS := -lpq -lhiredis
+
 # Regola di compilazione generica
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(HDRS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+$(DIROBJPSQ)/%.o: %(DIRSRCPSQ)/%.cpp %(HARS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
 # Regola per la creazione dell'eseguibile
-$(EXEC): $(OBJS)
+$(EXEC): $(OBJS) $(OBJP)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 # Target per la pulizia dei file intermedi e dell'eseguibile

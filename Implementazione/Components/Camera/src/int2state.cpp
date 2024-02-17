@@ -1,5 +1,4 @@
-#include "../../../main/src/main.h"
-
+#include "camera.h"
 // Funzione che inserisce in un buffer la stringa che rappresenta lo stato dell'oggetto camera
 void int2stateCamera(char *buf, camera_type x)
 {
