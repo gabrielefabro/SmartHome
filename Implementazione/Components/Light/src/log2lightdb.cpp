@@ -1,6 +1,6 @@
 #include "light.h"
 #include <cstring>
-#include "../../con2db/src/pgsql.h"
+
 
 // Funzione per registrare i dati della luce nel database.
 void log2lightdb(Con2DB db1, int id, int pid, light_type state, light_color color, int intensity)

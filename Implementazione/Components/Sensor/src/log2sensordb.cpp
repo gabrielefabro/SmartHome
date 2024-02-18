@@ -1,5 +1,5 @@
 #include "sensor.h"
-#include "../../con2db/src/pgsql.h"
+
 
 // Funzione per registrare i dati di un sensore nel database.
 void log2sensordb(Con2DB db1, int id, int pid, sensor_type state, bool check)
@@ -26,7 +26,7 @@ void log2sensordb(Con2DB db1, int id, int pid, sensor_type state, bool check)
 
   // Inserisce i dati del sensore nel database.
   sprintf(sqlcmd,
-          "INSERT INTO Sensor VALUES (%d, %d, '%s', %d, %d, '%s') ON CONFLICT DO NOTHING",
+          "INSERT INTO Sensor VALUES (%d, '%s', %d, %d, '%s') ON CONFLICT DO NOTHING",
           id,
           cstate,
           x,

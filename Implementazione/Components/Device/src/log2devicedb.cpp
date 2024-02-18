@@ -1,5 +1,4 @@
 #include "device.h"
-#include "../../con2db/src/pgsql.h"
 #include <cstring>
 
 // Funzione per registrare le informazioni di un dispositivo nel database.
@@ -29,7 +28,7 @@ void log2devicedb(Con2DB db1, int id, int pid, device_type state, nome_type nome
 
   // Esegui l'inserimento dei dati nel database.
   sprintf(sqlcmd,
-          "INSERT INTO Device VALUES (%d, %d, '%s', '%s', %d, %d, %d, '%s') ON CONFLICT DO NOTHING",
+          "INSERT INTO Device VALUES (%d, '%s', '%s', %d, %d, %d, '%s') ON CONFLICT DO NOTHING",
           id,
           cstate,
           n,

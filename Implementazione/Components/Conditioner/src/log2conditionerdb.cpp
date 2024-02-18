@@ -1,5 +1,5 @@
 #include "conditioner.h"
-#include "../../con2db/src/pgsql.h"
+#include "../../../con2db/src/pgsql.h"
 
 // Funzione per registrare informazioni sul condizionatore in un database PostgreSQL.
 void log2conditionerdb(Con2DB db1, int id, int pid, conditioner_type state, int temperature)
@@ -22,7 +22,7 @@ void log2conditionerdb(Con2DB db1, int id, int pid, conditioner_type state, int 
 
     // Crea e esegui un comando SQL per inserire informazioni sul condizionatore nella tabella "Conditioner" del database.
     sprintf(sqlcmd,
-            "INSERT INTO Conditioner VALUES (%d, %d, '%s', %d, %d, '%s') ON CONFLICT DO NOTHING",
+            "INSERT INTO Conditioner VALUES ( %d, '%s', %d, %d, '%s') ON CONFLICT DO NOTHING",
             id,
             cstate,
             temperature,

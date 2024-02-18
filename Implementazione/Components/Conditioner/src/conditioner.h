@@ -3,7 +3,7 @@
 
 #include <cstdlib>
 #include <iostream>
-#include "../../con2db/src/pgsql.h"
+#include "../../../con2db/src/pgsql.h"
 void timeFlies(char *buf);
 
 // Enumerazione che rappresenta i possibili stati del condizionatore.

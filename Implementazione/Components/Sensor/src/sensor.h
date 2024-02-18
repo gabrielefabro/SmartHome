@@ -4,8 +4,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
-#include "../../con2db/src/pgsql.h"
-
+#include "../../../con2db/src/pgsql.h"
 // Enumerazione che rappresenta gli stati possibili del sensore
 typedef enum
 {

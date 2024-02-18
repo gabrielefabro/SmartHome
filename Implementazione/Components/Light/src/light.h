@@ -1,7 +1,8 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 #include <cstdlib>
-#include "../../con2db/src/pgsql.h"
+#include "../../../con2db/src/pgsql.h"
+#include <hiredis/hiredis.h>
 
 // Dichiarazione di un tipo di enumerazione per rappresentare lo stato di una luce.
 typedef enum
@@ -71,4 +72,8 @@ void log2lightdb(Con2DB db1, int id, int pid, light_type state, light_color colo
 void int2stateLight(char *cstate, light_type state);
 const char* colorToString(light_color color);
 void timeFlies(char *buf);
+light_color getRandomColor();
+const char* colorToString(light_color color);
+int changeIntensity();
+
 #endif
