@@ -4,24 +4,31 @@ CC=g++
 # Additional Directories
 SRC_CAMERA_DIR=./Components/Camera/src
 OBJ_CAMERA_DIR=./Components/Camera/obj
+BIN_CAMERA_DIR=./Components/Camera/bin
 
 SRC_CONDITIONER_DIR=./Components/Conditioner/src
 OBJ_CONDITIONER_DIR=./Components/Conditioner/obj
+BIN_CONDITIONER_DIR=./Components/Conditioner/bin
 
 SRC_DEVICE_DIR=./Components/Device/src
 OBJ_DEVICE_DIR=./Components/Device/obj
+BIN_DEVICE_DIR=./Components/Device/bin
 
 SRC_LIGHT_DIR=./Components/Light/src
 OBJ_LIGHT_DIR=./Components/Light/obj
+BIN_LIGHT_DIR=./Components/Light/bin
 
 SRC_SENSOR_DIR=./Components/Sensor/src
 OBJ_SENSOR_DIR=./Components/Sensor/obj
+BIN_SENSOR_DIR=./Components/Sensor/bin
 
 SRC_SENSORGARDEN_DIR=./Components/SensorGarden/src
 OBJ_SENSORGARDEN_DIR=./Components/SensorGarden/obj
+BIN_SENSORGARDEN_DIR=./Components/SensorGarden/bin
 
 SRC_DB_DIR=./con2db/src
 OBJ_DB_DIR=./con2db/obj
+
 
 SRC_FUNC_DIR=./Monitors/Functional/src
 OBJ_FUNC_DIR=./Monitors/Functional/obj
@@ -31,9 +38,11 @@ OBJ_NFUN_DIR=./Monitors/NonFunctional/obj
 
 SRC_COMMAND_DIR=./Components/Command/src
 OBJ_COMMAND_DIR=./Components/Command/obj
+BIN_COMMAND_DIR=./Components/Command/bin
 
 SRC_SOFTWARE_DIR=./Components/Software/src
 OBJ_SOFTWARE_DIR=./Components/Software/obj
+BIN_SOFTWARE_DIR=./Components/Software/bin
 
 # use this when connecting to Postgresql (library lpq)
 #CFLAGS=-std=c++11 -I. -I$(IDIR) -I/usr/include/postgresql -lpq -lm 
@@ -61,21 +70,27 @@ DEPS9 = $(wildcard $(SRC_SOFTWARE_DIR)/*.h)
 
 SRC_CAMERA = $(wildcard $(SRC_CAMERA_DIR)/*.cpp)
 OBJ_CAMERA = $(patsubst $(SRC_CAMERA_DIR)/%.cpp, $(OBJ_CAMERA_DIR)/%.o, $(SRC_CAMERA))
+BIN_CAMERA = $(BIN_CAMERA_DIR)/camera_executable
 
 SRC_CONDITIONER = $(wildcard $(SRC_CONDITIONER_DIR)/*.cpp)
 OBJ_CONDITIONER = $(patsubst $(SRC_CONDITIONER_DIR)/%.cpp, $(OBJ_CONDITIONER_DIR)/%.o, $(SRC_CONDITIONER))
+BIN_CONDITIONER = $(BIN_CONDITIONER_DIR)/conditioner_executable
 
 SRC_DEVICE = $(wildcard $(SRC_DEVICE_DIR)/*.cpp)
 OBJ_DEVICE = $(patsubst $(SRC_DEVICE_DIR)/%.cpp, $(OBJ_DEVICE_DIR)/%.o, $(SRC_DEVICE))
+BIN_DEVICE = $(BIN_DEVICE_DIR)/device_executable
 
 SRC_LIGHT = $(wildcard $(SRC_LIGHT_DIR)/*.cpp)
 OBJ_LIGHT = $(patsubst $(SRC_LIGHT_DIR)/%.cpp, $(OBJ_LIGHT_DIR)/%.o, $(SRC_LIGHT))
+BIN_LIGHT = $(BIN_LIGHT_DIR)/light_executable
 
 SRC_SENSOR = $(wildcard $(SRC_SENSOR_DIR)/*.cpp)
 OBJ_SENSOR = $(patsubst $(SRC_SENSOR_DIR)/%.cpp, $(OBJ_SENSOR_DIR)/%.o, $(SRC_SENSOR))
+BIN_SENSOR = $(BIN_SENSOR_DIR)/sensor_executable
 
 SRC_SENSORGARDEN = $(wildcard $(SRC_SENSORGARDEN_DIR)/*.cpp)
 OBJ_SENSORGARDEN = $(patsubst $(SRC_SENSORGARDEN_DIR)/%.cpp, $(OBJ_SENSORGARDEN_DIR)/%.o, $(SRC_SENSORGARDEN))
+BIN_SENSORGARDEN = $(BIN_SENSORGARDEN_DIR)/sensorgarden_executable
 
 SRC_DB = $(wildcard $(SRC_DB_DIR)/*.cpp)
 OBJ_DB = $(patsubst $(SRC_DB_DIR)/%.cpp, $(OBJ_DB_DIR)/%.o, $(SRC_DB))
@@ -88,11 +103,12 @@ OBJ_NFUN = $(patsubst $(SRC_NFUN_DIR)/%.cpp, $(OBJ_NFUN_DIR)/%.o, $(SRC_NFUN))
 
 SRC_COMMAND = $(wildcard $(SRC_COMMAND_DIR)/*.cpp)
 OBJ_COMMAND = $(patsubst $(SRC_COMMAND_DIR)/%.cpp, $(OBJ_COMMAND_DIR)/%.o, $(SRC_COMMAND))
+BIN_COMMAND = $(BIN_COMMAND_DIR)/command_executable
 
 SRC_SOFTWARE = $(wildcard $(SRC_SOFTWARE_DIR)/*.cpp)
 OBJ_SOFTWARE = $(patsubst $(SRC_SOFTWARE_DIR)/%.cpp, $(OBJ_SOFTWARE_DIR)/%.o, $(SRC_SOFTWARE))
+BIN_SOFWARE = $(BIN_SOFTWARE_DIR)/software_executable
 
-all: $(BDIR)/main
 
 $(ODIR)/%.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -118,21 +134,41 @@ $(OBJ_SENSORGARDEN_DIR)/%.o: $(SRC_SENSORGARDEN_DIR)/%.cpp $(DEPS6)
 $(OBJ_DB_DIR)/%.o: $(SRC_DB_DIR)/%.cpp $(DEPS7)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-$(OBJ_FUNC_DIR)/%.o: $(SRC_FUNC_DIR)/%.cpp
+$(OBJ_FUNC_DIR)/%.o: $(SRC_FUNC_DIR)/%.cpp 
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(OBJ_NFUN_DIR)/%.o: $(SRC_NFUN_DIR)/%.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-$(OBJ_COMMAND_DIR)/%.o: $(SRC_COMMAND_DIR)/%.cpp
+$(OBJ_COMMAND_DIR)/%.o: $(SRC_COMMAND_DIR)/%.cpp $(DEPS8)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-$(OBJ_SOFTWARE_DIR)/%.o: $(SRC_SOFTWARE_DIR)/%.cpp
+$(OBJ_SOFTWARE_DIR)/%.o: $(SRC_SOFTWARE_DIR)/%.cpp $(DEPS9)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
+$(BIN_CAMERA): $(OBJ_CAMERA)
+	$(CC) -o $@ $^ $(CFLAGS)
 
-$(BDIR)/main: $(OBJ) $(OBJ_CAMERA) $(OBJ_CONDITIONER) $(OBJ_DEVICE) $(OBJ_LIGHT) $(OBJ_SENSOR) $(OBJ_SENSORGARDEN) $(OBJ_DB) $(OBJ_FUNC) $(OBJ_NFUN) $(DEPS) $(DEPS1) $(DEPS2) $(DEPS3) $(DEPS4) $(DEPS5) $(DEPS6) $(DEPS7)
-	$(CC) -o $@ $(OBJ) $(OBJ_CAMERA) $(OBJ_CONDITIONER) $(OBJ_DEVICE) $(OBJ_LIGHT) $(OBJ_SENSOR) $(OBJ_SENSORGARDEN) $(OBJ_DB) $(OBJ_FUNC) $(OBJ_NFUN) $(CFLAGS) -L/path/to/redis/lib $(LIBS)
+$(BIN_CONDITIONER): $(OBJ_CONDITIONER)
+	$(CC) -o $@ $^ $(CFLAGS)
+
+$(BIN_DEVICE): $(OBJ_DEVICE)
+	$(CC) -o $@ $^ $(CFLAGS)
+
+$(BIN_LIGHT): $(OBJ_LIGHT)
+	$(CC) -o $@ $^ $(CFLAGS)
+
+$(BIN_SENSOR): $(OBJ_SENSOR)
+	$(CC) -o $@ $^ $(CFLAGS)
+
+$(BIN_SENSORGARDEN): $(OBJ_SENSORGARDEN)
+	$(CC) -o $@ $^ $(CFLAGS)
+
+$(BIN_COMMAND): $(OBJ_COMMAND)
+	$(CC) -o $@ $^ $(CFLAGS)
+
+$(BIN_SOFTWARE): $(OBJ_SOFTWARE)
+	$(CC) -o $@ $^ $(CFLAGS)
 
 .PHONY: clean
 

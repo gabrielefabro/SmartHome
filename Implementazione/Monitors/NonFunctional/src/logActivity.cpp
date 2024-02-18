@@ -1,4 +1,5 @@
-#include "../../../main/src/main.h"
+#include "../../../con2db/src/pgsql.h"
+
 
 // Monitor per il requisito non funzionale per il logging delle attività
 void logActivity(Con2DB db1, const char *functionName, int pid)
@@ -8,7 +9,7 @@ void logActivity(Con2DB db1, const char *functionName, int pid)
     char timeString[25];
 
     // Ottieni la stringa formattata per l'orario attuale
-    timeFlies(timeString);
+    //timeFlies(timeString);
 
     // Inizia una transazione SQL
     sprintf(sqlcmd, "BEGIN");

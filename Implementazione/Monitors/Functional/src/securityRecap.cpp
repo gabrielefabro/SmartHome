@@ -1,4 +1,6 @@
-#include "../../../main/src/main.h"
+#include <ctime>
+#include "../../../con2db/src/pgsql.h"
+
 
 // Monitor per il requisito funzionale per registrare un riassunto di sicurezza nel database
 void securityRecap(Con2DB db1, int pid)
@@ -10,7 +12,7 @@ void securityRecap(Con2DB db1, int pid)
     char timeString[20];
 
     // Ottieni l'orario attuale
-    timeFlies(timeString);
+    //timeFlies(timeString);
 
     // Inizia una transazione SQL
     sprintf(sqlcmd, "BEGIN");

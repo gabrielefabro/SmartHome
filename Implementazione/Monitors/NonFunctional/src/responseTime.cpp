@@ -1,6 +1,5 @@
 #include <iostream>
-#include "../../../main/src/main.h"
-
+#include "../../../con2db/src/pgsql.h"
 // Monitor per il requisito non funzionale di tempestività nella risposta
 void monitorResponseTime(const Con2DB& db, int pid, long nanos, long long requestTime, long responseTimeLimit) {
 

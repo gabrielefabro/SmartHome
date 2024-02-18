@@ -1,6 +1,7 @@
 #include <iostream>
 #include <hiredis/hiredis.h>
-#include "command.h"
+#include "../../Command/src/command.h"
+
 
 int main()
 {
@@ -52,7 +53,7 @@ int main()
 
                 switch (comp)
                 {
-                case Camera:
+                case Camera: {
                     reply = (redisReply *)redisCommand(context, "GET comando");
                     camera_type state = static_cast<camera_type>(atoi(reply->str));
                     freeReplyObject(reply);
@@ -75,7 +76,8 @@ int main()
                     }
 
                     break;
-                case Conditioner:
+                }
+                case Conditioner: {
                     reply = (redisReply *)redisCommand(context, "GET comando");
                     conditioner_type state = static_cast<conditioner_type>(atoi(reply->str));
                     freeReplyObject(reply);
@@ -120,7 +122,8 @@ int main()
                         }
                     }
                     break;
-                case Device:
+                }
+                case Device: {
                     reply = (redisReply *)redisCommand(context, "GET comando");
                     conditioner_type state = static_cast<conditioner_type>(atoi(reply->str));
                     freeReplyObject(reply);
@@ -169,7 +172,8 @@ int main()
                         }
                     }
                     break;
-                case Light:
+                }
+                case Light: {
                     reply = (redisReply *)redisCommand(context, "GET comando");
                     light_type state = static_cast<light_type>(atoi(reply->str));
                     freeReplyObject(reply);
@@ -218,7 +222,8 @@ int main()
                         }
                     }
                     break;
-                case Sensor:
+                }
+                case Sensor: {
                     reply = (redisReply *)redisCommand(context, "GET comando");
                     sensor_type state = static_cast<sensor_type>(atoi(reply->str));
                     freeReplyObject(reply);
@@ -240,7 +245,8 @@ int main()
                         }
                     }
                     break;
-                case SensorGarden:
+                }
+                case SensorGarden: {
                     reply = (redisReply *)redisCommand(context, "GET comando");
                     camera_type state = static_cast<camera_type>(atoi(reply->str));
                     freeReplyObject(reply);
@@ -262,9 +268,10 @@ int main()
                         }
                     }
                     break;
-
-                default:
+                }
+                default: {
                     break;
+                }
                 }
             }
             else if (received_message == "Not ok")
