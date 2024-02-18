@@ -6,13 +6,31 @@
 #include <unistd.h>
 #include "../../Camera/src/camera.h"
 #include "../../Device/src/device.h"
-#include "../../Light/src/light.h"
 #include "../../Sensor/src/sensor.h"
 #include "../../SensorGarden/src/sensorGarden.h"
 #include "../../Conditioner/src/conditioner.h"
 #include <string.h>
 
 #define HORIZON 10
+
+typedef enum
+{
+    RED,
+    BLUE,
+    YELLOW,
+    PINK,
+    ORANGE,
+    WHITE,
+    PURPLE,
+} light_color;
+
+typedef enum
+{
+    LightON,
+    LightOFF,
+    change_intensity,
+    change_color,
+} light_type;
 
 typedef enum
 {

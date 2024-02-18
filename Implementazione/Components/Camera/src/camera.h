@@ -4,10 +4,10 @@
 #include <cstdlib>
 #include <iostream>
 #include <random>
-#include "../../../con2db/src/pgsql.h"
-#include <postgresql/libpq-fe.h>
+#include "pgsql.h"
 #include <unistd.h>
 #include <string.h>
+#include <hiredis/hiredis.h>
 
 
 typedef enum

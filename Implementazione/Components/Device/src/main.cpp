@@ -8,7 +8,7 @@ int main()
 {
     const char *redis_host = "127.0.0.1";
     int redis_port = 6379;
-    struct timeval timeout = {1, 100000000000000};
+    struct timeval timeout = {1, 500000};
 
     redisContext *redis_conn = redisConnectWithTimeout(redis_host, redis_port, timeout);
     if (redis_conn == NULL || redis_conn->err)
@@ -25,7 +25,7 @@ int main()
         exit(1);
     }
 
-    Con2DB db1("localhost", "5432", "smarthome", "47002", "logdb_smarthome");
+    Con2DB db1("localhost", "5432", "smarthome", "12345", "logdb_smarthome");
     PGresult *res;
     char buf[200];
     int pid;

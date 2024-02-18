@@ -1,5 +1,5 @@
 #include "camera.h"
-#include <hiredis/hiredis.h>
+
 
 
 int main()
