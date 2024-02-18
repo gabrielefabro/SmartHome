@@ -1,12 +1,10 @@
 #include "camera.h"
-#include "../../../con2db/src/pgsql.h"
-
+#include "../../../timeFlies.cpp"
 // Funzione per registrare informazioni sulla telecamera in un database PostgreSQL.
 void log2cameradb(Con2DB db1, int id, int pid, camera_type state, bool recording)
 {
   int x;
   PGresult *res;
-  int rows, k;
   char cstate[20];
   char sqlcmd[1000];
   char timeString[25];
@@ -27,7 +25,7 @@ void log2cameradb(Con2DB db1, int id, int pid, camera_type state, bool recording
 
   // Crea e esegui un comando SQL per inserire informazioni sulla telecamera nella tabella "Camera" del database.
   sprintf(sqlcmd,
-          "INSERT INTO Camera VALUES (%d, %d, '%s', %d, %d, '%s') ON CONFLICT DO NOTHING",
+          "INSERT INTO Camera VALUES (%d, '%s', %d, %d, '%s') ON CONFLICT DO NOTHING",
           id,
           cstate,
           x,
