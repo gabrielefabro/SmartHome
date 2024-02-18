@@ -6,17 +6,14 @@
 
 int main()
 {
-    const char *redis_host = "127.0.0.1";
-    int redis_port = 6379;
-    struct timeval timeout = {1, 500000};
-
-    redisContext *redis_conn = redisConnectWithTimeout(redis_host, redis_port, timeout);
-    if (redis_conn == NULL || redis_conn->err)
+    // Connessione a Redis
+    redisContext *context = redisConnect("127.0.0.1", 6379);
+    if (context == NULL || context->err)
     {
-        if (redis_conn)
+        if (context)
         {
-            std::cerr << "Errore nella connessione a Redis: " << redis_conn->errstr << std::endl;
-            redisFree(redis_conn);
+            std::cerr << "Errore nella connessione a Redis: " << context->errstr << std::endl;
+            redisFree(context);
         }
         else
         {
@@ -43,7 +40,14 @@ int main()
     /* init device state */
     Device device = initDevice();
 
-    redisReply *reply;
+    // Sottoscrizione al canale
+    redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE deviceChannel");
+    if (reply == NULL || context->err)
+    {
+        std::cerr << "Errore durante la sottoscrizione al canale." << std::endl;
+        exit(1);
+    }
+    freeReplyObject(reply);
 
     while (true)
     {
@@ -58,6 +62,12 @@ int main()
 
         if (dis(gen) > 5)
         {
+            if (redisGetReply(context, (void **)&reply) != REDIS_OK)
+            {
+                std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
+                exit(1);
+            }
+            
             response = "ok";
             // Utilizziamo redisGetReply per ottenere la risposta da Redis
             const int TIMEOUT_SECONDS = 1;
