@@ -3,8 +3,8 @@ SRCDIR := ./src
 OBJDIR := ./obj
 BINDIR := ./bin
 
-DIRSRCPSQ := ../../con2db/src
-DIROBJPSQ := ../../con2db/obj
+DIRSRCPSQ := ../../../con2db/src
+DIROBJPSQ := ../../../con2db/obj
 
 # Lista dei file sorgente (.cpp) e degli header (.h)
 SRCS := $(wildcard $(SRCDIR)/*.cpp)
@@ -23,29 +23,20 @@ EXEC := $(BINDIR)/main
 
 # Compilatore e opzioni di compilazione
 CXX := g++
-CXXFLAGS := -Wall -Wextra -std=c++11
-
-<<<<<<< HEAD
-# Opzioni di linking per PostgreSQL e Redis
-=======
->>>>>>> fb0c8a55095d71fc9ac088a9472b5b9a211a07d2
-LIBS := -lpq -lhiredis
+CFLAGS=-std=c++20 -I. -I$(IDIR) -I/usr/include/postgresql -lpq -lm 
+LIBDIR = -L/path/to/redis/lib
+LIBS = -lhiredis -lpq -lm
 
 # Regola di compilazione generica
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) -c $< -o $@ $(CFLAGS)
 
 $(DIROBJPSQ)/%.o: %(DIRSRCPSQ)/%.cpp %(HARS)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CFLAGS) -c $< -o $@
 
 # Regola per la creazione dell'eseguibile
-<<<<<<< HEAD
-$(EXEC): $(OBJS)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIBS)
-=======
 $(EXEC): $(OBJS) $(OBJP)
-	$(CXX) $(CXXFLAGS) $^ -o $@
->>>>>>> fb0c8a55095d71fc9ac088a9472b5b9a211a07d2
+	$(CXX) $^ -o $@ $(CFLAGS) -L/path/to/redis/lib $(LIBS)
 
 # Target per la pulizia dei file intermedi e dell'eseguibile
 .PHONY: clean
