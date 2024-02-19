@@ -38,7 +38,7 @@ int main()
         if (reply->type == REDIS_REPLY_ARRAY && strcmp(reply->element[0]->str, "message") == 0)
         {
             std::string message = reply->element[2]->str;
-            std::cout << "Messaggio ricevuto da Redis: " << message << std::endl;
+            std::cout << "La component di interesse è : " << message << std::endl;
 
             components comp = static_cast<components>(atoi(reply->element[2]->str));
             freeReplyObject(reply);
@@ -65,7 +65,7 @@ int main()
 
                     redisContext *context2 = redisConnect("127.0.0.1", 6379);
                     redisReply *secondReply = (redisReply *)redisCommand(context2, "PUBLISH cameraChannel %d", state);
-                    std::cout << "Ho pubblicato il messaggio: "<< std::endl;
+                    std::cout << "Ho pubblicato il messaggio: " << std::endl;
 
                     if (secondReply != NULL)
                     {
@@ -96,6 +96,7 @@ int main()
             }
             case Conditioner:
             {
+                std::cout << "sono in conditioner" << std::endl;
                 int numMessage = 0;
                 int comando, temp;
                 conditioner_type state = static_cast<conditioner_type>(comando);
@@ -109,45 +110,47 @@ int main()
 
                     if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
                     {
-                        std::cout << "Messaggio ricevuto da Redis!!" << std::endl;
                         std::string messageA = reply->element[2]->str;
                         std::cout << "Messaggio ricevuto da Redis(COMANDO): " << messageA << std::endl;
                         if (numMessage == 0)
                         {
                             state = static_cast<conditioner_type>(atoi(reply->element[2]->str));
+                            std::cout << "prendo stato" << std::endl;
                             freeReplyObject(reply);
                         }
                         if (numMessage == 1)
                         {
                             temp = (atoi(reply->element[2]->str));
+                            std::cout << "prendo temperatura" << std::endl;
                             freeReplyObject(reply);
                         }
                         numMessage++;
                     }
 
                     // Definisci un array contenente i valori da inviare
-                    int values[] = {state, temp};
-                    const int NUM_MESSAGES = sizeof(values) / sizeof(values[0]);
+                }
+                std::cout << "stato: " << state << " temperatura: " << temp << std::endl;
+                int values[] = {state, temp};
+                const int NUM_MESSAGES = sizeof(values) / sizeof(values[0]);
+                redisContext *context2 = redisConnect("127.0.0.1", 6379);
+                redisReply *secondReply;
+                for (int i = 0; i < NUM_MESSAGES; ++i)
+                {
+                    // Invia il messaggio a Redis
+                    std::cout << "mando il valore: " << values[i] << std::endl;
 
-                    for (int i = 0; i < NUM_MESSAGES; ++i)
+                    secondReply = (redisReply *)redisCommand(context2, "PUBLISH conditionerChannel %d", values[i]);
+                    if (reply != NULL)
                     {
-
-                        std::cout << values[i] << std::endl;
-                        // Invia il messaggio a Redis
-                        reply = (redisReply *)redisCommand(context, "PUBLISH userInput_channel %d", values[i]);
-                        if (reply != NULL)
-                        {
-                            freeReplyObject(reply);
-                            std::cout << "coddio" << std::endl;
-                        }
-                        else
-                        {
-                            std::cerr << "Errore nell'invio del messaggio " << i + 1 << " a Redis." << std::endl;
-                        }
-
-                        // Attendi un breve periodo di tempo tra l'invio dei messaggi
-                        sleep(5); // Attendi 1 secondo (1000000 microsecondi)
+                        freeReplyObject(secondReply);
                     }
+                    else
+                    {
+                        std::cerr << "Errore nell'invio del messaggio " << i + 1 << " a Redis." << std::endl;
+                    }
+
+                    // Attendi un breve periodo di tempo tra l'invio dei messaggi
+                    sleep(1); // Attendi 1 secondo (1000000 microsecondi)
 
                     /* Ricevi i messaggi per un periodo di tempo
                     const int TIMEOUT_SECONDS = 10;
@@ -163,8 +166,8 @@ int main()
                         }
                     }
                     */
-                    break;
                 }
+                break;
             }
             case Device:
             {
@@ -174,8 +177,6 @@ int main()
                 nome_type nomeDispositivo = static_cast<nome_type>(nomeDev);
                 while (numMessage < 4)
                 {
-                    std::cout << "sono dentro while numMessage" << std::endl;
-
                     if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                     {
                         std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
@@ -217,13 +218,15 @@ int main()
                 // Definisci un array contenente i valori da inviare
                 int values[] = {state, nomeDispositivo, inizio, fine};
                 const int NUM_MESSAGES = sizeof(values) / sizeof(values[0]);
+                redisContext *context2 = redisConnect("127.0.0.1", 6379);
+                redisReply *secondReply;
 
                 for (int i = 0; i < NUM_MESSAGES; ++i)
                 {
 
                     std::cout << values[i] << std::endl;
                     // Invia il messaggio a Redis
-                    reply = (redisReply *)redisCommand(context, "PUBLISH userInput_channel %d", values[i]);
+                    secondReply = (redisReply *)redisCommand(context2, "PUBLISH deviceChannel %d", values[i]);
                     if (reply != NULL)
                     {
                         freeReplyObject(reply);
@@ -235,7 +238,7 @@ int main()
                     }
 
                     // Attendi un breve periodo di tempo tra l'invio dei messaggi
-                    sleep(5); // Attendi 1 secondo (1000000 microsecondi)
+                    sleep(1); // Attendi 1 secondo (1000000 microsecondi)
                 }
 
                 /* Ricevi i messaggi per un periodo di tempo
@@ -262,8 +265,6 @@ int main()
                 light_color coloreLuce = static_cast<light_color>(color);
                 while (numMessage < 3)
                 {
-                    std::cout << "ciao" << std::endl;
-
                     if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                     {
                         std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
@@ -296,16 +297,17 @@ int main()
                 // Definisci un array contenente i valori da inviare
                 int values[] = {state, coloreLuce, intensity};
                 const int NUM_MESSAGES = sizeof(values) / sizeof(values[0]);
+                redisContext *context2 = redisConnect("127.0.0.1", 6379);
+                redisReply *secondReply;
 
                 for (int i = 0; i < NUM_MESSAGES; ++i)
                 {
-                    std::cout << values[i] << std::endl;
+                    std::cout <<"invio: " << values[i] << std::endl;
                     // Invia il messaggio a Redis
-                    reply = (redisReply *)redisCommand(context, "PUBLISH userInput_channel %d", values[i]);
+                    secondReply = (redisReply *)redisCommand(context2, "PUBLISH lightChannel %d", values[i]);
                     if (reply != NULL)
                     {
-                        freeReplyObject(reply);
-                        std::cout << "coddio" << std::endl;
+                        freeReplyObject(secondReply);
                     }
                     else
                     {
@@ -313,7 +315,7 @@ int main()
                     }
 
                     // Attendi un breve periodo di tempo tra l'invio dei messaggi
-                    sleep(5); // Attendi 1 secondo (1000000 microsecondi)
+                    sleep(1); // Attendi 1 secondo (1000000 microsecondi)
                 }
 
                 /* Ricevi i messaggi per un periodo di tempo
@@ -352,11 +354,14 @@ int main()
                     state = static_cast<sensor_type>(atoi(reply->element[2]->str));
                     freeReplyObject(reply);
 
-                    reply = (redisReply *)redisCommand(context, "PUBLISH userInput_channel %d", state);
-                    if (reply != NULL)
+                    redisContext *context2 = redisConnect("127.0.0.1", 6379);
+                    redisReply *secondReply = (redisReply *)redisCommand(context2, "PUBLISH sensorChannel %d", state);
+                    std::cout << "Ho pubblicato il messaggio: " << std::endl;
+
+                    if (secondReply != NULL)
                     {
-                        freeReplyObject(reply);
-                        std::cout << "coddio" << std::endl;
+                        freeReplyObject(secondReply);
+                        std::cout << "pubblica su sensor channel" << std::endl;
                     }
                     else
                     {
@@ -400,11 +405,14 @@ int main()
                     state = static_cast<sensorGarden_type>(atoi(reply->element[2]->str));
                     freeReplyObject(reply);
 
-                    reply = (redisReply *)redisCommand(context, "PUBLISH userInput_channel %d", state);
-                    if (reply != NULL)
+                    redisContext *context2 = redisConnect("127.0.0.1", 6379);
+                    redisReply *secondReply = (redisReply *)redisCommand(context2, "PUBLISH sensorGardenChannel %d", state);
+                    std::cout << "Ho pubblicato il messaggio: " << std::endl;
+
+                    if (secondReply != NULL)
                     {
-                        freeReplyObject(reply);
-                        std::cout << "coddio" << std::endl;
+                        freeReplyObject(secondReply);
+                        std::cout << "pubblica su sensorGarden channel" << std::endl;
                     }
                     else
                     {

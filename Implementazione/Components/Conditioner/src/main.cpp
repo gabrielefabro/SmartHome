@@ -44,7 +44,7 @@ int main()
     Conditioner conditioner = initConditioner();
 
     // Sottoscrizione al canale
-    redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE userInput_channel");
+    redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE conditionerChannel");
     freeReplyObject(reply);
 
     while (true)
@@ -56,49 +56,37 @@ int main()
         int temperature = 0;
         conditioner_type state;
 
-        if (dis(gen) > 5)
+        if (true)
         {
-           if (redisGetReply(context, (void **)&reply) != REDIS_OK)
-            {
-                std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
-                exit(1);
-            }
-            else
-            {
-                std::cout << "ehehehehhe: SIUUUUUUUUUUUUUUUu " << std::endl;
-            }
-            if (reply->type == REDIS_REPLY_ARRAY && strcmp(reply->element[0]->str, "message") == 0)
-            {
-                std::cout << "coddio3" << std::endl;
-                response = "ok";
+            response = "ok";
 
-                while (countMessage < 2)
+            while (countMessage < 2)
+            {
+                if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                 {
-                    if (redisGetReply(context, (void **)&reply) != REDIS_OK)
-                    {
-                        std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
-                        exit(1);
-                    }
-                    if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
-                    {
-                        std::string message = reply->element[2]->str;
-                        std::cout << "Messaggio ricevuto da Redis: " << message << std::endl;
-
-                        if (countMessage == 0)
-                        {
-                            state = static_cast<conditioner_type>(atoi(reply->element[2]->str));
-                            std::cout << countMessage << std::endl;
-                        }
-                        else if (countMessage == 1)
-                        {
-                            std::cout << countMessage << std::endl;  
-                            temperature = (atoi(reply->element[2]->str));
-                        }
-
-                        freeReplyObject(reply);
-                    }
-                    countMessage++;
+                    std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
+                    exit(1);
                 }
+                if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
+                {
+                    std::string message = reply->element[2]->str;
+                    std::cout << "Messaggio ricevuto da Redis: " << message << std::endl;
+
+                    if (countMessage == 0)
+                    {
+                        state = static_cast<conditioner_type>(atoi(reply->element[2]->str));
+                        std::cout << countMessage << std::endl;
+                    }
+                    else if (countMessage == 1)
+                    {
+                        std::cout << countMessage << std::endl;
+                        temperature = (atoi(reply->element[2]->str));
+                    }
+
+                    freeReplyObject(reply);
+                }
+                countMessage++;
+                sleep(1);
             }
 
             if (state == change_temperature)
@@ -119,7 +107,6 @@ int main()
                 std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
                 freeReplyObject(publish_reply);
             }
-            
 
             freeReplyObject(reply);
         }

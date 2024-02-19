@@ -41,7 +41,7 @@ int main()
     Device device = initDevice();
 
     // Sottoscrizione al canale
-    redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE userInput_channel");
+    redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE deviceChannel");
     freeReplyObject(reply);
 
     while (true)
@@ -54,69 +54,48 @@ int main()
         int countMessage = 0;
         int inizio = 0;
         int fine = 0;
-        std::cout << "dentro while true" << std::endl;
         if (true)
         {
-            std::cout << "dentro if true" << std::endl;
-            if (redisGetReply(context, (void **)&reply) != REDIS_OK)
-            {
-                std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
-                exit(1);
-            }
-            else
-            {
-                std::cout << "messaggio arrivato " << std::endl;
-            }
-            if (reply->type == REDIS_REPLY_ARRAY && strcmp(reply->element[0]->str, "message") == 0)
-            {
-                std::cout << "messaggio array" << std::endl;
-                response = "ok";
+            response = "ok";
 
-                // Utilizziamo redisGetReply per ottenere la risposta da Redis
-                while (countMessage < 4)
+            // Utilizziamo redisGetReply per ottenere la risposta da Redis
+            while (countMessage < 4)
+            {
+                if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                 {
-                    if (redisGetReply(context, (void **)&reply) != REDIS_OK)
-                    {
-                        std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
-                        exit(1);
-                    }
-                    if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
-                    {
-                        std::string message = reply->element[2]->str;
-                        std::cout << "Messaggio ricevuto da Redis: " << message << std::endl;
-
-                        if (countMessage == 0)
-                        {
-                            std::cout << countMessage << std::endl;
-                            state = static_cast<device_type>(atoi(reply->element[2]->str));
-                        }
-                        else if (countMessage == 1)
-                        {
-                            std::cout << countMessage << std::endl;  
-                            nome = static_cast<nome_type>(atoi(reply->element[2]->str));
-                        }
-                        else if (countMessage == 2)
-                        {
-                            std::cout << countMessage << std::endl;  
-                            inizio = (atoi(reply->element[2]->str));
-                        }
-                        else if (countMessage == 3)
-                        {
-                            std::cout << countMessage << std::endl;  
-                            fine = (atoi(reply->element[2]->str));
-                        }
-
-                        freeReplyObject(reply);
-                    }
-                    countMessage++;
+                    std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
+                    exit(1);
                 }
-            }
-            else
-            {
-                std::cout << "messaggio non va bene" << std::endl;
-            }
+                if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
+                {
+                    std::string message = reply->element[2]->str;
+                    std::cout << "Messaggio ricevuto da Redis: " << message << std::endl;
 
-            std::cout << "finito i cicli" << std::endl;
+                    if (countMessage == 0)
+                    {
+                        std::cout << countMessage << std::endl;
+                        state = static_cast<device_type>(atoi(reply->element[2]->str));
+                    }
+                    else if (countMessage == 1)
+                    {
+                        std::cout << countMessage << std::endl;
+                        nome = static_cast<nome_type>(atoi(reply->element[2]->str));
+                    }
+                    else if (countMessage == 2)
+                    {
+                        std::cout << countMessage << std::endl;
+                        inizio = (atoi(reply->element[2]->str));
+                    }
+                    else if (countMessage == 3)
+                    {
+                        std::cout << countMessage << std::endl;
+                        fine = (atoi(reply->element[2]->str));
+                    }
+
+                    freeReplyObject(reply);
+                }
+                countMessage++;
+            }
 
             if (state == programmed)
             {

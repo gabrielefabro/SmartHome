@@ -33,9 +33,9 @@ int main()
     redisReply *reply;
     while (t < HORIZON)
     {
-        components comp = static_cast<components>(2);
+        components comp = static_cast<components>(5);
         std::string compString;
-        std::cout << comp << std::endl;
+        std::cout << "Device: " << comp << std::endl;
         reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comp);
         freeReplyObject(reply);
         switch (comp)
@@ -45,18 +45,18 @@ int main()
             auto comando = static_cast<camera_type>(rand() % 2);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comando);
             freeReplyObject(reply);
-            redisFree(redis_conn);
             break;
         }
         case Conditioner:
         {
             auto comando = static_cast<conditioner_type>(rand() % 3);
+            std::cout << "state: " << comando << std::endl;
             int value = 0;
             if (comando == change_temperature)
             {
-                value = 20 ;//changeRandomTemperature();
+                value = rand() % 40;
             }
-            std::cout<<"temperatura"<<value<<std::endl;
+            std::cout << "temperatura: " << value << std::endl;
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comando);
             freeReplyObject(reply);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", value);
@@ -71,9 +71,11 @@ int main()
             int fine = 0;
             if (comando == programmed)
             {
-                inizio = changeInt();
-                fine = changeInt();
+                inizio = rand() % 23;
+                fine = rand() % 23;
             }
+
+            std::cout << "stato: " << comando << " nome: " << nomeDev << " inizio: " << inizio << " fine: " << fine << std::endl;
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comando);
             freeReplyObject(reply);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", nomeDev);
@@ -87,16 +89,19 @@ int main()
         case Light:
         {
             auto comando = static_cast<light_type>(rand() % 4);
-            const char *color;
+            light_color color;
             int intensity = 0;
             if (comando == change_color)
             {
-                color = colorToString(getRandomColor());
+                color = static_cast<light_color>(rand() % 7);
             }
             if (comando == change_intensity)
             {
-                intensity = changeIntensity();
+                intensity = rand() % 10;
             }
+
+            std::cout << "stato: " << comando << " colore: " << color << " intensità: " << intensity << std::endl;
+
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comando);
             freeReplyObject(reply);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", color);
@@ -114,7 +119,7 @@ int main()
         }
         case SensorGarden:
         {
-            auto comando = static_cast<sensorGarden_type>(rand() % 4);
+            auto comando = static_cast<sensorGarden_type>(rand() % 2);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comando);
             freeReplyObject(reply);
             break;

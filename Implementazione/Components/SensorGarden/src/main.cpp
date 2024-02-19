@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
 #include <hiredis/hiredis.h>
+#include <postgresql/libpq-fe.h>
 #include <unistd.h>
 #include "sensorGarden.h"
 #include <string.h>
@@ -22,6 +23,7 @@ int main()
         }
         exit(1);
     }
+
     Con2DB db1("localhost", "5432", "smarthome", "12345", "logdb_smarthome");
     PGresult *res;
     char buf[200];
@@ -34,13 +36,13 @@ int main()
 
     pid = getpid();
 
-    printf("Start light with pid %ld, ppid %ld \n",
+    printf("Start sensorGarden with pid %ld, ppid %ld \n",
            (long)pid, (long)getppid());
 
-    /* init traffic light state */
+    /* init sensor state */
     SensorGarden sensorGarden = initSensorGarden();
 
-    redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE userInput_channel");
+    redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE sensorGardenChannel");
     freeReplyObject(reply);
 
     while (true)
@@ -48,50 +50,41 @@ int main()
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dis(0, 100);
-        int humidity, temperature;
         sensorGarden_type state;
 
-        if (dis(gen) > 5)
+        if (true)
         {
-             if (redisGetReply(context, (void **)&reply) != REDIS_OK)
+
+            response = "ok";
+            if (redisGetReply(context, (void **)&reply) != REDIS_OK)
             {
                 std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
                 exit(1);
             }
-            else
+            if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
             {
-                std::cout << "ehehehehhe: SIUUUUUUUUUUUUUUUu " << std::endl;
-            }
-            if (reply->type == REDIS_REPLY_ARRAY && strcmp(reply->element[0]->str, "message") == 0)
-            {
-                std::cout << "coddio3" << std::endl;
-                response = "ok";
+                std::string received_message = reply->element[2]->str;
+                std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
 
-                if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
+                state = static_cast<sensorGarden_type>(atoi(reply->element[2]->str));
+
+                freeReplyObject(reply);
+
+                if (state == SensorGardenOFF)
                 {
-                    std::string received_message = reply->element[2]->str;
-                    std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
-
-                    state = static_cast<sensorGarden_type>(atoi(reply->element[2]->str));
-
-                    freeReplyObject(reply);
-
-                    if (state == SensorGardenON)
-                    {
-                        humidity = std::rand() % 101;
-                        temperature = std::rand() % 46;
-                    }
-                    else if (state == SensorGardenOFF)
-                    {
-                        humidity = 0;
-                        temperature = 0;
-                    }
-
-                    log2sensorGardendb(db1, sensorGarden.getId(), pid, sensorGarden.getState(), sensorGarden.getHumidity(), sensorGarden.getTemperature());
+                    sensorGarden.setHumidity(0);
+                    sensorGarden.setTemperature(0);
                 }
+                else if (state == SensorGardenON)
+                {
+                    sensorGarden.setHumidity(rand() % 100);
+                    sensorGarden.setTemperature(rand() % 46);
+                }
+                std::cout << "tempeartura: " << sensorGarden.getTemperature() << " umidità: " << sensorGarden.getHumidity() << std::endl;
+                log2sensorGardendb(db1, sensorGarden.getId(), pid, sensorGarden.getState(), sensorGarden.getTemperature(), sensorGarden.getHumidity());
 
                 // Scriviamo una risposta sulla stessa stream
-                redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH sensorGardenChannel %s", response);
+                redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH sensorChannel %s", response);
                 if (publish_reply == NULL)
                 {
                     std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
@@ -102,7 +95,6 @@ int main()
                     freeReplyObject(publish_reply);
                 }
             }
-            freeReplyObject(reply);
         }
         else
         {
@@ -120,7 +112,6 @@ int main()
             }
         }
     }
-
     redisFree(context);
     return 0;
 }
