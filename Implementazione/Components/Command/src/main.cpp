@@ -35,7 +35,7 @@ int main()
     {
         components comp = static_cast<components>(rand() % 6);
         std::string compString;
-        std::cout << "Device: " << comp << std::endl;
+        std::cout << "Componente: " << comp << std::endl;
         reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comp);
         freeReplyObject(reply);
         switch (comp)
