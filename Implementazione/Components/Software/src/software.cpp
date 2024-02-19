@@ -2,27 +2,6 @@
 #include <hiredis/hiredis.h>
 #include "../../Command/src/command.h"
 
-void handleUserInputMessage(const char *message) 
-{
-    // Dichiarazione di variabili per memorizzare i valori estratti dal messaggio
-    int comp, comando, nomeDev, inizio, fine;
-    
-    // Utilizziamo sscanf per estrarre i valori dai messaggi in formato stringa
-    if (sscanf(message, "comp:%d comando:%d nomeDev:%d inizio:%d fine:%d", &comp, &comando, &nomeDev, &inizio, &fine) == 5) {
-        // Operazioni desiderate con i valori estratti
-        printf("Messaggio ricevuto:\n");
-        printf("comp: %d\n", comp);
-        printf("comando: %d\n", comando);
-        printf("nomeDev: %d\n", nomeDev);
-        printf("inizio: %d\n", inizio);
-        printf("fine: %d\n", fine);
-        // Esegui altre operazioni necessarie utilizzando questi valori...
-    } else {
-        // Gestione dell'errore nel caso in cui il messaggio non sia nel formato atteso
-        printf("Errore: Il messaggio non è nel formato atteso.\n");
-    }
-}
-
 int main()
 {
     // Connessione a Redis
@@ -43,29 +22,24 @@ int main()
 
     // Sottoscrizione al canale
     redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE userInput_channel");
-    if (reply == NULL || context->err)
-    {
-        std::cerr << "Errore durante la sottoscrizione al canale." << std::endl;
-        exit(1);
-    }
     freeReplyObject(reply);
 
     // Ascolto dei messaggi
     while (true)
     {
+        std::cout << "STO ASPETTANDO UN MESSAGGIO" << std::endl;
         if (redisGetReply(context, (void **)&reply) != REDIS_OK)
         {
             std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
             exit(1);
         }
 
-        if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
+        if (reply->type == REDIS_REPLY_ARRAY && strcmp(reply->element[0]->str, "message") == 0)
         {
-            auto received_message = reply->element[2]->str;
-            
-            handleUserInputMessage(received_message);
+            std::string message = reply->element[2]->str;
+            std::cout << "Messaggio ricevuto da Redis: " << message << std::endl;
 
-            components comp = static_cast<components>(atoi(reply->str));
+            components comp = static_cast<components>(atoi(reply->element[2]->str));
             freeReplyObject(reply);
             std::cout << comp << std::endl;
 
@@ -145,29 +119,63 @@ int main()
             }
             case Device:
             {
-                reply = (redisReply *)redisCommand(context, "GET comando");
-                conditioner_type state = static_cast<conditioner_type>(atoi(reply->str));
-                freeReplyObject(reply);
+                int numMessage = 0;
+                int comando, nomeDev, inizio, fine;
+                device_type state = static_cast<device_type>(comando);
+                nome_type nomeDispositivo = static_cast<nome_type>(nomeDev);
+                while (numMessage < 4)
+                {
+                    std::cout << "ciao" << std::endl;
 
-                reply = (redisReply *)redisCommand(context, "GET inizio");
-                int inizio = (atoi(reply->str));
-                freeReplyObject(reply);
+                    if (redisGetReply(context, (void **)&reply) != REDIS_OK)
+                    {
+                        std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
+                        exit(1);
+                    }
 
-                reply = (redisReply *)redisCommand(context, "GET fine");
-                int fine = (atoi(reply->str));
-                freeReplyObject(reply);
+                    if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
+                    {
+                        std::cout << "Messaggio ricevuto da Redis!!" << std::endl;
+                        std::string messageA = reply->element[2]->str;
+                        std::cout << "Messaggio ricevuto da Redis: " << messageA << std::endl;
+                        if (numMessage == 0)
+                        {
+                            state = static_cast<device_type>(atoi(reply->element[2]->str));
+                            freeReplyObject(reply);
+                        }
+                        if (numMessage == 1)
+                        {
+                            nomeDispositivo = static_cast<nome_type>(atoi(reply->element[2]->str));
+                            freeReplyObject(reply);
+                        }
+                        if (numMessage == 2)
+                        {
+                            inizio = (atoi(reply->element[2]->str));
+                            freeReplyObject(reply);
+                        }
+                        if (numMessage == 3)
+                        {
+                            fine = (atoi(reply->element[2]->str));
+                            freeReplyObject(reply);
+                        }
+                    }
+                    numMessage++;
+                }
 
                 // Definisci un array contenente i valori da inviare
-                int values[] = {state, inizio, fine};
+                int values[] = {state, nomeDispositivo, inizio, fine};
                 const int NUM_MESSAGES = sizeof(values) / sizeof(values[0]);
 
                 for (int i = 0; i < NUM_MESSAGES; ++i)
                 {
+                    
+                    std::cout <<  values[i] << std::endl;
                     // Invia il messaggio a Redis
-                    reply = (redisReply *)redisCommand(context, "PUBLISH deviceChannel %d", values[i]);
+                    reply = (redisReply *)redisCommand(context, "PUBLISH userInput_channel %d", values[i]);
                     if (reply != NULL)
                     {
                         freeReplyObject(reply);
+                        std::cout << "coddio" << std::endl;
                     }
                     else
                     {
@@ -175,12 +183,11 @@ int main()
                     }
 
                     // Attendi un breve periodo di tempo tra l'invio dei messaggi
-                    usleep(1000000); // Attendi 1 secondo (1000000 microsecondi)
+                    sleep(5); // Attendi 1 secondo (1000000 microsecondi)
                 }
-                freeReplyObject(reply);
 
                 // Ricevi i messaggi per un periodo di tempo
-                const int TIMEOUT_SECONDS = 1;
+                const int TIMEOUT_SECONDS = 10;
                 time_t startTime = time(NULL);
                 while (difftime(time(NULL), startTime) < TIMEOUT_SECONDS)
                 {
@@ -299,8 +306,8 @@ int main()
             }
             }
         }
-    }
 
-    redisFree(context);
-    return 0;
+        redisFree(context);
+        return 0;
+    }
 }

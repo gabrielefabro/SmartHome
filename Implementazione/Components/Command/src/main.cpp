@@ -36,13 +36,15 @@ int main()
         components comp = static_cast<components>(2);
         std::string compString;
         std::cout<<comp<<std::endl;
-
+        reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comp);
+        freeReplyObject(reply);
         switch (comp)
         {
         case Camera:
         {
             auto comando = static_cast<camera_type>(rand() % 2);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel comp:%d comando:%d", comp, comando);
+            freeReplyObject(reply);
             break;
         }
         case Conditioner:
@@ -54,7 +56,8 @@ int main()
                 value = changeRandomTemperature();
             }
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel comp:%d comando:%d temperature:%d", comp, comando, value);
-            break;
+           freeReplyObject(reply);
+           break;
         }
         case Device:
         {
@@ -67,7 +70,14 @@ int main()
                 inizio = changeInt();
                 fine = changeInt();
             }
-            reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel comp:%d comando:%d nomeDev: %d inizio:%d fine:%d", comp, comando, nomeDev, inizio, fine);
+            reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comando);
+            freeReplyObject(reply);
+            reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", nomeDev);
+            freeReplyObject(reply);
+            reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", inizio);
+            freeReplyObject(reply);
+            reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", fine);
+            freeReplyObject(reply);
             break;
         }
         case Light:
@@ -84,18 +94,21 @@ int main()
                 intensity = changeIntensity();
             }
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel comp:%d comando:%d color:%s intensity:%d", comp, comando, color, intensity);
+            freeReplyObject(reply);
             break;
         }
         case Sensor:
         {
             auto comando = static_cast<sensor_type>(rand() % 2);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel comp:%d comando:%d", comp, comando);
+            freeReplyObject(reply);
             break;
         }
         case SensorGarden:
         {
             auto comando = static_cast<sensorGarden_type>(rand() % 4);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel comp:%d comando:%d humidity:%d temperature:%d", comp, comando);
+            freeReplyObject(reply);
             break;
         }
         default:
@@ -110,33 +123,10 @@ int main()
         else
         {
             std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
-            freeReplyObject(reply);
 
-            // Utilizziamo redisGetReply per ottenere la risposta da Redis
-            if (redisGetReply(redis_conn, (void **)&reply) != REDIS_OK)
-            {
-                std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
-                exit(1);
-            }
-
-            if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
-            {
-                std::string received_message = reply->element[2]->str;
-                std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
-
-                if (received_message == "Ok")
-                {
-                    std::cout << "Comando eseguito con successo" << std::endl;
-                }
-                else if (received_message == "Not ok")
-                {
-                    // Fare qualcosa se il comando non è andato a buon fine
-                }
-            }
-
-            freeReplyObject(reply);
         }
         t++;
+        sleep(30);
     }
 
     redisFree(redis_conn);
