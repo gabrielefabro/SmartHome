@@ -33,7 +33,7 @@ int main()
     redisReply *reply;
     while (t < HORIZON)
     {
-        components comp = static_cast<components>(5);
+        components comp = static_cast<components>(rand() % 6);
         std::string compString;
         std::cout << "Device: " << comp << std::endl;
         reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comp);
