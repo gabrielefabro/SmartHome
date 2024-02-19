@@ -1,7 +1,5 @@
 #include "camera.h"
 
-
-
 int main()
 {
     // Connessione a Redis
@@ -38,7 +36,7 @@ int main()
     Camera camera = initCamera();
 
     // Sottoscrizione al canale
-    redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE userInput_channel");
+    redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE cameraChannel");
     freeReplyObject(reply);
 
     while (true)
@@ -48,27 +46,27 @@ int main()
         std::uniform_int_distribution<> dis(0, 100);
         camera_type state;
 
-        if (dis(gen) > 5)
+        if (redisGetReply(context, (void **)&reply) != REDIS_OK)
         {
-            if (redisGetReply(context, (void **)&reply) != REDIS_OK)
-            {
-                std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
-                exit(1);
-            }
-            else
-            {
-                std::cout << "ehehehehhe: SIUUUUUUUUUUUUUUUu " << std::endl;
-            }
-            if (reply->type == REDIS_REPLY_ARRAY && strcmp(reply->element[0]->str, "message") == 0)
-            {
-                std::cout << "coddio3" << std::endl;
-                response = "ok";
+            std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
+            exit(1);
+        }
+        else
+        {
+            std::cout << "camera ha ricevuto qualcosa " << std::endl;
+        }
+        if (reply->type == REDIS_REPLY_ARRAY && strcmp(reply->element[0]->str, "message") == 0)
+        {
+            std::cout << "il messaggio va bene" << std::endl;
 
-                if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
+            if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
+            {
+                const char *received_message = reply->element[2]->str;
+                std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
+
+                if (true)
                 {
-                    std::string received_message = reply->element[2]->str;
-                    std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
-
+                    response = "ok";
                     state = static_cast<camera_type>(atoi(reply->element[2]->str));
 
                     freeReplyObject(reply);
@@ -82,35 +80,36 @@ int main()
                         camera.setRecording(true);
                     }
                     log2cameradb(db1, camera.getId(), pid, camera.getState(), camera.getRecording());
-                }
-                // Scriviamo una risposta sulla stessa stream
-                redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH cameraChannel %s", response);
-                if (publish_reply == NULL)
-                {
-                    std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
+
+                    // Scriviamo una risposta sulla stessa stream
+                    redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH userInput_channel %s", response);
+                    if (publish_reply == NULL)
+                    {
+                        std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
+                        freeReplyObject(publish_reply);
+                    }
                 }
                 else
                 {
-                    std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
-                    freeReplyObject(publish_reply);
+                    response = "no";
+                    // Scriviamo una risposta sulla stessa stream
+                    redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH userInput_channel %s", response);
+                    if (publish_reply == NULL)
+                    {
+                        std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
+                        freeReplyObject(publish_reply);
+                    }
                 }
             }
             freeReplyObject(reply);
-        }
-        else
-        {
-            response = "no";
-            // Scriviamo una risposta sulla stessa stream
-            redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH cameraChannel %s", response);
-            if (publish_reply == NULL)
-            {
-                std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
-            }
-            else
-            {
-                std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
-                freeReplyObject(publish_reply);
-            }
         }
     }
 

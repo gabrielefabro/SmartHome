@@ -33,7 +33,7 @@ int main()
     redisReply *reply;
     while (t < HORIZON)
     {
-        components comp = static_cast<components>(0);
+        components comp = static_cast<components>(2);
         std::string compString;
         std::cout << comp << std::endl;
         reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comp);
@@ -45,6 +45,7 @@ int main()
             auto comando = static_cast<camera_type>(rand() % 2);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comando);
             freeReplyObject(reply);
+            redisFree(redis_conn);
             break;
         }
         case Conditioner:
@@ -53,8 +54,9 @@ int main()
             int value = 0;
             if (comando == change_temperature)
             {
-                value = changeRandomTemperature();
+                value = 20 ;//changeRandomTemperature();
             }
+            std::cout<<"temperatura"<<value<<std::endl;
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comando);
             freeReplyObject(reply);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", value);

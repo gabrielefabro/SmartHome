@@ -45,7 +45,6 @@ int main()
     redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE userInput_channel");
     freeReplyObject(reply);
 
-
     while (true)
     {
         std::random_device rd;
@@ -87,10 +86,27 @@ int main()
                         sensor.setCheck(true);
                     }
 
-                log2sensordb(db1, sensor.getId(), pid, sensor.getState(), sensor.getCheck());
+                    log2sensordb(db1, sensor.getId(), pid, sensor.getState(), sensor.getCheck());
 
+                    // Scriviamo una risposta sulla stessa stream
+                    redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH sensorChannel %s", response);
+                    if (publish_reply == NULL)
+                    {
+                        std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
+                        freeReplyObject(publish_reply);
+                    }
+                }
+                freeReplyObject(reply);
+            }
+            else
+            {
+                response = "no";
                 // Scriviamo una risposta sulla stessa stream
-                redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH sensorChannel %s", response);
+                redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH response_channel %s", response);
                 if (publish_reply == NULL)
                 {
                     std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
@@ -101,25 +117,8 @@ int main()
                     freeReplyObject(publish_reply);
                 }
             }
-            freeReplyObject(reply);
-        }
-        else
-        {
-            response = "no";
-            // Scriviamo una risposta sulla stessa stream
-            redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH response_channel %s", response);
-            if (publish_reply == NULL)
-            {
-                std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
-            }
-            else
-            {
-                std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
-                freeReplyObject(publish_reply);
-            }
         }
     }
-
     redisFree(context);
     return 0;
 }

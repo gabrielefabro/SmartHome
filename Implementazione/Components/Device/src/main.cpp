@@ -54,10 +54,10 @@ int main()
         int countMessage = 0;
         int inizio = 0;
         int fine = 0;
-        std::cout << "coddio" << std::endl;
+        std::cout << "dentro while true" << std::endl;
         if (true)
         {
-            std::cout << "coddio2" << std::endl;
+            std::cout << "dentro if true" << std::endl;
             if (redisGetReply(context, (void **)&reply) != REDIS_OK)
             {
                 std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
@@ -65,11 +65,11 @@ int main()
             }
             else
             {
-                std::cout << "ehehehehhe: SIUUUUUUUUUUUUUUUu " << std::endl;
+                std::cout << "messaggio arrivato " << std::endl;
             }
             if (reply->type == REDIS_REPLY_ARRAY && strcmp(reply->element[0]->str, "message") == 0)
             {
-                std::cout << "coddio3" << std::endl;
+                std::cout << "messaggio array" << std::endl;
                 response = "ok";
 
                 // Utilizziamo redisGetReply per ottenere la risposta da Redis
@@ -87,8 +87,8 @@ int main()
 
                         if (countMessage == 0)
                         {
-                            state = static_cast<device_type>(atoi(reply->element[2]->str));
                             std::cout << countMessage << std::endl;
+                            state = static_cast<device_type>(atoi(reply->element[2]->str));
                         }
                         else if (countMessage == 1)
                         {
@@ -113,10 +113,10 @@ int main()
             }
             else
             {
-                std::cout << "MESI MESI MESI ANCORA MESI" << std::endl;
+                std::cout << "messaggio non va bene" << std::endl;
             }
 
-            std::cout << "CANNAVARO E ANCORA CANNAVARO" << std::endl;
+            std::cout << "finito i cicli" << std::endl;
 
             if (state == programmed)
             {

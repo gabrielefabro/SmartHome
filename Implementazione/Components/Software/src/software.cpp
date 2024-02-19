@@ -27,6 +27,7 @@ int main()
     // Ascolto dei messaggi
     while (true)
     {
+
         std::cout << "STO ASPETTANDO UN MESSAGGIO" << std::endl;
         if (redisGetReply(context, (void **)&reply) != REDIS_OK)
         {
@@ -41,13 +42,12 @@ int main()
 
             components comp = static_cast<components>(atoi(reply->element[2]->str));
             freeReplyObject(reply);
-            std::cout << comp << std::endl;
 
             switch (comp)
             {
             case Camera:
             {
-                int comando;
+                int comando = 0;
                 camera_type state = static_cast<camera_type>(comando);
 
                 if (redisGetReply(context, (void **)&reply) != REDIS_OK)
@@ -58,18 +58,19 @@ int main()
 
                 if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
                 {
-                    std::cout << "Messaggio ricevuto da Redis!!" << std::endl;
                     std::string messageA = reply->element[2]->str;
-                    std::cout << "Messaggio ricevuto da Redis: " << messageA << std::endl;
-
+                    std::cout << "Messaggio ricevuto da Redis(COMANDO): " << messageA << std::endl;
                     state = static_cast<camera_type>(atoi(reply->element[2]->str));
                     freeReplyObject(reply);
 
-                    reply = (redisReply *)redisCommand(context, "PUBLISH userInput_channel %d", state);
-                    if (reply != NULL)
+                    redisContext *context2 = redisConnect("127.0.0.1", 6379);
+                    redisReply *secondReply = (redisReply *)redisCommand(context2, "PUBLISH cameraChannel %d", state);
+                    std::cout << "Ho pubblicato il messaggio: "<< std::endl;
+
+                    if (secondReply != NULL)
                     {
-                        freeReplyObject(reply);
-                        std::cout << "coddio" << std::endl;
+                        freeReplyObject(secondReply);
+                        std::cout << "pubblica su camera channel" << std::endl;
                     }
                     else
                     {
@@ -110,7 +111,7 @@ int main()
                     {
                         std::cout << "Messaggio ricevuto da Redis!!" << std::endl;
                         std::string messageA = reply->element[2]->str;
-                        std::cout << "Messaggio ricevuto da Redis: " << messageA << std::endl;
+                        std::cout << "Messaggio ricevuto da Redis(COMANDO): " << messageA << std::endl;
                         if (numMessage == 0)
                         {
                             state = static_cast<conditioner_type>(atoi(reply->element[2]->str));
@@ -173,7 +174,7 @@ int main()
                 nome_type nomeDispositivo = static_cast<nome_type>(nomeDev);
                 while (numMessage < 4)
                 {
-                    std::cout << "ciao" << std::endl;
+                    std::cout << "sono dentro while numMessage" << std::endl;
 
                     if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                     {
@@ -183,26 +184,29 @@ int main()
 
                     if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
                     {
-                        std::cout << "Messaggio ricevuto da Redis!!" << std::endl;
+                        std::cout << "Messaggio ricevuto da Redis array !!" << std::endl;
                         std::string messageA = reply->element[2]->str;
-                        std::cout << "Messaggio ricevuto da Redis: " << messageA << std::endl;
                         if (numMessage == 0)
                         {
+                            std::cout << "Messaggio ricevuto da Redis(COMANDO): " << messageA << std::endl;
                             state = static_cast<device_type>(atoi(reply->element[2]->str));
                             freeReplyObject(reply);
                         }
                         if (numMessage == 1)
                         {
+                            std::cout << "Messaggio ricevuto da Redis(Elettrodomestico): " << messageA << std::endl;
                             nomeDispositivo = static_cast<nome_type>(atoi(reply->element[2]->str));
                             freeReplyObject(reply);
                         }
                         if (numMessage == 2)
                         {
+                            std::cout << "Messaggio ricevuto da Redis(inizio): " << messageA << std::endl;
                             inizio = (atoi(reply->element[2]->str));
                             freeReplyObject(reply);
                         }
                         if (numMessage == 3)
                         {
+                            std::cout << "Messaggio ricevuto da Redis(fine): " << messageA << std::endl;
                             fine = (atoi(reply->element[2]->str));
                             freeReplyObject(reply);
                         }
@@ -223,7 +227,7 @@ int main()
                     if (reply != NULL)
                     {
                         freeReplyObject(reply);
-                        std::cout << "coddio" << std::endl;
+                        std::cout << "pubblicato messaggio" << std::endl;
                     }
                     else
                     {
@@ -429,7 +433,6 @@ int main()
                 break;
             }
             }
-
             redisFree(context);
             return 0;
         }
