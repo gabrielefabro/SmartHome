@@ -1,23 +1,19 @@
 #include <iostream>
 #include <random>
-
 #include <unistd.h>
 #include "light.h"
 #include <string.h>
 
 int main()
 {
-    const char *redis_host = "127.0.0.1";
-    int redis_port = 6379;
-    struct timeval timeout = {1, 500000};
-
-    redisContext *redis_conn = redisConnectWithTimeout(redis_host, redis_port, timeout);
-    if (redis_conn == NULL || redis_conn->err)
+    // Connessione a Redis
+    redisContext *context = redisConnect("127.0.0.1", 6379);
+    if (context == NULL || context->err)
     {
-        if (redis_conn)
+        if (context)
         {
-            std::cerr << "Errore nella connessione a Redis: " << redis_conn->errstr << std::endl;
-            redisFree(redis_conn);
+            std::cerr << "Errore nella connessione a Redis: " << context->errstr << std::endl;
+            redisFree(context);
         }
         else
         {
@@ -41,10 +37,11 @@ int main()
     printf("Start light with pid %ld, ppid %ld \n",
            (long)pid, (long)getppid());
 
-    /* init traffic light state */
+    /* init light state */
     Light light = initLight();
 
-    redisReply *reply;
+    redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE userInput_channel");
+    freeReplyObject(reply);
 
     while (true)
     {
@@ -58,31 +55,55 @@ int main()
 
         if (dis(gen) > 5)
         {
-            response = "ok";
-            // Utilizziamo redisGetReply per ottenere la risposta da Redis
-            const int TIMEOUT_SECONDS = 1;
-            time_t startTime = time(NULL);
-            while (difftime(time(NULL), startTime) < TIMEOUT_SECONDS)
+            std::cout << "coddio2" << std::endl;
+            if (redisGetReply(context, (void **)&reply) != REDIS_OK)
             {
-                reply = (redisReply *)redisCommand(redis_conn, "GET lightChannel");
+                std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
+                exit(1);
+            }
+            else
+            {
+                std::cout << "ehehehehhe: SIUUUUUUUUUUUUUUUu " << std::endl;
+            }
+            if (reply->type == REDIS_REPLY_ARRAY && strcmp(reply->element[0]->str, "message") == 0)
+            {
+                std::cout << "coddio3" << std::endl;
+                response = "ok";
 
-                std::string message = reply->element[2]->str;
-                std::cout << "Messaggio ricevuto da Redis: " << message << std::endl;
+                // Utilizziamo redisGetReply per ottenere la risposta da Redis
+                while (countMessage < 3)
+                {
+                    if (redisGetReply(context, (void **)&reply) != REDIS_OK)
+                    {
+                        std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
+                        exit(1);
+                    }
+                    if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
+                    {
+                        std::string message = reply->element[2]->str;
+                        std::cout << "Messaggio ricevuto da Redis: " << message << std::endl;
 
-                if (countMessage == 0)
-                {
-                    state = static_cast<light_type>(atoi(reply->str));
-                }
-                else if (countMessage == 1)
-                {
-                    intensity = (atoi(reply->str));
-                }
-                else if (countMessage == 2)
-                {
-                    color = static_cast<light_color>(atoi(reply->str));
+                        if (countMessage == 0)
+                        {
+                            state = static_cast<light_type>(atoi(reply->element[2]->str));
+                            std::cout << countMessage << std::endl;
+                        }
+                        else if (countMessage == 1)
+                        {
+                            std::cout << countMessage << std::endl;  
+                            color = static_cast<light_color>(atoi(reply->element[2]->str));
+                        }
+                        else if (countMessage == 2)
+                        {
+                            std::cout << countMessage << std::endl;  
+                            intensity = (atoi(reply->element[2]->str));
+                        }
+
+                        freeReplyObject(reply);
+                    }
+                    countMessage++;
                 }
 
-                freeReplyObject(reply);
             }
 
             if (state == change_color)
@@ -98,7 +119,7 @@ int main()
             log2lightdb(db1, light.getId(), pid, light.getState(), light.getColor(), light.getIntensity());
 
             // Scriviamo una risposta sulla stessa stream
-            redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH lightChannel %s", response);
+            redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH lightChannel %s", response);
             if (publish_reply == NULL)
             {
                 std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
@@ -116,7 +137,7 @@ int main()
         {
             response = "no";
             // Scriviamo una risposta sulla stessa stream
-            redisReply *publish_reply = (redisReply *)redisCommand(redis_conn, "PUBLISH response_channel %s", response);
+            redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH response_channel %s", response);
             if (publish_reply == NULL)
             {
                 std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
@@ -129,6 +150,6 @@ int main()
         }
     }
 
-    redisFree(redis_conn);
+    redisFree(context);
     return 0;
 }
