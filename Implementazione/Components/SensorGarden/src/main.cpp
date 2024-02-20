@@ -44,7 +44,7 @@ int main()
     while (true)
     {
         sensorGarden_type state;
-        
+
         if (redisGetReply(context, (void **)&reply) != REDIS_OK)
         {
             std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
@@ -70,6 +70,30 @@ int main()
             auto tempo_corrente = std::chrono::steady_clock::now();
             auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
             log2sensorGardendb(db1, sensorGarden.getId(), pid, sensorGarden.getState(), sensorGarden.getTemperature(), sensorGarden.getHumidity(), tempo_trascorso);
+
+            if (state == SensorGardenON)
+            {
+                if (sensorGarden.getHumidity() < 35 && sensorGarden.getTemperature() > 30)
+                {
+                    char *messaggio = "Accendi gli irrigatori";
+                    log2Gardendb(db1, messaggio, tempo_trascorso, sensorGarden.getId(),sensorGarden.getTemperature(), sensorGarden.getHumidity());
+                }
+                else if (sensorGarden.getHumidity() > 60)
+                {
+                    char *messaggio = "Accendi luci esterne";
+                    log2Gardendb(db1, messaggio, tempo_trascorso, sensorGarden.getId(), sensorGarden.getTemperature(), sensorGarden.getHumidity());
+                }
+                else if (sensorGarden.getHumidity() >= 60 && sensorGarden.getHumidity() <= 70 && sensorGarden.getTemperature() >= 38)
+                {
+                    char *messaggio = "Accendi luci esterne e irrigatori";
+                    log2Gardendb(db1, messaggio, tempo_trascorso, sensorGarden.getId(), sensorGarden.getTemperature(), sensorGarden.getHumidity());
+                }
+                else
+                {
+                    char *messaggio = "Nessuna modifica necessaria";
+                    log2Gardendb(db1, messaggio, tempo_trascorso, sensorGarden.getId(), sensorGarden.getTemperature(), sensorGarden.getHumidity());
+                }
+            }
         }
     }
     redisFree(context);

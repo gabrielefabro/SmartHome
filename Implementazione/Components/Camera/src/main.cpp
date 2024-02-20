@@ -53,23 +53,33 @@ int main()
 
             if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
             {
-                    state = static_cast<camera_type>(atoi(reply->element[2]->str));
+                state = static_cast<camera_type>(atoi(reply->element[2]->str));
 
-                    freeReplyObject(reply);
+                freeReplyObject(reply);
 
-                    if (state == CameraOFF)
-                    {
-                        camera.setRecording(false);
-                    }
-                    else if (state == CameraON)
-                    {
-                        camera.setRecording(true);
-                    }
-                    auto tempo_corrente = std::chrono::steady_clock::now();
-                    auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
-                    log2cameradb(db1, camera.getId(), pid, camera.getState(), camera.getRecording(), tempo_trascorso);
+                if (state == CameraOFF)
+                {
+                    camera.setRecording(false);
+                }
+                else if (state == CameraON)
+                {
+                    camera.setRecording(true);
+                }
+                auto tempo_corrente = std::chrono::steady_clock::now();
+                auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
+                log2cameradb(db1, camera.getId(), pid, camera.getState(), camera.getRecording(), tempo_trascorso);
 
-                    sleep(1);
+                const char *sms = "ok "; 
+                redisContext *context2 = redisConnect("127.0.0.1", 6379);
+                redisReply *secondReply = (redisReply *)redisCommand(context2, "PUBLISH rispostaChannel %d", sms);
+                if (secondReply != NULL)
+                {
+                    freeReplyObject(secondReply);
+                }
+                else
+                {
+                    std::cerr << "Errore nell'invio del messaggio a Redis." << std::endl;
+                }
             }
         }
     }

@@ -66,7 +66,6 @@ CREATE TABLE IF NOT EXISTS SensorGarden (
     stato VARCHAR(15) NOT NULL,
     temperature INT NOT NULL,
     humidity INT NOT NULL,
-    descr VARCHAR(30) NOT NULL,
     pid INT NOT NULL,
     temp VARCHAR(25) NOT NULL,
     PRIMARY KEY (t, pid)
@@ -79,8 +78,12 @@ CREATE TABLE IF NOT EXISTS LogActivity (
     PRIMARY KEY (name_activity, temp)
 );
 
-CREATE TABLE IF NOT EXISTS SecurityRecap (
+CREATE TABLE IF NOT EXISTS Garden (
+    t INT NOT NULL,
+    id INT NOT NULL,
+    temperature INT NOT NULL,
+    humidity INT NOT NULL,
+    descr VARCHAR(30) NOT NULL,
     temp VARCHAR(25) NOT NULL,
-    pid INT NOT NULL,
-    PRIMARY KEY (temp, pid)
+    PRIMARY KEY (t)
 );
