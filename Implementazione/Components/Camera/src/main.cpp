@@ -68,6 +68,7 @@ int main()
                 auto tempo_corrente = std::chrono::steady_clock::now();
                 auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
                 log2cameradb(db1, camera.getId(), pid, camera.getState(), camera.getRecording(), tempo_trascorso);
+                sleep(5);
 
                 const char *sms = "ok "; 
                 redisContext *context2 = redisConnect("127.0.0.1", 6379);
@@ -82,6 +83,7 @@ int main()
                 }
             }
         }
+        
     }
 
     redisFree(context);

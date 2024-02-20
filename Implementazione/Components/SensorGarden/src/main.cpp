@@ -75,22 +75,22 @@ int main()
             {
                 if (sensorGarden.getHumidity() < 35 && sensorGarden.getTemperature() > 30)
                 {
-                    char *messaggio = "Accendi gli irrigatori";
+                    const char *messaggio = "Accendi gli irrigatori";
                     log2Gardendb(db1, messaggio, tempo_trascorso, sensorGarden.getId(),sensorGarden.getTemperature(), sensorGarden.getHumidity());
                 }
                 else if (sensorGarden.getHumidity() > 60)
                 {
-                    char *messaggio = "Accendi luci esterne";
+                    const char *messaggio = "Accendi luci esterne";
                     log2Gardendb(db1, messaggio, tempo_trascorso, sensorGarden.getId(), sensorGarden.getTemperature(), sensorGarden.getHumidity());
                 }
                 else if (sensorGarden.getHumidity() >= 60 && sensorGarden.getHumidity() <= 70 && sensorGarden.getTemperature() >= 38)
                 {
-                    char *messaggio = "Accendi luci esterne e irrigatori";
+                    const char *messaggio = "Accendi luci esterne e irrigatori";
                     log2Gardendb(db1, messaggio, tempo_trascorso, sensorGarden.getId(), sensorGarden.getTemperature(), sensorGarden.getHumidity());
                 }
                 else
                 {
-                    char *messaggio = "Nessuna modifica necessaria";
+                    const char *messaggio = "Nessuna modifica necessaria";
                     log2Gardendb(db1, messaggio, tempo_trascorso, sensorGarden.getId(), sensorGarden.getTemperature(), sensorGarden.getHumidity());
                 }
             }

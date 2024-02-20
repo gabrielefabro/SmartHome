@@ -1,7 +1,7 @@
 #include <ctime>
 #include "sensorGarden.h"
 
-void log2Gardendb(Con2DB db1, char *messaggio, int64_t tempo_trascorso, int id,  int humidity, int temperature)
+void log2Gardendb(Con2DB db1, const char *messaggio, int64_t tempo_trascorso, int id,  int humidity, int temperature)
 {
     char timeString[25];
     char sqlcmd[1000];
