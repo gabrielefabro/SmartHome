@@ -7,30 +7,13 @@
 #include "../../Camera/src/camera.h"
 #include "../../Device/src/device.h"
 #include "../../Sensor/src/sensor.h"
+#include "../../Light/src/light.h"
 #include "../../SensorGarden/src/sensorGarden.h"
 #include "../../Conditioner/src/conditioner.h"
 #include <string.h>
 
 #define HORIZON 10
 
-typedef enum
-{
-    RED,
-    BLUE,
-    YELLOW,
-    PINK,
-    ORANGE,
-    WHITE,
-    PURPLE,
-} light_color;
-
-typedef enum
-{
-    LightON,
-    LightOFF,
-    change_intensity,
-    change_color,
-} light_type;
 
 typedef enum
 {
@@ -43,9 +26,10 @@ typedef enum
 } components;
 
 std::string componentToString(components comp);
-int changeRandomTemperature();
 void int2stateCamera(char *buf, camera_type x);
-int changeInt();
-light_color getRandomColor();
+void int2stateConditioner(char *buf, conditioner_type x);
+void int2stateDevice(char *buf, device_type x);
+void int2stateLight(char *buf, light_type x);
+void int2stateSensor(char *buf, sensor_type x);
+void int2stateSensorGarden(char *buf, sensorGarden_type x);
 const char* colorToString(light_color color);
-int changeIntensity();

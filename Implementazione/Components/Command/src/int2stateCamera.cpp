@@ -1,4 +1,4 @@
-#include "camera.h"
+#include "command.h"
 #include <cstdio>
 
 // Funzione che inserisce in un buffer la stringa che rappresenta lo stato dell'oggetto camera

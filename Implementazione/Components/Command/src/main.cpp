@@ -32,7 +32,7 @@ int main()
     {
         components comp = static_cast<components>(rand() % 6);
         std::string compString;
-        std::cout << "Componente: " << comp << std::endl;
+        std::cout << "Componente Generata: " << componentToString(comp) << std::endl;
         reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comp);
         freeReplyObject(reply);
         switch (comp)
@@ -40,6 +40,9 @@ int main()
         case Camera:
         {
             auto comando = static_cast<camera_type>(rand() % 2);
+            char comm[20];
+            int2stateCamera(comm, comando);
+            std::cout << "Comando Generato: " << comm << std::endl;
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comando);
             freeReplyObject(reply);
             break;
@@ -47,13 +50,15 @@ int main()
         case Conditioner:
         {
             auto comando = static_cast<conditioner_type>(rand() % 3);
-            std::cout << "state: " << comando << std::endl;
+            char comm[20];
+            int2stateConditioner(comm, comando);
+            std::cout << "Comando Generato: " << comm << std::endl;
             int value = 0;
             if (comando == change_temperature)
             {
                 value = rand() % 40;
             }
-            std::cout << "temperatura: " << value << std::endl;
+            std::cout << "Temperatura desiderata: " << value << std::endl;
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comando);
             freeReplyObject(reply);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", value);
@@ -63,6 +68,9 @@ int main()
         case Device:
         {
             auto comando = static_cast<device_type>(rand() % 3);
+            char comm[20];
+            int2stateDevice(comm, comando);
+            std::cout << "Comando Generato: " << comm << std::endl;
             auto nomeDev = static_cast<nome_type>(rand() % 8);
             int inizio = 0;
             int fine = 0;
@@ -72,7 +80,7 @@ int main()
                 fine = rand() % 23;
             }
 
-            std::cout << "stato: " << comando << " nome: " << nomeDev << " inizio: " << inizio << " fine: " << fine << std::endl;
+            std::cout << " nome: " << nomeDev << " inizio: " << inizio << " fine: " << fine << std::endl;
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comando);
             freeReplyObject(reply);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", nomeDev);
@@ -86,6 +94,8 @@ int main()
         case Light:
         {
             auto comando = static_cast<light_type>(rand() % 4);
+            char comm[20];
+            int2stateLight(comm, comando);
             light_color color;
             int intensity = 0;
             if (comando == change_color)
@@ -96,6 +106,8 @@ int main()
             {
                 intensity = rand() % 10;
             }
+
+            std::cout << "Comando Generato: " << comm << std::endl;
 
             std::cout << "stato: " << comando << " colore: " << color << " intensità: " << intensity << std::endl;
 
@@ -110,6 +122,8 @@ int main()
         case Sensor:
         {
             auto comando = static_cast<sensor_type>(rand() % 2);
+            char comm[20];
+            int2stateSensor(comm, comando);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comando);
             freeReplyObject(reply);
             break;
@@ -117,6 +131,8 @@ int main()
         case SensorGarden:
         {
             auto comando = static_cast<sensorGarden_type>(rand() % 2);
+            char comm[20];
+            int2stateSensorGarden(comm, comando);
             reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comando);
             freeReplyObject(reply);
             break;

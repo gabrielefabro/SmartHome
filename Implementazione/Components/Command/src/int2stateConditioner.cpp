@@ -1,4 +1,4 @@
-#include "conditioner.h"
+#include "command.h"
 
 // Funzione che inserisce in un buffer la stringa che rappresenta lo stato dell'oggetto condizionatore
 void int2stateConditioner(char *buf, conditioner_type x)

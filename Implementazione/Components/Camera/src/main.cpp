@@ -47,20 +47,13 @@ int main()
             std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
             exit(1);
         }
-        else
-        {
-            std::cout << "camera ha ricevuto qualcosa " << std::endl;
-        }
+
         if (reply->type == REDIS_REPLY_ARRAY && strcmp(reply->element[0]->str, "message") == 0)
         {
-            std::cout << "il messaggio va bene" << std::endl;
 
             if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
             {
                 const char *received_message = reply->element[2]->str;
-                std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
-
-
 
                     state = static_cast<camera_type>(atoi(reply->element[2]->str));
 
@@ -78,8 +71,7 @@ int main()
                     auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
                     log2cameradb(db1, camera.getId(), pid, camera.getState(), camera.getRecording(), tempo_trascorso);
 
-                    // Scriviamo una risposta sulla stessa stream
-                    sleep(10);
+                    sleep(1);
             }
         }
     }

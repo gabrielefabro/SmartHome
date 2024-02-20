@@ -1,4 +1,4 @@
-#include "device.h"
+#include "command.h"
 
 // Funzione che inserisce in un buffer la stringa che rappresenta lo stato dell'oggetto Dispositivo
 void int2stateDevice(char *buf, device_type x)
