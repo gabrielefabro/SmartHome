@@ -2,7 +2,7 @@
 #include <cstring>
 
 // Funzione per registrare le informazioni di un dispositivo nel database.
-void log2devicedb(Con2DB db1, int id, int pid, device_type state, nome_type nome, int inizio, int fine)
+void log2devicedb(Con2DB db1, int id, int pid, device_type state, nome_type nome, int inizio, int fine, int64_t tempo_trascorso)
 {
   // Dichiarazioni di variabili locali
   PGresult *res;
@@ -28,7 +28,8 @@ void log2devicedb(Con2DB db1, int id, int pid, device_type state, nome_type nome
 
   // Esegui l'inserimento dei dati nel database.
   sprintf(sqlcmd,
-          "INSERT INTO Device VALUES (%d, '%s', '%s', %d, %d, %d, '%s') ON CONFLICT DO NOTHING",
+          "INSERT INTO Device VALUES (%ld, %d, '%s', '%s', %d, %d, %d, '%s') ON CONFLICT DO NOTHING",
+          tempo_trascorso,
           id,
           cstate,
           n,

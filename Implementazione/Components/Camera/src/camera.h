@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <hiredis/hiredis.h>
+#include <chrono>
 
 
 typedef enum
@@ -44,7 +45,7 @@ public:
 };
 
 Camera initCamera();
-void log2cameradb(Con2DB db1, int id, int pid, camera_type state, bool recording);
+void log2cameradb(Con2DB db1, int id, int pid, camera_type state, bool recording, int64_t tempo_trascorso);
 void int2stateCamera(char *buf, camera_type x);
 void timeFlies(char *buf);
 

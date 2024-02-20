@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include "../../../con2db/src/pgsql.h"
+#include <chrono>
 // Enumerazione che rappresenta gli stati possibili del sensore
 typedef enum
 {
@@ -46,7 +47,7 @@ public:
 };
 
 Sensor initSensor();
-void log2sensordb(Con2DB db1, int id, int pid, sensor_type state, bool check);
+void log2sensordb(Con2DB db1, int id, int pid, sensor_type state, bool check, int64_t tempo_trascorso);
 void int2stateSensor(char *cstate, sensor_type state);
 void timeFlies(char *buf);
 #endif

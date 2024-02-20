@@ -2,7 +2,7 @@
 #include <cstring>
 
 // Funzione per registrare i dati del sensore da giardino nel database
-void log2sensorGardendb(Con2DB db1, int id, int pid, sensorGarden_type state, int humidity, int temperature)
+void log2sensorGardendb(Con2DB db1, int id, int pid, sensorGarden_type state, int humidity, int temperature, int64_t tempo_trascorso)
 {
   PGresult *res;
   char cstate[20];
@@ -24,7 +24,8 @@ void log2sensorGardendb(Con2DB db1, int id, int pid, sensorGarden_type state, in
 
   // Inserisce i dati nel database
   sprintf(sqlcmd,
-          "INSERT INTO SensorGarden VALUES (%d, '%s', %d, %d, %d, '%s') ON CONFLICT DO NOTHING",
+          "INSERT INTO SensorGarden VALUES (%ld, %d, '%s', %d, %d, %d, '%s') ON CONFLICT DO NOTHING",
+          tempo_trascorso,
           id,
           cstate,
           temperature,

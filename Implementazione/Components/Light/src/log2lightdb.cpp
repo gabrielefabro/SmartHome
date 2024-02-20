@@ -3,7 +3,7 @@
 
 
 // Funzione per registrare i dati della luce nel database.
-void log2lightdb(Con2DB db1, int id, int pid, light_type state, light_color color, int intensity)
+void log2lightdb(Con2DB db1, int id, int pid, light_type state, light_color color, int intensity, int64_t tempo_trascorso)
 {
     // Dichiarazione di variabili locali per la gestione dei risultati delle query.
     PGresult *res;
@@ -28,7 +28,8 @@ void log2lightdb(Con2DB db1, int id, int pid, light_type state, light_color colo
 
     // Esegui l'inserimento dei dati della luce nel database.
     sprintf(sqlcmd,
-            "INSERT INTO Light VALUES (%d, '%s', '%s', %d, %d, '%s') ON CONFLICT DO NOTHING",
+            "INSERT INTO Light VALUES (%ld, %d, '%s', '%s', %d, %d, '%s') ON CONFLICT DO NOTHING",
+            tempo_trascorso,
             id,
             cstate,
             c,

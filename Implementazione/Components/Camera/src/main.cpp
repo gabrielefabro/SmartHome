@@ -2,6 +2,8 @@
 
 int main()
 {
+
+    auto tempo_iniziale = std::chrono::steady_clock::now();
     // Connessione a Redis
     redisContext *context = redisConnect("127.0.0.1", 6379);
     if (context == NULL || context->err)
@@ -20,9 +22,7 @@ int main()
 
     Con2DB db1("localhost", "5432", "smarthome", "12345", "logdb_smarthome");
     int pid;
-    char buf[200];
-    int t = 0;
-    const char *response;
+
 
     /* init random number generator  */
     srand((unsigned)time(NULL));
@@ -41,9 +41,6 @@ int main()
 
     while (true)
     {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(0, 100);
         camera_type state;
 
         if (redisGetReply(context, (void **)&reply) != REDIS_OK)
@@ -64,9 +61,8 @@ int main()
                 const char *received_message = reply->element[2]->str;
                 std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
 
-                if (true)
-                {
-                    response = "ok";
+
+
                     state = static_cast<camera_type>(atoi(reply->element[2]->str));
 
                     freeReplyObject(reply);
@@ -79,37 +75,13 @@ int main()
                     {
                         camera.setRecording(true);
                     }
-                    log2cameradb(db1, camera.getId(), pid, camera.getState(), camera.getRecording());
+                    auto tempo_corrente = std::chrono::steady_clock::now();
+                    auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
+                    log2cameradb(db1, camera.getId(), pid, camera.getState(), camera.getRecording(), tempo_trascorso);
 
                     // Scriviamo una risposta sulla stessa stream
-                    redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH userInput_channel %s", response);
-                    if (publish_reply == NULL)
-                    {
-                        std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
-                    }
-                    else
-                    {
-                        std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
-                        freeReplyObject(publish_reply);
-                    }
-                }
-                else
-                {
-                    response = "no";
-                    // Scriviamo una risposta sulla stessa stream
-                    redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH userInput_channel %s", response);
-                    if (publish_reply == NULL)
-                    {
-                        std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
-                    }
-                    else
-                    {
-                        std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
-                        freeReplyObject(publish_reply);
-                    }
-                }
+                    sleep(10);
             }
-            freeReplyObject(reply);
         }
     }
 

@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include "../../../con2db/src/pgsql.h"
 #include <hiredis/hiredis.h>
+#include <chrono>
 
 // Dichiarazione di un tipo di enumerazione per rappresentare lo stato di una luce.
 typedef enum
@@ -68,7 +69,7 @@ public:
 };
 
 Light initLight();
-void log2lightdb(Con2DB db1, int id, int pid, light_type state, light_color color, int intensity);
+void log2lightdb(Con2DB db1, int id, int pid, light_type state, light_color color, int intensity, int64_t tempo_trascorso);
 void int2stateLight(char *cstate, light_type state);
 const char* colorToString(light_color color);
 void timeFlies(char *buf);

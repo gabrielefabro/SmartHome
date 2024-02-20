@@ -35,14 +35,14 @@ typedef enum
 class Device
 {
 private:
+    // Variabile che rappresenta l'identificatore del dispositivo.
+    int id;
+    
     // Variabile di stato del dispositivo.
     device_type state;
 
     // Variabile che rappresenta il tipo di dispositivo.
     nome_type nome;
-
-    // Variabile che rappresenta l'identificatore del dispositivo.
-    int id;
 
     // Variabili per memorizzare gli intervalli di tempo programmati per l'attivazione del dispositivo.
     int inizio;
@@ -70,14 +70,16 @@ public:
     // Funzione per impostare manualmente lo stato del dispositivo con il valore passato come argomento.
     void setState(device_type newState);
 
+    void setName(nome_type newName);
+
     // Funzione per ottenere gli intervalli di tempo programmato per l'attivazione del dispositivo.
     std::tuple<int, int> getProgrammed();
 };
 
 Device initDevice();
-void log2devicedb(Con2DB db1, int id, int pid, device_type state, nome_type nome, int inizio, int fine);
+void log2devicedb(Con2DB db1, int id, int pid, device_type state, nome_type nome, int inizio, int fine, int64_t tempo_trascorso);
 void int2stateDevice(char *cstate, device_type);
-const char* nomeToString(nome_type nomeDev);
+const char *nomeToString(nome_type nomeDev);
 void timeFlies(char *buf);
 int changeInt();
 #endif

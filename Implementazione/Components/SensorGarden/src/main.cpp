@@ -8,6 +8,7 @@
 
 int main()
 {
+    auto tempo_iniziale = std::chrono::steady_clock::now();
     // Connessione a Redis
     redisContext *context = redisConnect("127.0.0.1", 6379);
     if (context == NULL || context->err)
@@ -25,11 +26,7 @@ int main()
     }
 
     Con2DB db1("localhost", "5432", "smarthome", "12345", "logdb_smarthome");
-    PGresult *res;
-    char buf[200];
     int pid;
-    int t = 0;
-    const char *response;
 
     /* init random number generator  */
     srand((unsigned)time(NULL));
@@ -39,7 +36,6 @@ int main()
     printf("Start sensorGarden with pid %ld, ppid %ld \n",
            (long)pid, (long)getppid());
 
-    /* init sensor state */
     SensorGarden sensorGarden = initSensorGarden();
 
     redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE sensorGardenChannel");
@@ -47,69 +43,36 @@ int main()
 
     while (true)
     {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(0, 100);
         sensorGarden_type state;
-
-        if (true)
+        
+        if (redisGetReply(context, (void **)&reply) != REDIS_OK)
         {
-
-            response = "ok";
-            if (redisGetReply(context, (void **)&reply) != REDIS_OK)
-            {
-                std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
-                exit(1);
-            }
-            if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
-            {
-                std::string received_message = reply->element[2]->str;
-                std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
-
-                state = static_cast<sensorGarden_type>(atoi(reply->element[2]->str));
-
-                freeReplyObject(reply);
-
-                if (state == SensorGardenOFF)
-                {
-                    sensorGarden.setHumidity(0);
-                    sensorGarden.setTemperature(0);
-                }
-                else if (state == SensorGardenON)
-                {
-                    sensorGarden.setHumidity(rand() % 100);
-                    sensorGarden.setTemperature(rand() % 46);
-                }
-                std::cout << "tempeartura: " << sensorGarden.getTemperature() << " umidità: " << sensorGarden.getHumidity() << std::endl;
-                log2sensorGardendb(db1, sensorGarden.getId(), pid, sensorGarden.getState(), sensorGarden.getTemperature(), sensorGarden.getHumidity());
-
-                // Scriviamo una risposta sulla stessa stream
-                redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH sensorChannel %s", response);
-                if (publish_reply == NULL)
-                {
-                    std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
-                }
-                else
-                {
-                    std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
-                    freeReplyObject(publish_reply);
-                }
-            }
+            std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
+            exit(1);
         }
-        else
+        if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
         {
-            response = "no";
-            // Scriviamo una risposta sulla stessa stream
-            redisReply *publish_reply = (redisReply *)redisCommand(context, "PUBLISH response_channel %s", response);
-            if (publish_reply == NULL)
+            std::string received_message = reply->element[2]->str;
+            std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
+
+            state = static_cast<sensorGarden_type>(atoi(reply->element[2]->str));
+
+            freeReplyObject(reply);
+
+            if (state == SensorGardenOFF)
             {
-                std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
+                sensorGarden.setHumidity(0);
+                sensorGarden.setTemperature(0);
             }
-            else
+            else if (state == SensorGardenON)
             {
-                std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
-                freeReplyObject(publish_reply);
+                sensorGarden.setHumidity(rand() % 100);
+                sensorGarden.setTemperature(rand() % 46);
             }
+            std::cout << "tempeartura: " << sensorGarden.getTemperature() << " umidità: " << sensorGarden.getHumidity() << std::endl;
+            auto tempo_corrente = std::chrono::steady_clock::now();
+            auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
+            log2sensorGardendb(db1, sensorGarden.getId(), pid, sensorGarden.getState(), sensorGarden.getTemperature(), sensorGarden.getHumidity(), tempo_trascorso);
         }
     }
     redisFree(context);

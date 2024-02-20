@@ -43,6 +43,12 @@ void Device::setState(device_type newState)
     state = newState;
 }
 
+// Funzione per impostare manualmente lo stato del dispositivo con il valore passato come argomento.
+void Device::setName(nome_type newName)
+{
+    nome = newName;
+}
+
 // Funzione per ottenere gli intervalli di tempo programmato per l'attivazione del dispositivo.
 std::tuple<int, int> Device::getProgrammed()
 {

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <chrono>
 #include "../../../con2db/src/pgsql.h"
 
 // Enumerazione dei possibili stati del sensore da giardino
@@ -56,7 +57,7 @@ public:
 };
 
 SensorGarden initSensorGarden();
-void log2sensorGardendb(Con2DB db1, int id, int pid, sensorGarden_type state, int humidity, int temperature);
+void log2sensorGardendb(Con2DB db1, int id, int pid, sensorGarden_type state, int humidity, int temperature, int64_t tempo_trascorso);
 void int2stateSensorGarden(char *cstate, sensorGarden_type state);
 void timeFlies(char *buf);
 
