@@ -373,28 +373,31 @@ int main()
         // Sottoscrizione al canale
         redisReply *altrareply = (redisReply *)redisCommand(context3, "SUBSCRIBE rispostaChannel");
         freeReplyObject(altrareply);
-
-        std::cout << "IN ATTESA RISPOSTA" << std::endl;
-        if (redisGetReply(context3, (void **)&altrareply) != REDIS_OK)
+        while (true)
         {
-            std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
-            exit(1);
-        }
-
-        if (altrareply->type == REDIS_REPLY_ARRAY && altrareply->elements == 3)
-        {
-            const char *received_message = altrareply->element[2]->str;
-            std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
-            auto tempo_corrente = std::chrono::steady_clock::now();
-            auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
-
-            if (tempo_trascorso > 2000)
+            std::cout << "IN ATTESA RISPOSTA" << std::endl;
+            if (redisGetReply(context3, (void **)&altrareply) != REDIS_OK)
             {
-                std::cout << "Sistema lento " << std::endl;
+                std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
+                exit(1);
             }
-            freeReplyObject(altrareply);
 
-            sleep(5);
+            if (altrareply->type == REDIS_REPLY_ARRAY && altrareply->elements == 3 && strcmp(altrareply->element[0]->str, "message") == 0)
+            {
+                //const char *received_message = altrareply->element[2]->str;
+                //std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
+                std::cout << "Messaggio ricevuto sul canale " << altrareply->element[1]->str << ": " << altrareply->element[2]->str << std::endl;
+                auto tempo_corrente = std::chrono::steady_clock::now();
+                auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
+
+                if (tempo_trascorso > 2000)
+                {
+                    std::cout << "Sistema lento " << std::endl;
+                }
+                freeReplyObject(altrareply);
+
+                sleep(5);
+            }
         }
         redisFree(context3);
     }
