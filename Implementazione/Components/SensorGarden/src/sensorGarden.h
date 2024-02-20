@@ -18,11 +18,11 @@ class SensorGarden
 {
 private:
 
-    // Stato attuale del sensore da giardino
-    sensorGarden_type state;
-
     // ID univoco del sensore da giardino
     int id;
+
+    // Stato attuale del sensore da giardino
+    sensorGarden_type state;
 
     // Livello di umidità rilevato dal sensore da giardino
     int humidity;

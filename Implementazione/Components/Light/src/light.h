@@ -30,6 +30,9 @@ typedef enum
 class Light
 {
 private:
+    // ID univoco della luce.
+    int id;
+
     // Variabile di stato della luce (accesa, spenta, ecc.).
     light_type state;
 
@@ -38,9 +41,6 @@ private:
 
     // Intensità della luce.
     int intensity;
-
-    // ID univoco della luce.
-    int id;
 
 public:
     // Costruttore della classe Light.
@@ -71,10 +71,10 @@ public:
 Light initLight();
 void log2lightdb(Con2DB db1, int id, int pid, light_type state, light_color color, int intensity, int64_t tempo_trascorso);
 void int2stateLight(char *cstate, light_type state);
-const char* colorToString(light_color color);
+const char *colorToString(light_color color);
 void timeFlies(char *buf);
 light_color getRandomColor();
-const char* colorToString(light_color color);
+const char *colorToString(light_color color);
 int changeIntensity();
 
 #endif

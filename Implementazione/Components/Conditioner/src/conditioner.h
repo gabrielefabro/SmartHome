@@ -19,14 +19,16 @@ typedef enum
 class Conditioner
 {
 private:
-    // Variabile di stato del condizionatore.
-    conditioner_type state;
+    // Variabile che rappresenta l'identificatore del condizionatore.
+    int id;
 
     // Variabile che rappresenta la temperatura del condizionatore.
     int temperature;
 
-    // Variabile che rappresenta l'identificatore del condizionatore.
-    int id;
+    // Variabile di stato del condizionatore.
+    conditioner_type state;
+
+    
 
 public:
     // Costruttore della classe Conditioner.
@@ -50,6 +52,6 @@ public:
 
 Conditioner initConditioner();
 void log2conditionerdb(Con2DB db1, int id, int pid, conditioner_type state, int temperature, int64_t tempo_trascorso);
-void int2stateConditioner(char *cstate , conditioner_type state);
+void int2stateConditioner(char *cstate, conditioner_type state);
 
 #endif

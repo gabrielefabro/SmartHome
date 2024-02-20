@@ -7,7 +7,6 @@ void log2sensorGardendb(Con2DB db1, int id, int pid, sensorGarden_type state, in
   PGresult *res;
   char cstate[20];
   char sqlcmd[1000];
-  char descr[20];
   char timeString[25];
 
   // Converte il tipo di stato del sensore da giardino in una stringa

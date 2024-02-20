@@ -79,6 +79,7 @@ int main()
                     {
                         std::cerr << "Errore nell'invio del messaggio a Redis." << std::endl;
                     }
+                    
                 }
                 break;
             }

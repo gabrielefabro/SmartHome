@@ -22,9 +22,6 @@ int main()
     }
 
     Con2DB db1("localhost", "5432", "smarthome", "12345", "logdb_smarthome");
-    PGresult *res;
-    char buf[200];
-    int pid;
     int t = 0;
 
     /* init random number generator  */
@@ -33,7 +30,7 @@ int main()
     redisReply *reply;
     while (t < HORIZON)
     {
-        components comp = static_cast<components>(3);
+        components comp = static_cast<components>(rand() % 6);
         std::string compString;
         std::cout << "Componente: " << comp << std::endl;
         reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comp);

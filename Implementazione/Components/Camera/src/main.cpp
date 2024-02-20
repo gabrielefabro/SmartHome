@@ -23,7 +23,6 @@ int main()
     Con2DB db1("localhost", "5432", "smarthome", "12345", "logdb_smarthome");
     int pid;
 
-
     /* init random number generator  */
     srand((unsigned)time(NULL));
 

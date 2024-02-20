@@ -11,9 +11,4 @@
 #include <chrono>
 
 
-
-void timeFlies(char *buf);
-void fail(Con2DB db1, int pid, char *component);
-
-
 #endif
