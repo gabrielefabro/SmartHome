@@ -2,11 +2,8 @@
 
 int main()
 {
-    const char *redis_host = "127.0.0.1";
-    int redis_port = 6379;
-    struct timeval timeout = {1, 500000};
 
-    redisContext *redis_conn = redisConnectWithTimeout(redis_host, redis_port, timeout);
+    redisContext *redis_conn = redisConnect("127.0.0.1", 6379);
     if (redis_conn == NULL || redis_conn->err)
     {
         if (redis_conn)
@@ -27,13 +24,13 @@ int main()
     /* init random number generator  */
     srand((unsigned)time(NULL));
 
-    redisReply *reply;
+    
     while (t < HORIZON)
     {
-        components comp = static_cast<components>(0);
+        components comp = static_cast<components>(rand() & 6);
         std::string compString;
         std::cout << "Componente Generata: " << componentToString(comp) << std::endl;
-        reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comp);
+        redisReply *reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comp);
         freeReplyObject(reply);
         switch (comp)
         {
@@ -144,7 +141,6 @@ int main()
         if (reply == NULL)
         {
             std::cerr << "Errore nella pubblicazione della risposta su Redis." << std::endl;
-            freeReplyObject(reply);
         }
         else
         {

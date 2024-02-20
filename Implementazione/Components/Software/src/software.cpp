@@ -49,12 +49,8 @@ int main()
             {
             case Camera:
             {
-                int comando = 0;
+                camera_type cameraState;
                 char com[20];
-                camera_type state = static_cast<camera_type>(comando);
-
-                int2stateCamera(com, state);
-                log2db(db1, componentToString(comp), com);
 
                 if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                 {
@@ -64,33 +60,24 @@ int main()
 
                 if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
                 {
-                    state = static_cast<camera_type>(atoi(reply->element[2]->str));
+                    cameraState = static_cast<camera_type>(atoi(reply->element[2]->str));
                     freeReplyObject(reply);
-
+                    int2stateCamera(com, cameraState);
+                    log2db(db1, componentToString(comp), com);
                     redisContext *context2 = redisConnect("127.0.0.1", 6379);
-                    redisReply *secondReply = (redisReply *)redisCommand(context2, "PUBLISH cameraChannel %d", state);
+                    redisReply *secondReply = (redisReply *)redisCommand(context2, "PUBLISH cameraChannel %d", cameraState);
                     tempo_iniziale = std::chrono::steady_clock::now();
-
-                    if (secondReply != NULL)
-                    {
-                        freeReplyObject(secondReply);
-                    }
-                    else
-                    {
-                        std::cerr << "Errore nell'invio del messaggio a Redis." << std::endl;
-                    }
+                    freeReplyObject(secondReply);
+                    redisFree(context2);
                 }
                 break;
             }
             case Conditioner:
             {
+                conditioner_type conditionerState;
                 int numMessage = 0;
-                int comando, temp;
+                int temp;
                 char com[20];
-                conditioner_type state = static_cast<conditioner_type>(comando);
-
-                int2stateConditioner(com, state);
-                log2db(db1, componentToString(comp), com);
 
                 while (numMessage < 2)
                 {
@@ -104,7 +91,7 @@ int main()
                     {
                         if (numMessage == 0)
                         {
-                            state = static_cast<conditioner_type>(atoi(reply->element[2]->str));
+                            conditionerState = static_cast<conditioner_type>(atoi(reply->element[2]->str));
                             freeReplyObject(reply);
                         }
                         if (numMessage == 1)
@@ -114,10 +101,12 @@ int main()
                         }
                         numMessage++;
                     }
+                    int2stateConditioner(com, conditionerState);
+                    log2db(db1, componentToString(comp), com);
 
                     // Definisci un array contenente i valori da inviare
                 }
-                int values[] = {state, temp};
+                int values[] = {conditionerState, temp};
                 const int NUM_MESSAGES = sizeof(values) / sizeof(values[0]);
                 redisContext *context2 = redisConnect("127.0.0.1", 6379);
                 redisReply *secondReply;
@@ -126,29 +115,21 @@ int main()
                     // Invia il messaggio a Redis
 
                     secondReply = (redisReply *)redisCommand(context2, "PUBLISH conditionerChannel %d", values[i]);
-                    if (reply != NULL)
-                    {
-                        freeReplyObject(secondReply);
-                    }
-                    else
-                    {
-                        std::cerr << "Errore nell'invio del messaggio " << i + 1 << " a Redis." << std::endl;
-                    }
 
                     // Attendi un breve periodo di tempo tra l'invio dei messaggi
+                    freeReplyObject(secondReply);
+                    redisFree(context2);
                     sleep(1); // Attendi 1 secondo (1000000 microsecondi)
                 }
                 break;
             }
             case Device:
             {
+                device_type deviceState;
+                nome_type nomeDispositivo;
                 int numMessage = 0;
-                int comando, nomeDev, inizio, fine;
+                int nomeDev, inizio, fine;
                 char com[20];
-                device_type state = static_cast<device_type>(comando);
-                nome_type nomeDispositivo = static_cast<nome_type>(nomeDev);
-                int2stateDevice(com, state);
-                log2db(db1, componentToString(comp), com);
 
                 while (numMessage < 4)
                 {
@@ -162,7 +143,7 @@ int main()
                     {
                         if (numMessage == 0)
                         {
-                            state = static_cast<device_type>(atoi(reply->element[2]->str));
+                            deviceState = static_cast<device_type>(atoi(reply->element[2]->str));
                             freeReplyObject(reply);
                         }
                         if (numMessage == 1)
@@ -183,9 +164,11 @@ int main()
                     }
                     numMessage++;
                 }
+                int2stateDevice(com, deviceState);
+                log2db(db1, componentToString(comp), com);
 
                 // Definisci un array contenente i valori da inviare
-                int values[] = {state, nomeDispositivo, inizio, fine};
+                int values[] = {deviceState, nomeDispositivo, inizio, fine};
                 const int NUM_MESSAGES = sizeof(values) / sizeof(values[0]);
                 redisContext *context2 = redisConnect("127.0.0.1", 6379);
                 redisReply *secondReply;
@@ -196,30 +179,21 @@ int main()
                     // Invia il messaggio a Redis
                     secondReply = (redisReply *)redisCommand(context2, "PUBLISH deviceChannel %d", values[i]);
                     auto tempo_iniziale = std::chrono::steady_clock::now();
-                    if (reply != NULL)
-                    {
-                        freeReplyObject(reply);
-                    }
-                    else
-                    {
-                        std::cerr << "Errore nell'invio del messaggio " << i + 1 << " a Redis." << std::endl;
-                    }
+                    freeReplyObject(secondReply);
 
                     // Attendi un breve periodo di tempo tra l'invio dei messaggi
                     sleep(1); // Attendi 1 secondo (1000000 microsecondi)
                 }
+                redisFree(context2);
                 break;
             }
             case Light:
             {
+                light_type lightState;
+                light_color coloreLuce;
                 int numMessage = 0;
-                int comando, color, intensity;
+                int intensity;
                 char com[20];
-                light_type state = static_cast<light_type>(comando);
-                light_color coloreLuce = static_cast<light_color>(color);
-
-                int2stateLight(com, state);
-                log2db(db1, componentToString(comp), com);
 
                 while (numMessage < 3)
                 {
@@ -233,7 +207,7 @@ int main()
                     {
                         if (numMessage == 0)
                         {
-                            state = static_cast<light_type>(atoi(reply->element[2]->str));
+                            lightState = static_cast<light_type>(atoi(reply->element[2]->str));
                             freeReplyObject(reply);
                         }
                         if (numMessage == 1)
@@ -249,8 +223,10 @@ int main()
                     }
                     numMessage++;
                 }
+                int2stateLight(com, lightState);
+                log2db(db1, componentToString(comp), com);
                 // Definisci un array contenente i valori da inviare
-                int values[] = {state, coloreLuce, intensity};
+                int values[] = {lightState, coloreLuce, intensity};
                 const int NUM_MESSAGES = sizeof(values) / sizeof(values[0]);
                 redisContext *context2 = redisConnect("127.0.0.1", 6379);
                 redisReply *secondReply;
@@ -260,29 +236,22 @@ int main()
                     // Invia il messaggio a Redis
                     secondReply = (redisReply *)redisCommand(context2, "PUBLISH lightChannel %d", values[i]);
                     auto tempo_iniziale = std::chrono::steady_clock::now();
-                    if (reply != NULL)
-                    {
-                        freeReplyObject(secondReply);
-                    }
-                    else
-                    {
-                        std::cerr << "Errore nell'invio del messaggio " << i + 1 << " a Redis." << std::endl;
-                    }
+                    freeReplyObject(secondReply);
 
                     // Attendi un breve periodo di tempo tra l'invio dei messaggi
                     sleep(1); // Attendi 1 secondo (1000000 microsecondi)
                 }
+                redisFree(context2);
                 break;
             }
             case Sensor:
             {
+                sensor_type sensorState;
                 int comando;
                 char com[20];
-                sensor_type state = static_cast<sensor_type>(comando);
+                
 
-                int2stateSensor(com, state);
-                const char *abc = componentToString(comp);
-                log2db(db1, abc, com);
+                
 
                 if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                 {
@@ -293,31 +262,26 @@ int main()
                 if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
                 {
 
-                    state = static_cast<sensor_type>(atoi(reply->element[2]->str));
+                    sensorState = static_cast<sensor_type>(atoi(reply->element[2]->str));
                     freeReplyObject(reply);
 
                     redisContext *context2 = redisConnect("127.0.0.1", 6379);
-                    redisReply *secondReply = (redisReply *)redisCommand(context2, "PUBLISH sensorChannel %d", state);
+                    redisReply *secondReply = (redisReply *)redisCommand(context2, "PUBLISH sensorChannel %d", sensorState);
                     auto tempo_iniziale = std::chrono::steady_clock::now();
-                    if (secondReply != NULL)
-                    {
-                        freeReplyObject(secondReply);
-                    }
-                    else
-                    {
-                        std::cerr << "Errore nell'invio del messaggio a Redis." << std::endl;
-                    }
+
+                    freeReplyObject(secondReply);
+                    redisFree(context2);
                 }
+                int2stateSensor(com, sensorState);
+                const char *component = componentToString(comp);
+                log2db(db1, component, com);
                 break;
             }
             case SensorGarden:
             {
+                sensorGarden_type sensorGardenState;
                 int comando;
                 char com[20];
-                sensorGarden_type state = static_cast<sensorGarden_type>(comando);
-
-                int2stateSensorGarden(com, state);
-                log2db(db1, componentToString(comp), com);
 
                 if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                 {
@@ -328,24 +292,20 @@ int main()
                 if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
                 {
 
-                    state = static_cast<sensorGarden_type>(atoi(reply->element[2]->str));
+                    sensorGardenState = static_cast<sensorGarden_type>(atoi(reply->element[2]->str));
                     freeReplyObject(reply);
 
                     redisContext *context2 = redisConnect("127.0.0.1", 6379);
-                    redisReply *secondReply = (redisReply *)redisCommand(context2, "PUBLISH sensorGardenChannel %d", state);
+                    redisReply *secondReply = (redisReply *)redisCommand(context2, "PUBLISH sensorGardenChannel %d", sensorGardenState);
                     auto tempo_iniziale = std::chrono::steady_clock::now();
 
-                    if (secondReply != NULL)
-                    {
-                        freeReplyObject(secondReply);
-                    }
-                    else
-                    {
-                        std::cerr << "Errore nell'invio del messaggio a Redis." << std::endl;
-                    }
+                    freeReplyObject(secondReply);
+                    redisFree(context2);
 
                     break;
                 }
+                int2stateSensorGarden(com, sensorGardenState);
+                log2db(db1, componentToString(comp), com);
             }
             default:
             {
@@ -384,13 +344,13 @@ int main()
 
             if (altrareply->type == REDIS_REPLY_ARRAY && altrareply->elements == 3 && strcmp(altrareply->element[0]->str, "message") == 0)
             {
-                //const char *received_message = altrareply->element[2]->str;
-                //std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
+                // const char *received_message = altrareply->element[2]->str;
+                // std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
                 std::cout << "Messaggio ricevuto sul canale " << altrareply->element[1]->str << ": " << altrareply->element[2]->str << std::endl;
                 auto tempo_corrente = std::chrono::steady_clock::now();
                 auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
 
-                if (tempo_trascorso > 2000)
+                if (tempo_trascorso > 5000)
                 {
                     std::cout << "Sistema lento " << std::endl;
                 }
@@ -398,6 +358,7 @@ int main()
 
                 sleep(5);
             }
+            break;
         }
         redisFree(context3);
     }
