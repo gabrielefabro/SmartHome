@@ -128,7 +128,7 @@ int main()
                 device_type deviceState;
                 nome_type nomeDispositivo;
                 int numMessage = 0;
-                int nomeDev, inizio, fine;
+                int inizio, fine;
                 char com[20];
 
                 while (numMessage < 4)
@@ -247,10 +247,7 @@ int main()
             case Sensor:
             {
                 sensor_type sensorState;
-                int comando;
                 char com[20];
-                
-
                 
 
                 if (redisGetReply(context, (void **)&reply) != REDIS_OK)
@@ -280,7 +277,6 @@ int main()
             case SensorGarden:
             {
                 sensorGarden_type sensorGardenState;
-                int comando;
                 char com[20];
 
                 if (redisGetReply(context, (void **)&reply) != REDIS_OK)
@@ -302,10 +298,11 @@ int main()
                     freeReplyObject(secondReply);
                     redisFree(context2);
 
-                    break;
+                    
                 }
                 int2stateSensorGarden(com, sensorGardenState);
                 log2db(db1, componentToString(comp), com);
+                break;
             }
             default:
             {
