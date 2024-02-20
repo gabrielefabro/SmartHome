@@ -59,17 +59,13 @@ int main()
             }
             if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
             {
-                std::string message = reply->element[2]->str;
-                std::cout << "Messaggio ricevuto da Redis: " << message << std::endl;
-
+            
                 if (countMessage == 0)
                 {
                     state = static_cast<conditioner_type>(atoi(reply->element[2]->str));
-                    std::cout << countMessage << std::endl;
                 }
                 else if (countMessage == 1)
                 {
-                    std::cout << countMessage << std::endl;
                     temperature = (atoi(reply->element[2]->str));
                 }
 

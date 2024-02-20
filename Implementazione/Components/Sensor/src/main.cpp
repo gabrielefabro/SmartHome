@@ -54,8 +54,6 @@ int main()
         }
         if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
         {
-            std::string received_message = reply->element[2]->str;
-            std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
 
             state = static_cast<sensor_type>(atoi(reply->element[2]->str));
 

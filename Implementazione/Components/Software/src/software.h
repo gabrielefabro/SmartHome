@@ -9,6 +9,7 @@
 #include <string.h>
 #include <hiredis/hiredis.h>
 #include <chrono>
-
+#include "../../Command/src/command.h"
+std::string componentToString(components comp);
 
 #endif

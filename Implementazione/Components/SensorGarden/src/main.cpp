@@ -52,8 +52,6 @@ int main()
         }
         if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
         {
-            std::string received_message = reply->element[2]->str;
-            std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
 
             state = static_cast<sensorGarden_type>(atoi(reply->element[2]->str));
 
@@ -69,7 +67,6 @@ int main()
                 sensorGarden.setHumidity(rand() % 100);
                 sensorGarden.setTemperature(rand() % 46);
             }
-            std::cout << "tempeartura: " << sensorGarden.getTemperature() << " umidità: " << sensorGarden.getHumidity() << std::endl;
             auto tempo_corrente = std::chrono::steady_clock::now();
             auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
             log2sensorGardendb(db1, sensorGarden.getId(), pid, sensorGarden.getState(), sensorGarden.getTemperature(), sensorGarden.getHumidity(), tempo_trascorso);

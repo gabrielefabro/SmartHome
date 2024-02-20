@@ -57,7 +57,6 @@ int main()
             }
             if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
             {
-                std::string message = reply->element[2]->str;
 
                 if (countMessage == 0)
                 {

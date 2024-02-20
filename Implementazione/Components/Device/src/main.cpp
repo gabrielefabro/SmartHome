@@ -59,27 +59,21 @@ int main()
             }
             if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
             {
-                std::string message = reply->element[2]->str;
-                std::cout << "Messaggio ricevuto da Redis: " << message << std::endl;
 
                 if (countMessage == 0)
                 {
-                    std::cout << countMessage << std::endl;
                     state = static_cast<device_type>(atoi(reply->element[2]->str));
                 }
                 else if (countMessage == 1)
                 {
-                    std::cout << countMessage << std::endl;
                     nome = static_cast<nome_type>(atoi(reply->element[2]->str));
                 }
                 else if (countMessage == 2)
                 {
-                    std::cout << countMessage << std::endl;
                     inizio = (atoi(reply->element[2]->str));
                 }
                 else if (countMessage == 3)
                 {
-                    std::cout << countMessage << std::endl;
                     fine = (atoi(reply->element[2]->str));
                 }
 

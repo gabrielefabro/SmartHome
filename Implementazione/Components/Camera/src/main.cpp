@@ -53,8 +53,6 @@ int main()
 
             if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
             {
-                const char *received_message = reply->element[2]->str;
-
                     state = static_cast<camera_type>(atoi(reply->element[2]->str));
 
                     freeReplyObject(reply);

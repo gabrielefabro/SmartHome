@@ -20,8 +20,8 @@ typedef enum
 class Camera
 {
 private:
-    camera_type state;
     int id;
+    camera_type state;
     bool recording;
 
 public:
