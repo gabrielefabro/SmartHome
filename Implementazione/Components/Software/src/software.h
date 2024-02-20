@@ -11,5 +11,6 @@
 #include <chrono>
 #include "../../Command/src/command.h"
 std::string componentToString(components comp);
+void log2db(Con2DB db1, std::string comp, const char *state);
 
 #endif

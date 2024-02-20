@@ -3,7 +3,7 @@
 
 #include <cstdlib>
 #include <iostream>
-#include "../../../con2db/src/pgsql.h"
+#include "pgsql.h"
 #include <chrono>
 void timeFlies(char *buf);
 

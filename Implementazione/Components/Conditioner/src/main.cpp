@@ -59,7 +59,7 @@ int main()
             }
             if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 3)
             {
-            
+
                 if (countMessage == 0)
                 {
                     state = static_cast<conditioner_type>(atoi(reply->element[2]->str));
@@ -74,15 +74,36 @@ int main()
             countMessage++;
             sleep(1);
         }
-
-        if (state == change_temperature)
+        
+        const char *sms;
+        if (rand() % 100 >= 5)
         {
-            conditioner.modifyTemperature(temperature);
+            sms = "ok";
+            if (state == change_temperature)
+            {
+                conditioner.modifyTemperature(temperature);
+            }
+            conditioner.setState(state);
+            auto tempo_corrente = std::chrono::steady_clock::now();
+            auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
+            log2conditionerdb(db1, conditioner.getId(), pid, conditioner.getState(), conditioner.getTemperature(), tempo_trascorso);
         }
-        conditioner.setState(state);
-        auto tempo_corrente = std::chrono::steady_clock::now();
-        auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
-        log2conditionerdb(db1, conditioner.getId(), pid, conditioner.getState(), conditioner.getTemperature(), tempo_trascorso);
+        else
+        {
+            sms = "Comando fallito";
+            sleep(5);
+        }
+
+        redisContext *context2 = redisConnect("127.0.0.1", 6379);
+        redisReply *secondReply = (redisReply *)redisCommand(context2, "PUBLISH rispostaChannel %d", sms);
+        if (secondReply != NULL)
+        {
+            freeReplyObject(secondReply);
+        }
+        else
+        {
+            std::cerr << "Errore nell'invio del messaggio a Redis." << std::endl;
+        }
     }
 
     redisFree(context);

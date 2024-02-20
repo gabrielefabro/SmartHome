@@ -5,7 +5,7 @@
 #include <string>
 #include <cstdlib>
 #include <chrono>
-#include "../../../con2db/src/pgsql.h"
+#include "pgsql.h"
 
 // Enumerazione dei possibili stati del sensore da giardino
 typedef enum

@@ -71,11 +71,11 @@ CREATE TABLE IF NOT EXISTS SensorGarden (
     PRIMARY KEY (t, pid)
 );
 
-CREATE TABLE IF NOT EXISTS LogActivity (
-    name_activity varchar(20)NOT NULL,
+CREATE TABLE IF NOT EXISTS LogDb (
+    comp varchar(25)NOT NULL,
+    state VARCHAR(25) NOT NULL,
     temp VARCHAR(25) NOT NULL,
-    pid INT NOT NULL,
-    PRIMARY KEY (name_activity, temp)
+    PRIMARY KEY (temp)
 );
 
 CREATE TABLE IF NOT EXISTS Garden (

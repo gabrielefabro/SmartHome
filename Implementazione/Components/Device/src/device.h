@@ -8,7 +8,7 @@
 #include <hiredis/hiredis.h>
 #include <string>
 #include <tuple>
-#include "../../../con2db/src/pgsql.h"
+#include "pgsql.h"
 
 // Enumerazione che rappresenta i possibili stati del dispositivo.
 typedef enum
@@ -81,5 +81,4 @@ void log2devicedb(Con2DB db1, int id, int pid, device_type state, nome_type nome
 void int2stateDevice(char *cstate, device_type);
 const char *nomeToString(nome_type nomeDev);
 void timeFlies(char *buf);
-int changeInt();
 #endif

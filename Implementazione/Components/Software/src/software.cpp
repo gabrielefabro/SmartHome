@@ -51,7 +51,11 @@ int main()
             case Camera:
             {
                 int comando = 0;
+                char *com;
                 camera_type state = static_cast<camera_type>(comando);
+
+                int2stateCamera(com,state);
+                log2db(db1,componentToString(comp),com);
 
                 if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                 {
@@ -83,7 +87,12 @@ int main()
             {
                 int numMessage = 0;
                 int comando, temp;
+                char *com;
                 conditioner_type state = static_cast<conditioner_type>(comando);
+
+                int2stateConditioner(com,state);
+                log2db(db1,componentToString(comp),com);
+
                 while (numMessage < 2)
                 {
                     if (redisGetReply(context, (void **)&reply) != REDIS_OK)
@@ -136,8 +145,13 @@ int main()
             {
                 int numMessage = 0;
                 int comando, nomeDev, inizio, fine;
+                char *com;
                 device_type state = static_cast<device_type>(comando);
                 nome_type nomeDispositivo = static_cast<nome_type>(nomeDev);
+
+                int2stateDevice(com,state);
+                log2db(db1,componentToString(comp),com);
+
                 while (numMessage < 4)
                 {
                     if (redisGetReply(context, (void **)&reply) != REDIS_OK)
@@ -202,8 +216,13 @@ int main()
             {
                 int numMessage = 0;
                 int comando, color, intensity;
+                char *com;
                 light_type state = static_cast<light_type>(comando);
                 light_color coloreLuce = static_cast<light_color>(color);
+
+                int2stateLight(com,state);
+                log2db(db1,componentToString(comp),com);
+
                 while (numMessage < 3)
                 {
                     if (redisGetReply(context, (void **)&reply) != REDIS_OK)
@@ -260,7 +279,11 @@ int main()
             case Sensor:
             {
                 int comando;
+                char *com;
                 sensor_type state = static_cast<sensor_type>(comando);
+
+                int2stateSensor(com,state);
+                log2db(db1,componentToString(comp),com);
 
                 if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                 {
@@ -291,8 +314,12 @@ int main()
             case SensorGarden:
             {
                 int comando;
+                char *com;
                 sensorGarden_type state = static_cast<sensorGarden_type>(comando);
 
+                int2stateSensorGarden(com,state);
+                log2db(db1,componentToString(comp),com);
+                
                 if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                 {
                     std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
@@ -354,6 +381,8 @@ int main()
             std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
             exit(1);
         }
+        std::string message = reply->str;
+        std::cout << message << std::endl;
         auto tempo_corrente = std::chrono::steady_clock::now();
         auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
 
