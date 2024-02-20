@@ -99,9 +99,8 @@ int main()
         {
             sms = "Comando fallito";
         }
-        sleep(2);
+        sleep(5);
         redisContext *context2 = redisConnect("127.0.0.1", 6379);
-        std::cout << "messaggio mandato " << sms << std::endl;
         redisReply *secondReply = (redisReply *)redisCommand(context2, "PUBLISH rispostaChannel %s", sms);
         if (secondReply != NULL)
         {

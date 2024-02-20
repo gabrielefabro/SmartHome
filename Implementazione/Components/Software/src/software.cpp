@@ -78,7 +78,6 @@ int main()
                 int numMessage = 0;
                 int temp;
                 char com[20];
-
                 while (numMessage < 2)
                 {
                     if (redisGetReply(context, (void **)&reply) != REDIS_OK)
@@ -118,10 +117,12 @@ int main()
 
                     // Attendi un breve periodo di tempo tra l'invio dei messaggi
                     freeReplyObject(secondReply);
-                    redisFree(context2);
+                    
                     sleep(1); // Attendi 1 secondo (1000000 microsecondi)
                 }
+                redisFree(context2);
                 break;
+                
             }
             case Device:
             {
