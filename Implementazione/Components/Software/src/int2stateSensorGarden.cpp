@@ -1,4 +1,4 @@
-#include "command.h"
+#include "../../Command/src/command.h"
 
 // Funzione che inserisce nel buffer la stringa che rappresenta lo stato del SensoreGiardino
 void int2stateSensorGarden(char *buf, sensorGarden_type x)

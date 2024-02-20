@@ -30,7 +30,7 @@ int main()
     redisReply *reply;
     while (t < HORIZON)
     {
-        components comp = static_cast<components>(rand() % 6);
+        components comp = static_cast<components>(0);
         std::string compString;
         std::cout << "Componente Generata: " << componentToString(comp) << std::endl;
         reply = (redisReply *)redisCommand(redis_conn, "PUBLISH userInput_channel %d", comp);
@@ -151,7 +151,7 @@ int main()
             std::cout << "Publisher: Risposta pubblicata su Redis." << std::endl;
         }
         t++;
-        sleep(30);
+        sleep(10);
     }
 
     redisFree(redis_conn);

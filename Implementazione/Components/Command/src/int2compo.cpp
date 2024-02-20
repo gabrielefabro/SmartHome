@@ -1,7 +1,7 @@
 #include <string>
 #include "command.h"
 
-std::string componentToString(components comp) {
+const char* componentToString(components comp) {
     switch (comp) {
         case Camera:
             return "Camera";

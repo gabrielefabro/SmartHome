@@ -1,4 +1,4 @@
-#include "command.h"
+#include "../../Command/src/command.h"
 
 // Funzione che inserisce in un buffer la stringa dello stato della luce
 void int2stateLight(char *buf, light_type x)

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <random>
 #include <hiredis/hiredis.h>
-#include "../../../con2db/src/pgsql.h"
+#include "pgsql.h"
 #include <postgresql/libpq-fe.h>
 #include <unistd.h>
 #include "conditioner.h"

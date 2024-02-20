@@ -45,17 +45,16 @@ int main()
             components comp = static_cast<components>(atoi(reply->element[2]->str));
             std::cout << "La component di interesse è : " << componentToString(comp) << std::endl;
             freeReplyObject(reply);
-
             switch (comp)
             {
             case Camera:
             {
                 int comando = 0;
-                char *com;
+                char com[20];
                 camera_type state = static_cast<camera_type>(comando);
 
-                int2stateCamera(com,state);
-                log2db(db1,componentToString(comp),com);
+                int2stateCamera(com, state);
+                log2db(db1, componentToString(comp), com);
 
                 if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                 {
@@ -87,11 +86,11 @@ int main()
             {
                 int numMessage = 0;
                 int comando, temp;
-                char *com;
+                char com[20];
                 conditioner_type state = static_cast<conditioner_type>(comando);
 
-                int2stateConditioner(com,state);
-                log2db(db1,componentToString(comp),com);
+                int2stateConditioner(com, state);
+                log2db(db1, componentToString(comp), com);
 
                 while (numMessage < 2)
                 {
@@ -145,12 +144,11 @@ int main()
             {
                 int numMessage = 0;
                 int comando, nomeDev, inizio, fine;
-                char *com;
+                char com[20];
                 device_type state = static_cast<device_type>(comando);
                 nome_type nomeDispositivo = static_cast<nome_type>(nomeDev);
-
-                int2stateDevice(com,state);
-                log2db(db1,componentToString(comp),com);
+                int2stateDevice(com, state);
+                log2db(db1, componentToString(comp), com);
 
                 while (numMessage < 4)
                 {
@@ -216,12 +214,12 @@ int main()
             {
                 int numMessage = 0;
                 int comando, color, intensity;
-                char *com;
+                char com[20];
                 light_type state = static_cast<light_type>(comando);
                 light_color coloreLuce = static_cast<light_color>(color);
 
-                int2stateLight(com,state);
-                log2db(db1,componentToString(comp),com);
+                int2stateLight(com, state);
+                log2db(db1, componentToString(comp), com);
 
                 while (numMessage < 3)
                 {
@@ -279,11 +277,12 @@ int main()
             case Sensor:
             {
                 int comando;
-                char *com;
+                char com[20];
                 sensor_type state = static_cast<sensor_type>(comando);
 
-                int2stateSensor(com,state);
-                log2db(db1,componentToString(comp),com);
+                int2stateSensor(com, state);
+                const char *abc = componentToString(comp);
+                log2db(db1, abc, com);
 
                 if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                 {
@@ -314,12 +313,12 @@ int main()
             case SensorGarden:
             {
                 int comando;
-                char *com;
+                char com[20];
                 sensorGarden_type state = static_cast<sensorGarden_type>(comando);
 
-                int2stateSensorGarden(com,state);
-                log2db(db1,componentToString(comp),com);
-                
+                int2stateSensorGarden(com, state);
+                log2db(db1, componentToString(comp), com);
+
                 if (redisGetReply(context, (void **)&reply) != REDIS_OK)
                 {
                     std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
@@ -372,26 +371,33 @@ int main()
         }
 
         // Sottoscrizione al canale
-        redisReply *reply = (redisReply *)redisCommand(context, "SUBSCRIBE rispostaChannel");
-        freeReplyObject(reply);
+        redisReply *altrareply = (redisReply *)redisCommand(context3, "SUBSCRIBE rispostaChannel");
+        freeReplyObject(altrareply);
 
         std::cout << "IN ATTESA RISPOSTA" << std::endl;
-        if (redisGetReply(context, (void **)&reply) != REDIS_OK)
+        if (redisGetReply(context3, (void **)&altrareply) != REDIS_OK)
         {
             std::cerr << "Errore nella ricezione del messaggio da Redis." << std::endl;
             exit(1);
         }
-        std::string message = reply->str;
-        std::cout << message << std::endl;
-        auto tempo_corrente = std::chrono::steady_clock::now();
-        auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
 
-        if(tempo_trascorso > 2000)
+        if (altrareply->type == REDIS_REPLY_ARRAY && altrareply->elements == 3)
         {
-            std::cout << "Sistema lento " << std::endl;
-        }
+            const char *received_message = altrareply->element[2]->str;
+            std::cout << "Receiver: Messaggio ricevuto da Redis: " << received_message << std::endl;
+            auto tempo_corrente = std::chrono::steady_clock::now();
+            auto tempo_trascorso = std::chrono::duration_cast<std::chrono::milliseconds>(tempo_corrente - tempo_iniziale).count();
 
-        sleep(5);
+            if (tempo_trascorso > 2000)
+            {
+                std::cout << "Sistema lento " << std::endl;
+            }
+            freeReplyObject(altrareply);
+
+            sleep(5);
+        }
+        redisFree(context3);
     }
+    redisFree(context);
     return 0;
 }

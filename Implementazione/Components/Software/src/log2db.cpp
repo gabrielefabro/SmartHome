@@ -1,12 +1,11 @@
-#include "./con2db/src/pgsql.h"
+#include "pgsql.h"
 #include <vector>
 #include <iomanip>
 #include <iostream>
 #include <string.h>
-#include <libpq-fe.h>
 #include "software.h"
 
-void log2db(Con2DB db1, std::string comp, const char *state)
+void log2db(Con2DB db1, const char *comp, const char *state)
 {
     PGresult *res;
     char sqlcmd[1000];

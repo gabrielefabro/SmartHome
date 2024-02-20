@@ -25,7 +25,7 @@ typedef enum
     SensorGarden
 } components;
 
-std::string componentToString(components comp);
+const char* componentToString(components comp);
 void int2stateCamera(char *buf, camera_type x);
 void int2stateConditioner(char *buf, conditioner_type x);
 void int2stateDevice(char *buf, device_type x);

@@ -10,7 +10,7 @@
 #include <hiredis/hiredis.h>
 #include <chrono>
 #include "../../Command/src/command.h"
-std::string componentToString(components comp);
-void log2db(Con2DB db1, std::string comp, const char *state);
+const char* componentToString(components comp);
+void log2db(Con2DB db1, const char *comp, const char *state);
 
 #endif
